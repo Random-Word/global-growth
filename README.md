@@ -206,8 +206,8 @@ The papers propose redistribution of $1.3–6 trillion per year to close poverty
 
 | Flow | Amount | Scale Reference |
 |---|---|---|
-| Total global ODA (2022) | ~$200B | |
-| Poverty gap at $2.15/day | $332B | ODA covers ~60% |
+| Total global ODA (2023) | ~$203B | |
+| Poverty gap at $2.15/day | $332B | ODA covers ~61% |
 | Poverty gap at $6.85/day (perfect) | $7,755B | ODA covers ~2.6% |
 | Poverty gap at $6.85/day (realistic 3x) | $23,264B | ODA covers ~0.9% |
 | Papers' proposed redistribution | $1,300–6,000B | **6–30x total current ODA** |
@@ -257,6 +257,72 @@ Solar is doubling every 3 years. If that rate continues:
 - By 2035: ~10,000 TWh (approaching global electricity needs)
 
 This could resolve the tension between growth and climate in a way that neither the papers' redistribution proposals nor current policy trajectories anticipate. The energy transition is the variable that could make 4-5%/yr decoupling achievable — moving us from the 3°C path to something closer to 2°C.
+
+---
+
+## Beyond Carbon: The Planetary Boundaries the Papers Should Have Emphasized
+
+GPT-5.4's second major criticism was that our ecological analysis was "too carbon-centric." The Rockström/Steffen planetary boundaries framework identifies nine Earth-system processes — carbon is just one. The data on the others is, frankly, worse than the carbon story.
+
+### Material footprint: the decoupling that isn't happening
+
+![Material footprint](charts/28_material_footprint.png)
+*Top-left: Global material footprint per capita has risen 31% since 2000 (9.3 → 12.3 tonnes/person). Top-right: Material intensity of GDP (kg/$ GDP) has barely declined — only 0.4%/yr vs 1.8%/yr for carbon intensity. Bottom-left: GDP has grown 117% since 2000 while material extraction grew 71% — relative decoupling but NO absolute decoupling.*
+
+This is the key chart for the ecological critique. Carbon has a clear technological pathway to decoupling (renewables replacing fossil fuels). **Material extraction has no equivalent.** There is no "solar panel for copper" — you need the physical stuff. Material intensity is declining at only 0.4%/yr vs 1.8%/yr for carbon. At current rates, keeping material use flat while GDP grows at 3% would require 6x the current material decoupling rate.
+
+### Biodiversity: the irreversible crisis
+
+![Biodiversity and land use](charts/29_biodiversity_land.png)
+*Top-left: The Living Planet Index shows a 73% decline in monitored vertebrate populations since 1970. Top-right: Latin America has lost 95% of monitored wildlife — the worst regional collapse. Bottom-left: The Red List Index is declining worldwide. Bottom-right: Tree cover loss averages 21.5 Mha/yr and is trending upward.*
+
+| Region | LPI Decline (1970–2020) |
+|---|---|
+| Latin America & Caribbean | -95% |
+| Freshwater species | -85% |
+| Africa | -76% |
+| World (global average) | -73% |
+| Asia & Pacific | -60% |
+| North America | -39% |
+| Europe & Central Asia | -35% |
+
+This is the boundary where the "irreversibility" argument is strongest. You can build solar panels and restore carbon sinks. **You cannot bring back extinct species.** The 73% LPI decline dwarfs anything in the carbon story.
+
+### Nitrogen, phosphorus & water: the invisible boundaries
+
+![Nitrogen and water](charts/30_nitrogen_water.png)
+*Top-left: Nitrogen fertilizer use per hectare has increased 800% since 1961, with China peaking at 200+ kg/ha. Top-right: Phosphate fertilizer following a similar trajectory. Bottom-left: 17 countries are in critical water stress (>100% of renewable resources), mostly in the Middle East/North Africa. Bottom-right: Global freshwater withdrawals are approaching the 4,000 km³/yr Rockström boundary.*
+
+- **Nitrogen**: Industrial fixation (~120 Tg N/yr) is **3.5x the safe boundary** (35 Tg/yr). This is the most severely breached boundary after biodiversity. It causes ocean dead zones, algal blooms, groundwater contamination, and N₂O emissions. There is no easy tech fix — it's directly tied to feeding 8 billion people.
+- **Phosphorus**: Flow to oceans (~8-10 Tg/yr) is approaching the 11 Tg/yr boundary. Phosphorus is mined from finite phosphate rock with no substitute in agriculture.
+- **Freshwater**: Global withdrawals ~3,949 km³/yr, right at the 4,000 km³/yr boundary. 17 countries already exceed 100% of their renewable freshwater resources.
+
+### The scorecard
+
+![Planetary boundaries scorecard](charts/31_planetary_scorecard.png)
+*Horizontal bars show the ratio of current status to the safe boundary for each planetary process. The red dashed line marks the boundary. Four boundaries are clearly exceeded (red), three are at/near the limit (orange), and only ozone is recovering (green — thanks to the Montreal Protocol).*
+
+| Boundary | Safe Limit | Current | Status |
+|---|---|---|---|
+| Climate change (CO₂) | 350 ppm | 424 ppm | **Exceeded** |
+| Biosphere integrity (LPI) | 90 (index) | 27 (index) | **Exceeded** |
+| Nitrogen fixation | 35 Tg/yr | 120 Tg/yr | **Exceeded (3.4x)** |
+| Land-system change | 75% forests | 68% forests | **Exceeded** |
+| Freshwater use | 4,000 km³/yr | ~3,949 km³/yr | At limit |
+| Phosphorus flow | 11 Tg/yr | ~9 Tg/yr | Near limit |
+| Ocean acidification | 2.75 Ω | 2.8 Ω | Near limit |
+| Ozone depletion | 276 DU | 284 DU | Safe (recovering) |
+
+Consistent with Richardson et al. (2023): **6 of 9 boundaries transgressed.**
+
+### Material decoupling: the harder problem
+
+![Material vs carbon decoupling](charts/32_material_vs_carbon.png)
+*Left: Since 2000, carbon intensity of GDP has fallen ~30% while material intensity has fallen only ~8%. Right: Under 3% GDP growth, keeping material extraction flat requires 3%/yr decoupling — 6x the current rate of 0.5%/yr. Absolute material decline would require 5%/yr, which is unprecedented.*
+
+**This is the strongest data-driven argument for the papers' position.** Carbon decoupling is 4.5x faster than material decoupling (1.8%/yr vs 0.4%/yr). Even the optimistic energy transition story doesn't help here — solar panels, wind turbines, and batteries all require massive material inputs (lithium, cobalt, copper, rare earths). The energy transition may actually *increase* material demand in the short term.
+
+The honest position: the papers are **more right on ecology than on economics.** The "capitalism is mathematically unworkable" framing is wrong — the math shows poverty reduction is working through growth. But the planetary boundaries framing is substantially correct — growth-as-usual, even with carbon decoupling, is ecologically unsustainable across multiple dimensions simultaneously.
 
 ---
 
@@ -345,6 +411,7 @@ The nuclear reactor metaphor stands: capitalism is a powerful energy source that
 | [Maddison Project](https://www.rug.nl/ggdc/historicaldevelopment/maddison/) | MPD 2023 | 1–2022, 169 entities | GDP per capita (2011 int'l $), population |
 | [Our World in Data](https://github.com/owid/co2-data) | CO₂ and Greenhouse Gas Emissions | 1750–2024 | CO₂ (production + consumption), CO₂/GDP, CO₂/energy, energy/GDP, trade CO₂ |
 | [Our World in Data](https://github.com/owid/energy-data) | Energy Dataset | 1965–2024, 200+ entities | Solar/wind/fossil generation (TWh), renewable shares, energy mix |
+| [Our World in Data](https://ourworldindata.org/) | Planetary Boundaries | Various, 1961–2024 | Material footprint, Living Planet Index, Red List Index, tree cover loss, N/P fertilizer, water stress |
 | [World Bank WDI](https://data.worldbank.org/) | ODA & Fiscal Indicators | 1960–2024 | Net ODA received, bilateral ODA by donor, tax revenue/GDP, GDP/capita growth |
 
 ### Analysis Scripts
@@ -366,6 +433,7 @@ python analysis/run_analysis_3.py    # Floor-raising, good-life threshold, Prest
 python analysis/run_analysis_4.py    # Market reforms, command vs market economies (Charts 17–18)
 python analysis/run_analysis_5.py    # Decoupling, planetary boundaries, trade flows (Charts 19–23)
 python analysis/run_analysis_6.py    # ODA, political economy, energy transition (Charts 24–27)
+python analysis/run_analysis_7.py    # Non-carbon planetary boundaries (Charts 28–32)
 ```
 
 ### Analysis Pipeline
@@ -390,6 +458,8 @@ python analysis/run_analysis_6.py    # ODA, political economy, energy transition
 6. **`run_analysis_5.py`** — Carbon intensity trends and acceleration. Production vs consumption-based emissions. Trade CO₂ flows (exploitation hypothesis test). Carbon budget arithmetic for required decoupling rates. Poor-world-only growth scenario. Energy transition decomposition.
 
 6. **`run_analysis_6.py`** — Political economy of redistribution. ODA trends vs poverty gaps. The 0.7% GNI target. ODA quality problems (in-donor refugee costs, tied aid). Rich-world growth slowdown. Domestic vs international redistribution correlation. Energy transition S-curve. Terms of trade.
+
+7. **`run_analysis_7.py`** — Non-carbon planetary boundaries. Material footprint per capita and per GDP. Living Planet Index and Red List Index. Tree cover loss and deforestation. Nitrogen and phosphorus fertilizer use vs Rockström boundaries. Water stress. Planetary boundaries scorecard. Material vs carbon decoupling comparison.
 
 ### Key Methodological Notes
 
@@ -434,6 +504,11 @@ python analysis/run_analysis_6.py    # ODA, political economy, energy transition
 | 25 | `25_domestic_redistribution.png` | Tax, spending, and the squeezed middle |
 | 26 | `26_energy_transition_scurve.png` | Solar/wind S-curve |
 | 27 | `27_debt_and_trade.png` | Debt and terms of trade constraints |
+| 28 | `28_material_footprint.png` | Material footprint per capita, per GDP, and vs GDP growth |
+| 29 | `29_biodiversity_land.png` | Living Planet Index, Red List Index, tree cover loss |
+| 30 | `30_nitrogen_water.png` | N/P fertilizer trends, water stress, freshwater withdrawals |
+| 31 | `31_planetary_scorecard.png` | Planetary boundaries status (8 of 9 processes) |
+| 32 | `32_material_vs_carbon.png` | Material vs carbon intensity decline rates |
 
 ### Tools & Environment
 

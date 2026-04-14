@@ -66,11 +66,15 @@ oda_pct_gni = fetch_wdi('DT.ODA.ODAT.GN.ZS', 'oda_pct_gni')
 time.sleep(1)
 oda_received = fetch_wdi('DT.ODA.ODAT.CD', 'oda_received_usd')
 time.sleep(1)
+# Donor-side total ODA (DAC total, avoids double-counting)
+oda_dac_total = fetch_wdi('DC.DAC.TOTL.CD', 'oda_dac_total_usd')
+time.sleep(1)
 
 # Government expenditure and tax revenue
 tax_rev = fetch_wdi('GC.TAX.TOTL.GD.ZS', 'tax_revenue_pct_gdp')
 time.sleep(1)
-govt_exp = fetch_wdi('GC.XPN.TOTL.GD.ZS', 'govt_expense_pct_gdp')
+# Use general government final consumption expenditure (more reliable than GC.XPN.TOTL.GD.ZS)
+govt_exp = fetch_wdi('NE.CON.GOVT.ZS', 'govt_expense_pct_gdp')
 time.sleep(1)
 
 # Domestic redistribution proxy: social contributions
@@ -82,8 +86,8 @@ time.sleep(1)
 terms_of_trade = fetch_wdi('TT.PRI.MRCH.XD.WD', 'terms_of_trade')
 time.sleep(1)
 
-# External debt stocks (% of GNI) — for poor countries
-ext_debt = fetch_wdi('DT.DOD.DECT.GN.ZS', 'ext_debt_pct_gni')
+# External debt — use total debt service as % of exports (more reliably available)
+ext_debt = fetch_wdi('DT.TDS.DECT.EX.ZS', 'debt_service_pct_exports')
 time.sleep(1)
 
 # GDP per capita growth (annual %) — to check rich-world stagnation
@@ -166,11 +170,22 @@ fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 
 # 1a: Total ODA received globally over time
 ax = axes[0, 0]
-if len(oda_received) > 0:
-    # Filter to actual countries (exclude aggregates)
-    # Sum all recipient-country ODA by year
-    yearly_oda = oda_received[oda_received['country_code'].str.len() <= 3].copy()
-    yearly_oda = yearly_oda.groupby('year')['oda_received_usd'].sum().reset_index()
+# Known WDI aggregate/region codes to exclude from country sums
+WDI_AGGREGATES = {
+    'WLD', 'HIC', 'LIC', 'LMC', 'UMC', 'MIC', 'LMY', 'INB',
+    'SSF', 'SST', 'TSA', 'TEA', 'TEC', 'TLA', 'TMN', 'TSS',
+    'EAP', 'ECA', 'LAC', 'MNA', 'SAS', 'SSA', 'EAS', 'ECS',
+    'LCN', 'MEA', 'NAC', 'OED', 'PST', 'PRE', 'IBD', 'IDA',
+    'IDX', 'IDB', 'FCS', 'HPC', 'EMU', 'EUU', 'ARB', 'CEB',
+    'CSS', 'OSS', 'PSS', 'AFE', 'AFW', 'IBT', 'IDD', 'OES',
+}
+
+if len(oda_dac_total) > 0:
+    # Use DAC donor-side total (avoids double-counting bilateral+multilateral on recipient side)
+    yearly_oda = oda_dac_total[oda_dac_total['country_code'] == '1W'].copy()  # '1W' = World
+    yearly_oda = yearly_oda.dropna(subset=['oda_dac_total_usd'])
+    yearly_oda = yearly_oda.groupby('year')['oda_dac_total_usd'].sum().reset_index()
+    yearly_oda = yearly_oda.rename(columns={'oda_dac_total_usd': 'oda_received_usd'})
     yearly_oda = yearly_oda[yearly_oda['year'] >= 1960].sort_values('year')
     yearly_oda['oda_billions'] = yearly_oda['oda_received_usd'] / 1e9
     
@@ -190,8 +205,15 @@ if len(oda_received) > 0:
     ax.axhline(y=332, color='green', linewidth=1.5, linestyle='--', alpha=0.7)
     ax.annotate('$2.15/day gap: $332B', xy=(1965, 340), fontsize=9, color='green')
     
-    latest_oda = yearly_oda[yearly_oda['year'] == yearly_oda['year'].max()].iloc[0]['oda_billions']
-    print(f"\nGlobal ODA received (latest): ${latest_oda:.0f}B")
+    # Use the latest year with substantial data (>$50B, to avoid incomplete trailing years)
+    good_years = yearly_oda[yearly_oda['oda_billions'] > 50].sort_values('year')
+    if len(good_years) > 0:
+        latest_oda = good_years.iloc[-1]['oda_billions']
+        latest_oda_yr = int(good_years.iloc[-1]['year'])
+    else:
+        latest_oda = yearly_oda.iloc[-1]['oda_billions']
+        latest_oda_yr = int(yearly_oda.iloc[-1]['year'])
+    print(f"\nGlobal ODA received ({latest_oda_yr}): ${latest_oda:.0f}B")
     print(f"Poverty gap at $2.15/day: $332B")
     print(f"ODA as % of $2.15 gap: {latest_oda/332*100:.0f}%")
     print(f"Poverty gap at $6.85/day: $7,755B")
@@ -602,14 +624,13 @@ if len(ext_debt) > 0:
     debt_countries = ['Nigeria', 'Kenya', 'Ghana', 'Ethiopia', 'Mozambique',
                       'Bangladesh', 'Pakistan', 'Sri Lanka', 'Argentina',
                       'Low income', 'Sub-Saharan Africa']
-    # Check for aggregate groups
     for name in debt_countries:
         d = ext_debt[(ext_debt['country'] == name) & (ext_debt['year'] >= 1990)]
-        d = d.sort_values('year').dropna(subset=['ext_debt_pct_gni'])
+        d = d.sort_values('year').dropna(subset=['debt_service_pct_exports'])
         if len(d) > 3:
-            ax.plot(d['year'], d['ext_debt_pct_gni'], label=name, linewidth=1.5)
-    ax.set_title('External Debt (% of GNI)', fontsize=12, fontweight='bold')
-    ax.set_ylabel('% of GNI')
+            ax.plot(d['year'], d['debt_service_pct_exports'], label=name, linewidth=1.5)
+    ax.set_title('Debt Service (% of Exports)', fontsize=12, fontweight='bold')
+    ax.set_ylabel('% of exports of goods & services')
     ax.legend(fontsize=8, ncol=2)
 else:
     ax.text(0.5, 0.5, 'External debt data not available', ha='center', va='center', transform=ax.transAxes)
