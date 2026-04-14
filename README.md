@@ -301,6 +301,82 @@ This is a real problem — but it is a problem of **within-country inequality an
 
 **The papers' error is not in identifying the problem (inequality erodes redistribution) — it's in concluding that capitalism itself must be abandoned.** The data shows European social democracy delivering shared growth within a capitalist framework. The failure is specifically American-style low-tax, high-inequality capitalism, not capitalism as such.
 
+### But what about the entire income spectrum?
+
+The previous section showed every quintile gained in rich countries. But France did *better* at generating material abundance for the poorest. If we integrate over the entire population — weighting improvements for the poor more heavily — how do countries actually compare? And how much should we weight the poorest?
+
+This is the Atkinson social welfare function question. The parameter ε controls how much you care about inequality:
+- **ε = 0**: Only total output matters (mean income). The US wins.
+- **ε = 1**: Log-utility — a dollar matters more to a poor person, but not infinitely more. (Geometric mean.)
+- **ε = 2**: Strong pro-poor weighting. A dollar to someone at $2k matters 4x more than to someone at $4k.
+- **ε = ∞**: Rawlsian — only the bottom 20% matters.
+
+![Welfare rankings](charts/52_welfare_rankings.png)
+*Country rankings shift dramatically depending on how much you care about inequality. At ε=0 (mean), the US leads by far. At ε=∞ (Rawlsian), Norway leads and France, Germany, Sweden, Poland all beat the US. The "right" answer depends on your value judgment about ε.*
+
+| Country | Mean (ε=0) | ε=0.5 | ε=1 (Log) | ε=2 | Rawlsian |
+|---|---|---|---|---|---|
+| Norway | $90k | $86k | $81k | $73k | **$41k** |
+| **US** | **$75k** | $66k | $57k | $44k | $19k |
+| Germany | $64k | $59k | $54k | $45k | $22k |
+| Sweden | $63k | $59k | $55k | $48k | $25k |
+| France | $54k | $50k | $47k | $41k | $21k |
+| UK | $51k | $47k | $44k | $38k | $19k |
+| South Korea | $52k | $48k | $44k | $38k | $19k |
+| Poland | $44k | $41k | $39k | $35k | $19k |
+| China | $21k | $20k | $18k | $15k | $8k |
+| Brazil | $20k | $16k | $13k | $9k | $4k |
+| India | $9k | $8k | $8k | $7k | $4k |
+
+**Key insight:** The US's $75k mean income drops to $19k under Rawlsian weighting — below Poland ($19k) and Norway ($41k). France at $54k mean drops to only $21k. The US has the highest "inequality tax" of any rich country: 74% of its mean income is lost to distribution at ε=∞, vs only 61% for France and 54% for Norway.
+
+### Whose growth reached the poor?
+
+![Welfare growth scatter](charts/53_welfare_growth_scatter.png)
+*Countries above the diagonal line had "pro-poor" growth — their welfare-weighted growth (ε=2) exceeded their mean growth. Brazil, Chile, Mexico, Thailand, Ethiopia, and Rwanda are above the line. The US, Germany, and Sweden are below.*
+
+| Country | Span | Mean Growth | ε=2 Growth | Pro-poor? |
+|---|---|---|---|---|
+| China | 1990–2022 | +1,190% | +1,099% | Near-neutral |
+| Chile | 1990–2024 | +175% | +310% | **PRO-POOR** |
+| Poland | 1992–2023 | +260% | +263% | Neutral |
+| Brazil | 1990–2024 | +56% | +134% | **PRO-POOR** |
+| Thailand | 1990–2024 | +150% | +213% | **PRO-POOR** |
+| Mexico | 1992–2024 | +24% | +59% | **PRO-POOR** |
+| France | 1990–2023 | +40% | +37% | Neutral |
+| US | 1990–2024 | +70% | +57% | Pro-rich |
+| Germany | 1991–2022 | +44% | +25% | Pro-rich |
+| Sweden | 1992–2023 | +60% | +48% | Pro-rich |
+| South Africa | 1993–2022 | +38% | +70% | **PRO-POOR** |
+
+Latin America stands out: Brazil, Chile, and Mexico all had growth that *disproportionately benefited the poor* — likely reflecting the conditional cash transfer programs (Bolsa Família, Chile Solidario, Prospera) that these countries pioneered. Remarkably, even in rich countries where growth was pro-rich (US, Germany, Sweden), welfare-weighted growth was still positive. Nobody got poorer under any welfare function.
+
+### The ε dial: same country, different story
+
+![The ε dial](charts/55_epsilon_dial.png)
+*Left: The "inequality tax" — the percentage of mean income lost to inequality — for each country at different ε values. South Africa, Brazil, and Colombia lose 50–60% of their mean income at ε=2. Norway loses only 19%. Right: Rank shifts among the top 15 countries as ε increases. France rises; the US falls.*
+
+### What each quintile actually earns
+
+![Income spectrum](charts/54_income_spectrum.png)
+*The full income spectrum for 27 countries: five quintile bars per country, sorted by mean income. Norway's bottom 20% ($41k) earns more than the average person in Brazil ($20k). Ethiopia's top 20% ($6.5k) earns less than France's bottom 20% ($21k).*
+
+### Welfare over time: trajectories
+
+![Welfare trajectories](charts/56_welfare_trajectories.png)
+*Left: Rich countries — absolute welfare-weighted income (ε=1). Right: Developing countries — indexed welfare growth. China, Vietnam, and Poland show spectacular welfare gains. Japan stagnated.*
+
+### The key question: US vs France vs China vs Brazil
+
+![US vs France vs China vs Brazil](charts/57_us_france_china_brazil.png)
+*Four welfare metrics (mean, log-utility, ε=2, Rawlsian) indexed to each country's first year. In the US, the welfare-weighted measures lag further behind the mean — growth was captured by the top. In France, all four lines track closely — growth was shared. In China, explosive growth lifted all metrics. In Brazil, welfare-weighted measures outpace the mean — growth was pro-poor.*
+
+**The answer to "are improvements for the poorest infinitely more important?":** No — but they are *more* important, and how much more is a value judgment embodied in ε. What the data shows is:
+
+1. **At any reasonable ε, growth-with-redistribution (France model) dominates degrowth.** Every country's EDEI grew at every ε. No welfare function produces a case for abandoning capitalism.
+2. **The debate between the papers and the growth optimists is really a debate about ε.** The papers implicitly use high ε (the poor matter most); growth optimists use low ε (total output matters). Both are legitimate value positions.
+3. **But even at ε=2, the practical agenda is the same:** grow the pie AND share it. France, Poland, Chile, and South Korea all show this is achievable within market capitalism. The question isn't capitalism vs. something else — it's which capitalism.
+
 ### The energy S-curve: the wildcard
 
 One reason for optimism despite the political economy problem:
@@ -754,6 +830,7 @@ python analysis/run_analysis_8.py    # Country-level ecological decoupling (Char
 python analysis/run_analysis_9.py    # Transition minerals vs fossil fuels (Charts 37–40)
 python analysis/run_analysis_10.py   # Transfers to self-sufficiency (Charts 41–46)
 python analysis/run_analysis_11.py   # Rich-world quintile income analysis (Charts 47–51)
+python analysis/run_analysis_12.py   # Welfare-weighted growth across 27 countries (Charts 52–57)
 ```
 
 ### Analysis Pipeline
@@ -787,6 +864,8 @@ python analysis/run_analysis_11.py   # Rich-world quintile income analysis (Char
 
 10. **`run_analysis_10.py`** — From transfers to self-sufficiency. Development anatomy at $15k (what the "good life" threshold actually provides). Efficient outliers (countries achieving good welfare below $15k). Historical transition paths ($3k→$10k timelines and investment rates). Investment and structural transformation requirements. SSA multi-dimensional gap analysis. Cash transfer evidence vs development requirements (GiveDirectly, BRAC graduation model, conditional transfers). The 7 components of reaching $15k.
 11. **`run_analysis_11.py`** — Are rich-world citizens actually worse off? Real income by quintile (PPP constant $) for US, UK, France, Germany, Japan, Sweden from 1980–2024. Income share shifts (stacked area). Rich-country bottom 20% vs developing-country average income. Gini coefficient trajectories. Life expectancy, child mortality, tertiary enrollment trends. Indexed quintile growth (US vs France models). Tests the claim that capitalism is "untenable" because rich-world citizens aren't benefiting — finding that every quintile in every country gained in absolute terms.
+
+12. **`run_analysis_12.py`** — Welfare-weighted growth across the full income spectrum. Atkinson Equally-Distributed Equivalent Income (EDEI) at ε=0 (mean), 0.5, 1 (log-utility), 2 (strong pro-poor), and ∞ (Rawlsian) for 27 countries spanning rich, middle-income, and poor economies. Pro-poor vs pro-rich growth identification. The "inequality tax" — how much mean income is lost to distribution. Rank shifts across welfare functions. Time series of welfare trajectories. Key finding: at any reasonable ε, growth-with-redistribution dominates degrowth; the debate is really about the value of ε.
 
 ### Key Methodological Notes
 
@@ -856,6 +935,12 @@ python analysis/run_analysis_11.py   # Rich-world quintile income analysis (Char
 | 49 | `49_rich_poor_vs_global.png` | Rich-country bottom 20% vs developing-country average; Gini trends |
 | 50 | `50_human_development_rich.png` | Life expectancy, child mortality, tertiary enrollment; summary scorecard |
 | 51 | `51_absolute_vs_relative.png` | US vs France indexed quintile growth — absolute vs relative |
+| 52 | `52_welfare_rankings.png` | Welfare rankings under different social welfare functions (ε=0 to ε=∞) |
+| 53 | `53_welfare_growth_scatter.png` | Mean vs welfare-weighted growth — who grew for whom? |
+| 54 | `54_income_spectrum.png` | Full income spectrum: 5 quintile incomes for 27 countries |
+| 55 | `55_epsilon_dial.png` | The inequality tax and rank shifts across ε values |
+| 56 | `56_welfare_trajectories.png` | Welfare-weighted income trajectories over time |
+| 57 | `57_us_france_china_brazil.png` | US vs France vs China vs Brazil — same growth, different welfare |
 
 ### Tools & Environment
 
