@@ -119,6 +119,7 @@ fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 ax = axes[0, 0]
 if len(mat_foot_pc) > 0:
     vcol = get_value_col(mat_foot_pc)
+    assert vcol is not None, "mat_foot_pc missing value column"
     for name, color in [('World', 'black'), ('United States', 'blue'),
                          ('Germany', 'purple'), ('China', 'red'),
                          ('India', 'orange'), ('United Kingdom', 'green'),
@@ -151,6 +152,7 @@ if len(mat_foot_pc) > 0:
 ax = axes[0, 1]
 if len(mat_foot_gdp) > 0:
     vcol_gdp = get_value_col(mat_foot_gdp)
+    assert vcol_gdp is not None, "mat_foot_gdp missing value column"
     for name, color in [('World', 'black'), ('United States', 'blue'),
                          ('Germany', 'purple'), ('China', 'red'),
                          ('India', 'orange'), ('United Kingdom', 'green')]:
@@ -178,6 +180,7 @@ if len(mat_foot_gdp) > 0:
 ax = axes[1, 0]
 if len(mat_foot_pc) > 0:
     vcol = get_value_col(mat_foot_pc)
+    assert vcol is not None
     world = mat_foot_pc[mat_foot_pc['Entity'] == 'World'].sort_values('Year').copy()
     if len(world) > 2:
         # Get world GDP from OWID CO2 data
@@ -223,6 +226,7 @@ if len(mat_foot_pc) > 0:
 ax = axes[1, 1]
 if len(mat_foot_pc) > 0:
     vcol = get_value_col(mat_foot_pc)
+    assert vcol is not None
     income_groups = ['High-income countries', 'Upper-middle-income countries',
                      'Lower-middle-income countries', 'Low-income countries']
     colors = ['#d62728', '#ff7f0e', '#2ca02c', '#1f77b4']
@@ -272,6 +276,7 @@ fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 ax = axes[0, 0]
 if len(lpi) > 0:
     vcol = get_value_col(lpi)
+    assert vcol is not None
     global_lpi = lpi[lpi['Entity'] == 'World'].sort_values('Year')
     if len(global_lpi) == 0:
         # Try other entity names
@@ -314,6 +319,7 @@ if len(lpi) > 0:
 ax = axes[0, 1]
 if len(lpi_regional) > 0:
     vcol = get_value_col(lpi_regional)
+    assert vcol is not None
     regions_found = []
     for ent in lpi_regional['Entity'].unique():
         d = lpi_regional[lpi_regional['Entity'] == ent].sort_values('Year')
@@ -345,6 +351,7 @@ else:
 ax = axes[1, 0]
 if len(red_list) > 0:
     vcol = get_value_col(red_list)
+    assert vcol is not None
     for name, color in [('World', 'black'), ('Brazil', 'green'), ('Indonesia', 'brown'),
                          ('India', 'orange'), ('China', 'red'), ('Australia', 'purple'),
                          ('United States', 'blue'), ('Sub-Saharan Africa', 'darkred')]:
@@ -369,6 +376,7 @@ if len(red_list) > 0:
 ax = axes[1, 1]
 if len(tree_loss) > 0:
     vcol = get_value_col(tree_loss)
+    assert vcol is not None
     # Global annual tree cover loss
     world_tl = tree_loss[tree_loss['Entity'] == 'World'].sort_values('Year')
     if len(world_tl) == 0:
@@ -414,6 +422,7 @@ fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 ax = axes[0, 0]
 if len(n_fert) > 0:
     vcol = get_value_col(n_fert)
+    assert vcol is not None
     for name, color in [('World', 'black'), ('China', 'red'), ('India', 'orange'),
                          ('United States', 'blue'), ('Brazil', 'green'),
                          ('Sub-Saharan Africa', 'brown')]:
@@ -444,6 +453,7 @@ if len(n_fert) > 0:
 ax = axes[0, 1]
 if len(p_fert) > 0:
     vcol = get_value_col(p_fert)
+    assert vcol is not None
     for name, color in [('World', 'black'), ('China', 'red'), ('India', 'orange'),
                          ('United States', 'blue'), ('Brazil', 'green'),
                          ('Sub-Saharan Africa', 'brown')]:
@@ -471,6 +481,7 @@ if len(p_fert) > 0:
 ax = axes[1, 0]
 if len(water_stress) > 0:
     vcol = get_value_col(water_stress)
+    assert vcol is not None
     # Show latest year as a bar chart for most-stressed countries
     latest_yr = water_stress['Year'].max()
     latest = water_stress[water_stress['Year'] == latest_yr].copy()
@@ -505,6 +516,7 @@ if len(water_stress) > 0:
 ax = axes[1, 1]
 if len(water_total) > 0:
     vcol = get_value_col(water_total)
+    assert vcol is not None
     world_w = water_total[water_total['Entity'] == 'World'].sort_values('Year')
     if len(world_w) > 2:
         ax.plot(world_w['Year'], world_w[vcol] / 1e9, color='steelblue', linewidth=2, marker='o', markersize=4)
@@ -562,6 +574,7 @@ boundaries.append({
 # 2. Biodiversity — Living Planet Index
 if len(lpi) > 0:
     vcol = get_value_col(lpi)
+    assert vcol is not None
     world_lpi = lpi[lpi['Entity'].isin(['World', 'Global', 'Living Planet Index'])].sort_values('Year')
     if len(world_lpi) > 0:
         last_lpi = world_lpi.iloc[-1][vcol]
@@ -714,6 +727,7 @@ world_co2 = world_co2.sort_values('year')
 # Material intensity from mat_foot_gdp
 if len(mat_foot_gdp) > 0:
     vcol_gdp = get_value_col(mat_foot_gdp)
+    assert vcol_gdp is not None
     world_mat = mat_foot_gdp[mat_foot_gdp['Entity'] == 'World'].sort_values('Year')
     
     if len(world_mat) > 2 and len(world_co2) > 2:
@@ -731,8 +745,8 @@ if len(mat_foot_gdp) > 0:
             co2_base = co2_sub.loc[base_yr, 'co2_per_gdp']
             mat_base = mat_sub.loc[base_yr, vcol_gdp]
             
-            co2_idx = co2_sub['co2_per_gdp'] / co2_base * 100
-            mat_idx = mat_sub[vcol_gdp] / mat_base * 100
+            co2_idx = co2_sub['co2_per_gdp'] / co2_base * 100  # type: ignore[operator]
+            mat_idx = mat_sub[vcol_gdp] / mat_base * 100  # type: ignore[operator]
             
             ax.plot(co2_idx.index, co2_idx.values, color='steelblue', linewidth=2.5,
                     label='Carbon intensity (CO₂/GDP)')

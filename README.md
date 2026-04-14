@@ -214,6 +214,23 @@ The papers propose redistribution of $1.3–6 trillion per year to close poverty
 
 The papers' redistribution proposals aren't just politically difficult — they're asking for 6 to 30 times the entire current international aid system. In 50+ years, the world has never come close to the 0.7% GNI target (the DAC average is 0.36%), and the trend is **downward** — the US and UK, two of the largest donors, are actively cutting.
 
+### But growth closed the gap from below
+
+The static comparison above understates how much the picture has improved. Growth didn't just make redistribution cheaper as a share of GDP — it shrank the absolute dollar poverty gap toward ODA:
+
+![ODA vs poverty gap convergence](charts/24b_oda_poverty_gap_convergence.png)
+*Top-left: The $2.15/day poverty gap (green) fell from $524B to $118B while ODA rose to $203B — they crossed around 2018. Higher thresholds remain far above ODA. Top-right: ODA as % of each poverty gap over time — now 173% at $2.15, but only 6% at $6.85. Bottom-left: Counterfactual showing how the $2.15 gap would have grown to ~$630B without growth. Bottom-right: ODA efficiency — direct cash transfers deliver $0.87 per dollar vs ~$0.35–$0.50 for traditional bilateral ODA.*
+
+| Threshold | ODA/Gap (1990) | ODA/Gap (2023) | Main Driver |
+|---|---|---|---|
+| $2.15/day | 11% | **173%** | Growth shrank gap $420B → $117B |
+| $3.65/day | 3% | 36% | Growth + rising ODA |
+| $6.85/day | 1% | 6% | Gap barely moved ($5.4T → $3.2T) |
+
+At $2.15/day, total ODA now *exceeds* the theoretical poverty gap. Growth brought the mountain down to where aid could reach it. At $6.85/day, ODA covers 6% — no plausible aid increase closes that; only sustained developing-country growth can.
+
+The efficiency question matters too: GiveDirectly-style cash transfers deliver ~$0.87 per dollar to recipients (Haushofer & Shapiro 2016, Egger et al. 2022), with $2.60 local GDP multiplier effects. Traditional bilateral ODA delivers $0.35–$0.50 after in-donor costs, tied aid, and administrative overhead. For pure poverty-gap closure, cash is 2x more efficient than the average aid dollar. But ODA isn't designed solely for poverty-gap closure — infrastructure, health systems, and institutional capacity require non-cash investment.
+
 ### And the headline numbers overstate reality
 
 Your point about questionable items being billed as aid is well-documented:
@@ -252,9 +269,13 @@ One reason for optimism despite the political economy problem:
 ![Energy transition S-curve](charts/26_energy_transition_scurve.png)
 *Top-left: Solar generation has gone from 4 TWh (2005) to 2,128 TWh (2024) — a 500x increase, doubling every ~3 years. Top-right: Solar + wind now supply ~15% of global electricity and the curve is steepening. Bottom-left: Fossil fuels have fallen from 94% to 81% of primary energy. Bottom-right: Renewable electricity shares by country — Germany and UK above 50%, world average approaching 30%.*
 
-Solar is doubling every 3 years. If that rate continues:
-- By 2030: ~4,000-5,000 TWh (matching current US total electricity)
-- By 2035: ~10,000 TWh (approaching global electricity needs)
+Solar is doubling every ~3.2 years (24.4%/yr, 2018–2024). If that rate continues:
+- By 2027: ~4,100 TWh (matching US total electricity — 4,391 TWh)
+- By 2030: ~7,900 TWh (~25% of current global electricity demand of 30,938 TWh)
+- By 2033: ~15,000 TWh (~50% of global demand)
+- By 2035: ~23,000 TWh (~75% of global demand)
+
+For context: China alone generates 10,087 TWh (33% of world), the US 4,391 TWh (14%). Global electricity demand is ~31,000 TWh and rising. The S-curve will inevitably flatten (grid integration limits, storage, nighttime), but even conservative estimates put solar at 15–25% of global electricity by 2030.
 
 This could resolve the tension between growth and climate in a way that neither the papers' redistribution proposals nor current policy trajectories anticipate. The energy transition is the variable that could make 4-5%/yr decoupling achievable — moving us from the 3°C path to something closer to 2°C.
 
@@ -581,6 +602,7 @@ python analysis/run_analysis_9.py    # Transition minerals vs fossil fuels (Char
 | 22 | `22_poor_world_growth_scenario.png` | Poor-world-only growth scenario |
 | 23 | `23_energy_transition.png` | Energy transition progress |
 | 24 | `24_oda_reality.png` | ODA flows vs poverty gaps |
+| 24b | `24b_oda_poverty_gap_convergence.png` | ODA vs poverty gap convergence, efficiency |
 | 25 | `25_domestic_redistribution.png` | Tax, spending, and the squeezed middle |
 | 26 | `26_energy_transition_scurve.png` | Solar/wind S-curve |
 | 27 | `27_debt_and_trade.png` | Debt and terms of trade constraints |

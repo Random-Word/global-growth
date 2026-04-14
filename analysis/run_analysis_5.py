@@ -839,7 +839,7 @@ for c in test_countries:
         peak_data.append(
             {
                 "country": c,
-                "peak_year": int(peak_year),
+                "peak_year": int(peak_year),  # type: ignore[arg-type]
                 "decline_from_peak": decline_pct,
                 "still_rising": still_rising,
             }
@@ -908,6 +908,7 @@ for budget_label, budget_gt, color in [
     for g in growth_rates:
         # Binary search for required decoupling rate
         d_low, d_high = 0, 0.15
+        d_mid = 0.0
         for _ in range(50):
             d_mid = (d_low + d_high) / 2
             cumul = sum(
@@ -1036,11 +1037,11 @@ fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 # 5a: Annual emissions path for poor-world-only growth
 ax = axes[0]
 years_forward = np.arange(0, 101)
+gdp_growth = 0.05  # 5% growth for poor world
+rich_emissions = rich_co2_actual / 1000  # Gt, frozen
 for decouple, ls in [(0.02, ":"), (0.03, "--"), (0.04, "-"), (0.05, "-.")]:
-    gdp_growth = 0.05  # 5% growth for poor world
     # Poor world emissions path
     poor_emissions = []
-    rich_emissions = rich_co2_actual / 1000  # Gt, frozen
     # Also model rich world declining at their own decoupling rate
     rich_decouple = 0.025  # rich world continues decoupling even if GDP frozen (renewables replacing fossil)
     for yr in years_forward:
@@ -1222,19 +1223,19 @@ for label, df in [("World", world), ("High income", hi_agg)]:
     for p in [(2000, 2010), (2010, 2020)]:
         if p[0] in d.index and p[1] in d.index:
             co2_gdp_rate = (
-                (d.loc[p[1], "co2_per_gdp"] / d.loc[p[0], "co2_per_gdp"]) ** (1 / 10)
+                (d.loc[p[1], "co2_per_gdp"] / d.loc[p[0], "co2_per_gdp"]) ** (1 / 10)  # type: ignore[operator]
                 - 1
             ) * 100
             co2_energy_rate = (
                 (
                     d.loc[p[1], "co2_per_unit_energy"]
-                    / d.loc[p[0], "co2_per_unit_energy"]
+                    / d.loc[p[0], "co2_per_unit_energy"]  # type: ignore[operator]
                 )
                 ** (1 / 10)
                 - 1
             ) * 100
             energy_gdp_rate = (
-                (d.loc[p[1], "energy_per_gdp"] / d.loc[p[0], "energy_per_gdp"])
+                (d.loc[p[1], "energy_per_gdp"] / d.loc[p[0], "energy_per_gdp"])  # type: ignore[operator]
                 ** (1 / 10)
                 - 1
             ) * 100

@@ -73,7 +73,8 @@ ax.scatter(merged_q1['headcount'] * 100, merged_q1['annual_growth'], alpha=0.5, 
 # Regression
 valid = merged_q1.dropna(subset=['headcount', 'annual_growth'])
 if len(valid) > 10:
-    slope, intercept, r, p, se = stats.linregress(valid['headcount'] * 100, valid['annual_growth'])
+    _lr = stats.linregress(valid['headcount'] * 100, valid['annual_growth'])
+    slope, intercept, r, p = _lr.slope, _lr.intercept, _lr.rvalue, _lr.pvalue  # type: ignore[union-attr]
     x_fit = np.linspace(0, 100, 100)
     ax.plot(x_fit, intercept + slope * x_fit, 'r-', linewidth=2)
     ax.set_title(f"Initial Poverty Rate (~2000) vs. Growth 2000-2020\nSlope={slope:.3f}, R²={r**2:.3f}, p={p:.4f}")
@@ -109,7 +110,8 @@ mer2 = mer2[mer2['growth_00s'].between(-10, 20)]
 
 ax.scatter(mer2['pov_change_90s'], mer2['growth_00s'], alpha=0.5, s=40)
 if len(mer2) > 10:
-    slope, intercept, r, p, se = stats.linregress(mer2['pov_change_90s'], mer2['growth_00s'])
+    _lr = stats.linregress(mer2['pov_change_90s'], mer2['growth_00s'])
+    slope, intercept, r, p = _lr.slope, _lr.intercept, _lr.rvalue, _lr.pvalue  # type: ignore[union-attr]
     x_fit = np.linspace(mer2['pov_change_90s'].min(), mer2['pov_change_90s'].max(), 100)
     ax.plot(x_fit, intercept + slope * x_fit, 'r-', linewidth=2)
     ax.set_title(f"Poverty Change in 1990s vs Growth in 2000s\nSlope={slope:.3f}, R²={r**2:.3f}, p={p:.4f}")

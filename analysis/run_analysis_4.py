@@ -186,6 +186,8 @@ for cc in mad['countrycode'].unique():
     best_start = None
     best_end = None
     best_growth = 0
+    best_gdp_start = 0.0
+    best_gdp_end = 0.0
     
     for i in range(len(cdata)):
         for j in range(i+1, len(cdata)):
@@ -203,6 +205,7 @@ for cc in mad['countrycode'].unique():
                 best_gdp_end = cdata.iloc[j]['gdppc']
     
     if best_start is not None:
+        assert best_end is not None
         episodes.append({
             'country': cdata.iloc[0]['country'],
             'code': cc,

@@ -416,7 +416,8 @@ if len(common) > 10:
     
     ax.scatter(log_initial, growth, alpha=0.5, s=30)
     # Regression line
-    slope, intercept, r, p, se = stats.linregress(log_initial, growth)
+    _lr = stats.linregress(log_initial, growth)
+    slope, intercept, r, p = _lr.slope, _lr.intercept, _lr.rvalue, _lr.pvalue  # type: ignore[union-attr]
     x_fit = np.linspace(log_initial.min(), log_initial.max(), 100)
     ax.plot(x_fit, intercept + slope * x_fit, 'r-', linewidth=2)
     ax.set_title(f"Beta Convergence {start_yr}-{end_yr}\nSlope={slope:.3f}, R²={r**2:.3f}, p={p:.4f}")
@@ -428,7 +429,7 @@ if len(common) > 10:
     # Label some key countries
     for cc in ['CHN', 'IND', 'KOR', 'NGA', 'USA', 'ETH', 'VNM', 'BWA', 'COD', 'BRA']:
         if cc in common:
-            ax.annotate(cc, (log_initial[cc], growth[cc]), fontsize=7, alpha=0.7)
+            ax.annotate(cc, (log_initial[cc], growth[cc]), fontsize=7, alpha=0.7)  # type: ignore[index]
 
 # Panel C: Beta convergence by period
 ax = axes[1][0]
@@ -441,7 +442,8 @@ for (sy, ey), clr in zip(periods, colors_p):
     if len(cm) > 10:
         lg = np.log(sd.loc[cm, 'gdppc'])
         gr = (np.log(ed.loc[cm, 'gdppc']) - np.log(sd.loc[cm, 'gdppc'])) / (ey - sy) * 100
-        slope, intercept, r, p, se = stats.linregress(lg, gr)
+        _lr = stats.linregress(lg, gr)
+        slope, intercept, r, p = _lr.slope, _lr.intercept, _lr.rvalue, _lr.pvalue  # type: ignore[union-attr]
         x_fit = np.linspace(lg.min(), lg.max(), 100)
         ax.plot(x_fit, intercept + slope * x_fit, '-', color=clr, linewidth=2,
                 label=f"{sy}-{ey}: β={slope:.3f}, R²={r**2:.2f}")
@@ -580,8 +582,8 @@ ax = axes[1]
 ax.scatter(np.log(df_elast['initial_gdppc']), df_elast['elasticity'], alpha=0.2, s=15)
 # Binned averages
 bins = pd.qcut(np.log(df_elast['initial_gdppc']), 10, duplicates='drop')
-binned = df_elast.groupby(bins, observed=True)['elasticity'].median()
-bin_centers = [(b.left + b.right) / 2 for b in binned.index]
+binned = df_elast.groupby(bins, observed=True)['elasticity'].median()  # type: ignore[call-overload]
+bin_centers = [(b.left + b.right) / 2 for b in binned.index]  # type: ignore[attr-defined]
 ax.plot(bin_centers, binned.values, 'r-o', linewidth=2, markersize=8, label='Binned median')
 ax.set_xlabel("Log initial GDP per capita (2015 USD)")
 ax.set_ylabel("Growth elasticity of poverty")

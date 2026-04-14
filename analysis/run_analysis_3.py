@@ -237,7 +237,7 @@ ax.set_xlim(0, 60000)
 # Find the "elbow" — where does the marginal gain drop below 1 year per $1000?
 print("\n  Life expectancy by GDP per capita band:")
 for b, row in binned.iterrows():
-    print(f"    ${b.left:>6,.0f} - ${b.right:>6,.0f}: {row['mean']:.1f} years (n={int(row['count'])})")
+    print(f"    ${b.left:>6,.0f} - ${b.right:>6,.0f}: {row['mean']:.1f} years (n={int(row['count'])})")  # type: ignore[attr-defined]
 
 # Panel B: Child mortality vs GDP per capita
 ax = axes[0][1]
@@ -269,7 +269,8 @@ ax.set_title("Inequality vs Income Level\n(Does inequality naturally fall with g
 # Regression
 valid_gini = pip_gini.dropna(subset=['annual_mean', 'gini'])
 if len(valid_gini) > 20:
-    slope, intercept, r, p, se = stats.linregress(valid_gini['annual_mean'], valid_gini['gini'] * 100)
+    _lr = stats.linregress(valid_gini['annual_mean'], valid_gini['gini'] * 100)
+    slope, intercept, r, p = _lr.slope, _lr.intercept, _lr.rvalue, _lr.pvalue  # type: ignore[union-attr]
     x_fit = np.linspace(0, valid_gini['annual_mean'].max(), 100)
     ax.plot(x_fit, intercept + slope * x_fit, 'r-', linewidth=2, label=f'R²={r**2:.2f}')
     ax.legend()
@@ -468,7 +469,8 @@ df_gg = df_gg[df_gg['gdp_growth'].between(-5, 15)]
 ax.scatter(df_gg['gdp_growth'], df_gg['gini_change'], alpha=0.5, s=40)
 
 if len(df_gg) > 10:
-    slope, intercept, r, p, se = stats.linregress(df_gg['gdp_growth'], df_gg['gini_change'])
+    _lr = stats.linregress(df_gg['gdp_growth'], df_gg['gini_change'])
+    slope, intercept, r, p = _lr.slope, _lr.intercept, _lr.rvalue, _lr.pvalue  # type: ignore[union-attr]
     x_fit = np.linspace(df_gg['gdp_growth'].min(), df_gg['gdp_growth'].max(), 100)
     ax.plot(x_fit, intercept + slope * x_fit, 'r-', linewidth=2)
     ax.set_title(f"GDP Growth vs. Gini Change\nslope={slope:.2f}, R²={r**2:.3f}")
@@ -517,12 +519,12 @@ for yr in range(1960, 2025, 5):
     le = wdi_yr[wdi_yr['life_expectancy'].notna()].sort_values('life_expectancy')
     if len(le) >= 20:
         n20 = max(len(le) // 5, 1)
-        rec['le_bottom20'] = le.head(n20)['life_expectancy'].mean()
+        rec['le_bottom20'] = le.head(n20)['life_expectancy'].mean()  # type: ignore[assignment]
     
     cm = wdi_yr[wdi_yr['under5_mortality'].notna()].sort_values('under5_mortality', ascending=False)
     if len(cm) >= 20:
         n20 = max(len(cm) // 5, 1)
-        rec['cm_worst20'] = cm.head(n20)['under5_mortality'].mean()
+        rec['cm_worst20'] = cm.head(n20)['under5_mortality'].mean()  # type: ignore[assignment]
     
     scorecard.append(rec)
 
@@ -542,7 +544,7 @@ ax2.set_ylabel("Life expectancy (years)", color='g')
 ax1.set_title("Floor-Raising Scorecard: Absolute Conditions for the World's Poorest Countries", fontsize=14, fontweight='bold')
 
 lines = l1 + l2 + l3
-labels = [l.get_label() for l in lines]
+labels = [str(l.get_label()) for l in lines]
 ax1.legend(lines, labels, fontsize=10, loc='center left')
 
 plt.savefig(os.path.join(CHARTS, "16_floor_scorecard.png"))
