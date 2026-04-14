@@ -368,6 +368,33 @@ The multi-dimensional scorecard reveals the full picture:
 
 The reforestation story has a twist: China (+45%) and India (+14%) are aggressively planting trees, but monoculture plantations don't restore biodiversity. Brazil (-21%) and Indonesia (-17%) are losing primary forest with irreplaceable ecological value.
 
+### But wait — what about transition minerals?
+
+In the previous section I wrote that the energy transition "may make material extraction *worse* (lithium, cobalt, copper for batteries and solar panels)." That claim deserves scrutiny — with actual numbers.
+
+![Extraction volumes](charts/37_extraction_volumes.png)
+*The scale difference is staggering. Fossil fuel extraction is 16,300 Mt/year vs 48 Mt/year for all transition minerals combined — a 340:1 ratio. Even including waste rock, fossil fuels move ~30,000 Mt of earth vs ~115 Mt for minerals. By 2040 under the most aggressive clean energy scenario, minerals reach ~50 Mt while fossil fuels (even declining) remain above 10,000 Mt.*
+
+![Harm comparison](charts/38_harm_comparison.png)
+*Across every dimension of ecological harm, fossil fuels dominate by 1-2 orders of magnitude: 201× more CO₂, 18× more water, 26× more land disturbance, 204× more deaths. The green bars are barely visible.*
+
+![Burn vs recycle](charts/39_burn_vs_recycle.png)
+*The fundamental asymmetry: fossil fuels are burned once and gone, requiring continuous extraction forever. Transition minerals are stocks — copper wire lasts 50+ years, battery lithium can be recycled at 90-95%. Once you build the clean energy infrastructure, virgin extraction needs drop as recycling kicks in around 2040.*
+
+![Mineral concerns](charts/40_mineral_concerns.png)
+*The real concerns aren't imaginary: lithium brine extraction strains water in the Atacama (but accounts for only ~6% of regional water use), DRC cobalt involves human rights issues (but cobalt per kWh has fallen 91% since 2015 as LFP batteries take over), and Indonesian nickel smelting drives deforestation using coal power. These are solvable engineering and governance problems — unlike CO₂ from combustion, which is an inherent, unavoidable harm.*
+
+| Dimension | Fossil Fuels | Transition Minerals | Ratio |
+|---|---|---|---|
+| Mass extracted/yr | 16,300 Mt | 48 Mt | **340:1** |
+| CO₂ emissions/yr | 37.4 Gt | 0.17 Gt | **220:1** |
+| Water use/yr | 60 Gt | 3.1 Gt | **19:1** |
+| Land disturbance | 10,500 km² | 400 km² | **26:1** |
+| Deaths/yr | 5,100,000 | 25,000 | **204:1** |
+| Recyclable? | No | Yes (90-95%) | **∞:1** |
+
+**Self-correction:** My earlier statement was a false equivalence. The ecological harm of transition mineral extraction is real — Indonesian nickel deforestation, DRC cobalt, Atacama lithium water stress, copper tailings dam risks, rare earth processing waste are all genuine concerns. But they are 1-2 orders of magnitude smaller than what they replace. And critically, these are *solvable* engineering and governance problems (better mining practices, recycling, alternative chemistries), whereas CO₂ from fossil fuel combustion is inherent to the physics.
+
 ---
 
 ## Independent Critical Review
@@ -457,6 +484,8 @@ The nuclear reactor metaphor stands: capitalism is a powerful energy source that
 | [Our World in Data](https://github.com/owid/energy-data) | Energy Dataset | 1965–2024, 200+ entities | Solar/wind/fossil generation (TWh), renewable shares, energy mix |
 | [Our World in Data](https://ourworldindata.org/) | Planetary Boundaries | Various, 1961–2024 | Material footprint, Living Planet Index, Red List Index, tree cover loss, N/P fertilizer, water stress |
 | [Our World in Data](https://ourworldindata.org/) | DMC per capita | 1970–2022, 248 countries | Domestic material consumption per capita by country |
+| [IEA](https://www.iea.org/) | Critical Minerals Outlook 2025 | 2020–2040 | Transition mineral demand projections by scenario |
+| [USGS](https://pubs.usgs.gov/) | Mineral Commodity Summaries 2025 | Annual | Copper, nickel, lithium, cobalt, rare earth production volumes |
 | [World Bank WDI](https://data.worldbank.org/) | ODA & Fiscal Indicators | 1960–2024 | Net ODA received, bilateral ODA by donor, tax revenue/GDP, GDP/capita growth |
 
 ### Analysis Scripts
@@ -480,6 +509,7 @@ python analysis/run_analysis_5.py    # Decoupling, planetary boundaries, trade f
 python analysis/run_analysis_6.py    # ODA, political economy, energy transition (Charts 24–27)
 python analysis/run_analysis_7.py    # Non-carbon planetary boundaries (Charts 28–32)
 python analysis/run_analysis_8.py    # Country-level ecological decoupling (Charts 33–36)
+python analysis/run_analysis_9.py    # Transition minerals vs fossil fuels (Charts 37–40)
 ```
 
 ### Analysis Pipeline
@@ -508,6 +538,8 @@ python analysis/run_analysis_8.py    # Country-level ecological decoupling (Char
 7. **`run_analysis_7.py`** — Non-carbon planetary boundaries. Material footprint per capita and per GDP. Living Planet Index and Red List Index. Tree cover loss and deforestation. Nitrogen and phosphorus fertilizer use vs Rockström boundaries. Water stress. Planetary boundaries scorecard. Material vs carbon decoupling comparison.
 
 8. **`run_analysis_8.py`** — Country-level ecological decomposition. DMC/capita by country. Nitrogen peak analysis (138 peaked, 31 still rising). Red List Index by country. Tree cover loss top 10. Forest reforestation vs deforestation. Multi-dimensional decoupling heatmap and scorecard.
+
+9. **`run_analysis_9.py`** — Transition minerals vs fossil fuels. Extraction volume comparison (340:1 mass ratio). Ecological harm across 6 dimensions. Burn-once vs recycle-forever asymmetry. Specific mineral concerns in context (lithium water, DRC cobalt, Indonesian nickel, copper tailings). Self-correction of false equivalence claim.
 
 ### Key Methodological Notes
 
@@ -561,6 +593,10 @@ python analysis/run_analysis_8.py    # Country-level ecological decoupling (Char
 | 34 | `34_nitrogen_by_country.png` | N/ha by country, peak analysis, peaked vs rising |
 | 35 | `35_biodiversity_by_country.png` | Red List by country, tree loss top 10, reforestation |
 | 36 | `36_multidim_decoupling.png` | 5-dimension decoupling heatmap and CO₂ vs material scatter |
+| 37 | `37_extraction_volumes.png` | Fossil fuel vs transition mineral extraction volumes (340:1) |
+| 38 | `38_harm_comparison.png` | CO₂, water, land, deaths comparison across dimensions |
+| 39 | `39_burn_vs_recycle.png` | Cumulative extraction and recycling asymmetry |
+| 40 | `40_mineral_concerns.png` | Lithium water, cobalt decline, nickel deforestation, scorecard |
 
 ### Tools & Environment
 
