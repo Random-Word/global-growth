@@ -747,6 +747,145 @@ Credit to the project for fixing this immediately rather than defending the old 
 
 **The East Asian path may not be generalizable.** It depended on unusual geopolitical conditions, export absorption by rich-country markets, cheap fossil energy, land reform, demographic transitions, and ecological slack that may not exist for today's poorest countries.
 
+---
+
+## Why Some Countries Develop and Others Don't
+
+The previous 12 analyses established that growth matters, redistribution matters more at the margin, and planetary boundaries are real. But a key question remains: why did East Asia take off while Sub-Saharan Africa and Latin America lagged? Is the "greed" narrative right — rich countries got richer and stopped helping? And is there something unique about Asian development that can't be replicated?
+
+### The "greed" question: is ODA failing the poor?
+
+![ODA greed question](charts/58_oda_greed_question.png)
+*Top-left: ODA dependency has collapsed — Mozambique from ~80% to 15% of GNI, Ethiopia from 17% to 4%. Top-right: absolute ODA rose from near-zero to ~$40B but plateaued. Bottom-left: remittances now dwarf ODA for many countries (Pakistan 9%, Senegal 11%, Nigeria 8% of GDP). Bottom-right: ODA declining while FDI rising across all developing regions.*
+
+The "greed" narrative is partially right, partially wrong:
+- **Right:** Most rich countries never hit the 0.7% GNI target. The US gives ~0.17%. ODA stagnated as rich countries got richer. That IS a political choice.
+- **Wrong:** ODA was never the main driver of development. FDI, remittances, and trade openness moved orders of magnitude more resources. Pakistan gets 9% of GDP in remittances — far more than any ODA ever delivered.
+- **Nuance:** The real "greed" is not in withheld ODA but in agricultural subsidies ($700B/yr), trade barriers on poor-country manufactured goods, tax havens enabling $50B+/yr in capital flight from SSA, and brain drain of ~70,000 skilled African workers per year.
+
+### The development recipe
+
+![Development recipe](charts/59_development_recipe.png)
+*Each panel plots a development input (savings, investment, trade, fertility, FDI, growth rate) against total GDP/cap growth since ~1990. Red dots are East Asia, orange South Asia, purple SSA, yellow Latin America. The pattern is stark: East Asian growers cluster high-savings, high-investment, low-fertility, high-trade. SSA clusters the opposite.*
+
+The factors that distinguish countries that took off from those that didn't are neither mysterious nor genetic:
+1. **High domestic savings** (30-45% in East Asia vs 10-20% in SSA) — funds investment without foreign debt
+2. **High investment rates** (25-40% of GDP) — roads, factories, power plants, human capital
+3. **Early fertility decline** (1960s in Korea vs 1990s in Nigeria) — creates the demographic dividend
+4. **Trade openness + export-led manufacturing** — technology transfer, learning-by-doing, scale
+5. **Education investment**, especially primary and technical — skilled workforce for factories
+
+### Why East Asia diverged
+
+![Divergent paths](charts/60_divergent_paths.png)
+*Six-panel comparison of regional medians over time. East Asia (red) pulls away from all other regions on income, savings, investment, trade openness, and tertiary enrollment. The fertility panel is the leading indicator: East Asia began the demographic transition 20-30 years before SSA.*
+
+The divergence is not cultural or genetic. Consider:
+- **Vietnam** (+484%) and **Bangladesh** (+310%) — neither Confucian, both poor and war-damaged in the 1970s
+- **Rwanda** (+191%) — African, landlocked, post-genocide, yet one of the fastest growers
+- **Argentina** (+57%) — European-descended population, resource-rich, yet one of the slowest growers
+
+What actually mattered:
+- **Historical timing**: Asia's fertility decline started in the 1960s-70s; SSA's only in the 1990s-2000s. This 20-30 year head start in the demographic dividend is the single most important difference.
+- **Geopolitics**: Cold War rivalry meant the US and Japan invested heavily in South Korea and Taiwan; SSA got proxy wars.
+- **Land reform**: Korea, China, and Vietnam redistributed land, creating broad-based purchasing power. Most of SSA and Latin America did not.
+- **State capacity**: East Asian "developmental states" directed investment into manufacturing, not because they were democratic (Korea was a dictatorship during takeoff) but because they were competent and corruption was investment-compatible rather than consumption-oriented.
+- **Geography**: Coastal access for export manufacturing vs SSA's landlocked interior.
+
+### Who grew fastest
+
+![Success stories](charts/61_success_stories.png)
+*Left: GDP/capita growth ranking for all developing countries in our sample. China (+1,331%), Vietnam (+484%), India (+346%), Bangladesh (+310%), S. Korea (+283%), Ethiopia (+231%). Right: Top vs bottom 5 growers on key metrics — the top 5 had higher savings, investment, trade openness, and education.*
+
+The growth ranking demolishes the "development is only for Asians" claim. The top growers span every region:
+- **East Asia**: China, Vietnam, Korea, Indonesia
+- **South Asia**: India, Bangladesh, Sri Lanka
+- **SSA**: Ethiopia, Rwanda, Mozambique, Uganda, Ghana
+- **Latin America**: Chile, Peru, Costa Rica
+
+The bottom performers are equally diverse: South Africa, Mexico, Cote d'Ivoire, Senegal, Nigeria. The common factor among laggards is not race or geography but low savings, high fertility, commodity dependence, and weak institutional capacity.
+
+### The demographic dividend
+
+![Demographic dividend](charts/62_demographic_dividend.png)
+*Left: fertility decline from 1975 predicts GDP growth since 1990 — countries with bigger fertility drops grew faster, regardless of region. Center: Korea and Thailand began fertility decline in the 1960s; Nigeria and Ethiopia only in the 1990s. Right: SSA population growth is still 2.5%/yr vs 0.5% for East Asia.*
+
+The demographic transition is perhaps the single most underrated development input. When fertility falls:
+1. The dependency ratio improves (fewer children per worker)
+2. Women enter the labor force
+3. Families invest more in each child's education
+4. Savings rates rise (fewer mouths to feed)
+
+East Asia got this dividend from the 1970s onward. SSA is only beginning to get it now. This is not destiny — Bangladesh, a Muslim-majority South Asian country, achieved replacement-rate fertility through female education and family planning programs, all while growing 310%.
+
+### Beyond ODA: the full picture
+
+![Beyond ODA](charts/63_beyond_oda.png)
+*Top-left: FDI to developing regions. Top-right: Remittances by region — South Asia leads. Bottom-left: SSA ODA dependency vs growth (scatter) — no clear positive relationship; the most ODA-dependent countries are NOT the fastest growers. Bottom-right: Summary table of the development recipe by region.*
+
+| Factor | East Asia | SSA | Latin America |
+|---|---|---|---|
+| Savings rate | 30-45% | 10-20% | 15-25% |
+| Investment rate | 25-40% | 15-22% | 18-25% |
+| Trade openness | 80-150% | 40-65% | 30-55% |
+| Fertility decline onset | 1960s | 1990s | 1970s |
+| FDI inflows | 2-5% GDP | 1-3% GDP | 2-4% GDP |
+| Export strategy | Manufacturing | Commodities | Mixed |
+| State role | Developmental | Extractive/weak | ISI → reform |
+| Land reform | Yes (KOR/CHN) | Partial | Limited |
+
+### Does ODA crowd out growth? ODA vs FDI vs investment
+
+![ODA crowding out](charts/64_oda_crowding_out.png)
+*Top row: ODA, FDI, and investment rate each scattered against total GDP/cap growth since ~1995. ODA shows NO crowding-out (r=+0.13, NS). FDI is also noise (r=+0.06, NS). Only investment rate is a strong predictor (r=+0.69, p<0.001). Bottom-left: ODA (solid) falls and FDI (dashed) rises as countries grow — the "graduation" pattern. Center: fast growers received more ODA AND more FDI than slow growers.*
+
+The crowding-out question gets a clear answer from our data:
+
+| Capital flow | Correlation with growth | Significance |
+|---|---|---|
+| ODA received (% GNI) | r = +0.13 | p = 0.48 (NS) |
+| FDI inflows (% GDP) | r = +0.06 | p = 0.74 (NS) |
+| Remittances (% GDP) | r = -0.01 | p = 0.97 (NS) |
+| Savings rate (% GDP) | r = +0.30 | p = 0.09 |
+| **Investment rate (% GDP)** | **r = +0.69** | **p < 0.001** |
+
+The punchline: **neither ODA nor FDI predicts growth on its own**. What predicts growth is the investment rate — whether capital gets invested in productive capacity (roads, factories, power plants, schools) or consumed. The source of capital is nearly irrelevant; the deployment of capital is everything.
+
+Fast growers actually received *more* ODA (5.2% of GNI) than slow growers (1.4%), not less. But they also invested far more (26.4% vs 20.8% of GDP). Rwanda and Ethiopia are the poster cases: very high ODA dependency (19% and 11% of GNI) *combined* with very high growth — because their governments channelled aid into infrastructure and productive investment, not consumption.
+
+The development economics literature supports this nuance:
+- **Infrastructure ODA** (roads, power, ports) is consistently growth-positive
+- **Health and education ODA** builds human capital — growth-positive with a lag
+- **Humanitarian/food aid** is necessary but growth-neutral
+- **Budget support** risks crowding out domestic revenue mobilization (the "Dutch Disease" concern)
+- **Greenfield FDI** (new factories) is more growth-positive than **M&A FDI** (buying existing assets)
+- The best outcomes come from ODA building foundations (roads, schools, health systems) that make a country attractive to FDI which then adds productive capacity on top
+
+### The capital flow transition
+
+![Capital flow transition](charts/65_capital_flow_transition.png)
+*Six country profiles showing ODA (red), FDI (blue), remittances (green), and GDP/cap (gray dotted) over time. Each tells a different development story: Korea graduated from aid entirely; China used state-directed FDI; Vietnam is mid-graduation from ODA to FDI; Ethiopia shows high ODA + high growth; Bangladesh is remittance-powered; Nigeria shows the resource curse with volatile FDI.*
+
+The data reveals distinct development financing models:
+- **Korea / Singapore / Chile**: Already past aid — funded by domestic savings and FDI. ODA near zero.
+- **China**: State-directed FDI (peaked at 5% of GDP in the 1990s), essentially no ODA. Government channelled foreign capital into manufacturing export zones.
+- **Vietnam**: Classic ODA → FDI graduation. ODA peaked ~10% of GNI in the mid-1990s, now <1%. FDI rose from near-zero to 5% as investor confidence grew.
+- **Ethiopia / Rwanda**: High ODA + high growth. ODA is declining (Ethiopia 12%→5%, Rwanda 22%→12%) while FDI rises (Ethiopia 2.7%→3.7%, Rwanda 0.3%→2.8%). These countries are mid-graduation.
+- **Bangladesh**: Remittance-powered. ODA is tiny (1.2%), FDI marginal (0.6%), but remittances are 5-6% of GDP — the garment industry workforce abroad sends back more capital than all foreign aid and investment combined.
+- **Nigeria**: Resource curse in action. FDI is volatile (tied to oil), ODA is small, remittances are significant (3-4%). No graduation pattern because the oil economy discourages manufacturing.
+
+### What this means for the debate
+
+The data answers several of the questions that prompted this analysis:
+
+1. **"Is the 'more nuanced' framing genuine?"** — Yes, but with caveats. The rich world's failure is less about ODA and more about trade barriers, tax havens, brain drain, and agricultural subsidies. Norway and Sweden prove you can be rich and generous; the US and Japan prove you can be rich and stingy. It's a policy choice, not an iron law of capitalism.
+
+2. **"Can the Asian model be replicated?"** — The specific geopolitical conditions can't be, but the underlying inputs (savings, investment, fertility decline, trade openness, education, state capacity) are not region-specific. Bangladesh, Rwanda, Ethiopia, and Vietnam all demonstrate this.
+
+3. **"Is it genetics/culture?"** — No. The within-region variation is larger than the between-region variation. Argentina (European) grew slower than Rwanda (African). Bangladesh (South Asian, Muslim) replicated Korean-style fertility decline. The "culture" that matters is institutional: whether the state channels investment into productive capacity or into elite consumption.
+
+4. **"Why IS Africa different?"** — Three concrete factors: the demographic transition started 20-30 years later, colonial legacies created extractive rather than developmental institutions, and geography (landlocked interior, disease burden) raised the cost of export manufacturing. All three are changeable — slowly, painfully, but they are not permanent.
+
 ### Steel-Man the Opposition
 
 The strongest version of the anti-growth argument that this project still does not adequately answer is not "growth has never reduced poverty." That version is easy to beat. The strongest version is this: historically observed capitalist growth can indeed reduce low-end deprivation, but it does so through a political-economic system that systematically channels gains upward, locks in luxury consumption, delays redistribution, and externalizes ecological costs. The few high-growth success stories relied on conditions that are not globally replicable. And **the biophysical boundaries that matter most now are the ones with the weakest technological escape routes** — land use, biodiversity, nitrogen, and phosphorus. On that view, the problem is not that growth is arithmetically useless. It is that growth under capitalism cannot be trusted to deliver the combination of broad inclusion and hard ecological restraint that the project's own evidence says is needed.
@@ -831,6 +970,7 @@ python analysis/run_analysis_9.py    # Transition minerals vs fossil fuels (Char
 python analysis/run_analysis_10.py   # Transfers to self-sufficiency (Charts 41–46)
 python analysis/run_analysis_11.py   # Rich-world quintile income analysis (Charts 47–51)
 python analysis/run_analysis_12.py   # Welfare-weighted growth across 27 countries (Charts 52–57)
+python analysis/run_analysis_13.py   # Why some countries develop and others don't (Charts 58–63)
 ```
 
 ### Analysis Pipeline
@@ -866,6 +1006,8 @@ python analysis/run_analysis_12.py   # Welfare-weighted growth across 27 countri
 11. **`run_analysis_11.py`** — Are rich-world citizens actually worse off? Real income by quintile (PPP constant $) for US, UK, France, Germany, Japan, Sweden from 1980–2024. Income share shifts (stacked area). Rich-country bottom 20% vs developing-country average income. Gini coefficient trajectories. Life expectancy, child mortality, tertiary enrollment trends. Indexed quintile growth (US vs France models). Tests the claim that capitalism is "untenable" because rich-world citizens aren't benefiting — finding that every quintile in every country gained in absolute terms.
 
 12. **`run_analysis_12.py`** — Welfare-weighted growth across the full income spectrum. Atkinson Equally-Distributed Equivalent Income (EDEI) at ε=0 (mean), 0.5, 1 (log-utility), 2 (strong pro-poor), and ∞ (Rawlsian) for 27 countries spanning rich, middle-income, and poor economies. Pro-poor vs pro-rich growth identification. The "inequality tax" — how much mean income is lost to distribution. Rank shifts across welfare functions. Time series of welfare trajectories. Key finding: at any reasonable ε, growth-with-redistribution dominates degrowth; the debate is really about the value of ε.
+
+13. **`run_analysis_13.py`** — Why some countries develop and others don't. Examines the "greed" narrative (ODA trends), the development recipe (savings, investment, trade, fertility, education), Asia vs Africa vs Latin America divergence, success stories ranking, the demographic dividend, and the full picture of capital flows beyond ODA. Uses 14 WDI indicators across 41 countries spanning East Asia, South Asia, SSA, Latin America, rich comparators, and MENA. Key finding: the development recipe is clear and not region-specific — high savings, high investment, early fertility decline, trade openness, and state capacity — but the demographic transition timing (20-30 years earlier in Asia) is the single most important divergence driver. Extended with ODA crowding-out analysis: ODA does NOT crowd out growth (r=+0.13, NS); only the investment rate predicts growth (r=+0.69, p<0.001). Country-level capital flow transition profiles show distinct development financing models.
 
 ### Key Methodological Notes
 
@@ -941,6 +1083,14 @@ python analysis/run_analysis_12.py   # Welfare-weighted growth across 27 countri
 | 55 | `55_epsilon_dial.png` | The inequality tax and rank shifts across ε values |
 | 56 | `56_welfare_trajectories.png` | Welfare-weighted income trajectories over time |
 | 57 | `57_us_france_china_brazil.png` | US vs France vs China vs Brazil — same growth, different welfare |
+| 58 | `58_oda_greed_question.png` | ODA dependency trends, absolute ODA, remittances vs ODA, ODA vs FDI |
+| 59 | `59_development_recipe.png` | Savings, investment, trade, fertility, FDI vs GDP growth (scatter) |
+| 60 | `60_divergent_paths.png` | Regional median trajectories: income, savings, investment, fertility, trade, education |
+| 61 | `61_success_stories.png` | GDP/cap growth ranking + top 5 vs bottom 5 development input comparison |
+| 62 | `62_demographic_dividend.png` | Fertility decline predicts growth; timeline of demographic transition |
+| 63 | `63_beyond_oda.png` | FDI by region, remittances by region, ODA vs growth (SSA), development recipe table |
+| 64 | `64_oda_crowding_out.png` | ODA/FDI/investment vs growth scatters, ODA graduation, capital flow mix, literature |
+| 65 | `65_capital_flow_transition.png` | Country profiles: Korea, China, Vietnam, Ethiopia, Bangladesh, Nigeria capital flows |
 
 ### Tools & Environment
 

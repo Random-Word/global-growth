@@ -13,21 +13,23 @@ os.makedirs(PROC, exist_ok=True)
 session = requests.Session()
 session.headers.update({"User-Agent": "GlobalGrowthAnalysis/1.0"})
 
+
 def cached_get(url, filename, timeout=120, binary=True):
     """Download URL to RAW dir; skip if cached and non-empty."""
     path = os.path.join(RAW, filename)
     if os.path.exists(path) and os.path.getsize(path) > 100:
         print(f"  [cached] {filename}")
-        with open(path, 'rb' if binary else 'r') as f:
+        with open(path, "rb" if binary else "r") as f:
             return f.read()
     print(f"  Downloading {filename}...")
     resp = session.get(url, timeout=timeout, allow_redirects=True)
     resp.raise_for_status()
     content = resp.content if binary else resp.text
-    with open(path, 'wb' if binary else 'w') as f:
+    with open(path, "wb" if binary else "w") as f:
         f.write(content)
     print(f"    -> {len(resp.content)/1024:.0f} KB")
     return content
+
 
 # ============================================================
 # 1. WORLD BANK WDI
@@ -83,7 +85,7 @@ for code, name in WDI.items():
             resp = session.get(url, timeout=60)
             resp.raise_for_status()
             data = resp.json()
-            with open(cache_path, 'w') as f:
+            with open(cache_path, "w") as f:
                 json.dump(data, f)
             time.sleep(0.5)
         except Exception as e:
@@ -94,13 +96,15 @@ for code, name in WDI.items():
         count = 0
         for r in data[1]:
             if r.get("value") is not None and r.get("countryiso3code"):
-                all_wdi.append({
-                    "country_code": r["countryiso3code"],
-                    "country": r["country"]["value"],
-                    "year": int(r["date"]),
-                    "indicator": name,
-                    "value": float(r["value"])
-                })
+                all_wdi.append(
+                    {
+                        "country_code": r["countryiso3code"],
+                        "country": r["country"]["value"],
+                        "year": int(r["date"]),
+                        "indicator": name,
+                        "value": float(r["value"]),
+                    }
+                )
                 count += 1
         print(f"    -> {count} obs")
     else:
@@ -109,8 +113,7 @@ for code, name in WDI.items():
 if all_wdi:
     df_long = pd.DataFrame(all_wdi)
     df_wide = df_long.pivot_table(
-        index=["country_code", "country", "year"],
-        columns="indicator", values="value"
+        index=["country_code", "country", "year"], columns="indicator", values="value"
     ).reset_index()
     df_wide.columns.name = None
     out = os.path.join(PROC, "wdi_combined.csv")
@@ -133,7 +136,8 @@ for pl in povlines:
     try:
         cached_get(
             f"{pip_base}/pip?country=all&year=all&povline={pl}&fill_gaps=true&format=csv",
-            fname, timeout=180
+            fname,
+            timeout=180,
         )
         time.sleep(1.5)
     except Exception as e:
@@ -144,7 +148,8 @@ for pl in povlines:
     try:
         cached_get(
             f"{pip_base}/pip-grp?group=wb&year=all&povline={pl}&format=csv",
-            fname_r, timeout=60
+            fname_r,
+            timeout=60,
         )
         time.sleep(1.5)
     except Exception as e:
@@ -179,7 +184,7 @@ if os.path.exists(mpd_path) and os.path.getsize(mpd_path) > 1000:
         xls = pd.ExcelFile(mpd_path)
         print(f"  Sheets: {xls.sheet_names}")
         # The main data is usually in 'Full data' sheet
-        for sheet in ['Full data', 'data', 'Sheet1', xls.sheet_names[0]]:
+        for sheet in ["Full data", "data", "Sheet1", xls.sheet_names[0]]:
             if sheet in xls.sheet_names:
                 df_mad = pd.read_excel(mpd_path, sheet_name=sheet)
                 df_mad.to_csv(os.path.join(PROC, "maddison.csv"), index=False)
@@ -199,7 +204,11 @@ print("=" * 60)
 pwt_path = os.path.join(RAW, "pwt1001.xlsx")
 if not (os.path.exists(pwt_path) and os.path.getsize(pwt_path) > 1000):
     try:
-        cached_get("https://dataverse.nl/api/access/datafile/354098", "pwt1001.xlsx", timeout=180)
+        cached_get(
+            "https://dataverse.nl/api/access/datafile/354098",
+            "pwt1001.xlsx",
+            timeout=180,
+        )
     except Exception as e:
         print(f"  FAILED: {e}")
 else:
@@ -209,7 +218,7 @@ if os.path.exists(pwt_path) and os.path.getsize(pwt_path) > 1000:
     try:
         xls = pd.ExcelFile(pwt_path)
         print(f"  Sheets: {xls.sheet_names}")
-        for sheet in ['Data', 'data', xls.sheet_names[0]]:
+        for sheet in ["Data", "data", xls.sheet_names[0]]:
             if sheet in xls.sheet_names:
                 df_pwt = pd.read_excel(pwt_path, sheet_name=sheet)
                 df_pwt.to_csv(os.path.join(PROC, "pwt.csv"), index=False)
@@ -229,7 +238,7 @@ print("=" * 60)
 try:
     cached_get(
         "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv",
-        "owid_co2.csv"
+        "owid_co2.csv",
     )
 except Exception as e:
     print(f"  FAILED OWID CO2: {e}")
@@ -248,23 +257,28 @@ else:
     print("  Downloading OECD total tax/GDP from SDMX API...")
     oecd_dfs = []
     oecd_datasets = [
-        ('DSD_REV_COMP_OECD@DF_RSOECD', 'OECD'),
-        ('DSD_REV_COMP_LAC@DF_RSLAC', 'LAC'),
-        ('DSD_REV_COMP_AFRICA@DF_RSAFRICA', 'Africa'),
-        ('DSD_REV_COMP_ASAP@DF_RSASAP', 'Asia-Pacific'),
-        ('DSD_REV_COMP_GLOBAL@DF_RSGLOBAL', 'Global'),
+        ("DSD_REV_COMP_OECD@DF_RSOECD", "OECD"),
+        ("DSD_REV_COMP_LAC@DF_RSLAC", "LAC"),
+        ("DSD_REV_COMP_AFRICA@DF_RSAFRICA", "Africa"),
+        ("DSD_REV_COMP_ASAP@DF_RSASAP", "Asia-Pacific"),
+        ("DSD_REV_COMP_GLOBAL@DF_RSGLOBAL", "Global"),
     ]
     for ds_id, label in oecd_datasets:
-        url = (f'https://sdmx.oecd.org/public/rest/data/OECD.CTP.TPS,{ds_id},/'
-               f'.TAX_REV.S13._T..PT_B1GQ.A'
-               f'?startPeriod=1965&endPeriod=2025&dimensionAtObservation=AllDimensions')
+        url = (
+            f"https://sdmx.oecd.org/public/rest/data/OECD.CTP.TPS,{ds_id},/"
+            f".TAX_REV.S13._T..PT_B1GQ.A"
+            f"?startPeriod=1965&endPeriod=2025&dimensionAtObservation=AllDimensions"
+        )
         try:
-            r = session.get(url, headers={'Accept': 'application/vnd.sdmx.data+csv;version=2.0.0'},
-                            timeout=120)
+            r = session.get(
+                url,
+                headers={"Accept": "application/vnd.sdmx.data+csv;version=2.0.0"},
+                timeout=120,
+            )
             if r.status_code == 200:
                 df_oecd = pd.read_csv(io.StringIO(r.text))
-                df_oecd['source'] = label
-                n = df_oecd['REF_AREA'].nunique()
+                df_oecd["source"] = label
+                n = df_oecd["REF_AREA"].nunique()
                 print(f"    {label}: {len(df_oecd)} rows, {n} countries")
                 oecd_dfs.append(df_oecd)
             else:
@@ -275,13 +289,17 @@ else:
 
     if oecd_dfs:
         oecd_all = pd.concat(oecd_dfs, ignore_index=True)
-        oecd_all = oecd_all.drop_duplicates(subset=['REF_AREA', 'TIME_PERIOD'], keep='first')
+        oecd_all = oecd_all.drop_duplicates(
+            subset=["REF_AREA", "TIME_PERIOD"], keep="first"
+        )
         # Simplify to just the columns we need
-        oecd_out = oecd_all[['REF_AREA', 'TIME_PERIOD', 'OBS_VALUE']].copy()
-        oecd_out.columns = ['country_code', 'year', 'total_tax_pct_gdp']
-        oecd_out = oecd_out.dropna(subset=['total_tax_pct_gdp'])
+        oecd_out = oecd_all[["REF_AREA", "TIME_PERIOD", "OBS_VALUE"]].copy()
+        oecd_out.columns = ["country_code", "year", "total_tax_pct_gdp"]
+        oecd_out = oecd_out.dropna(subset=["total_tax_pct_gdp"])
         oecd_out.to_csv(oecd_tax_path, index=False)
-        print(f"  -> OECD tax/GDP: {len(oecd_out)} rows, {oecd_out['country_code'].nunique()} countries")
+        print(
+            f"  -> OECD tax/GDP: {len(oecd_out)} rows, {oecd_out['country_code'].nunique()} countries"
+        )
     else:
         print("  -> FAILED: no OECD data downloaded")
 

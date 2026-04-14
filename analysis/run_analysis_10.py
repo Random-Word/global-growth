@@ -35,13 +35,57 @@ maddison = pd.read_csv(os.path.join(PROC, "maddison.csv"))
 
 # Filter to countries only (exclude aggregates)
 AGGREGATES = {
-    "WLD", "HIC", "LIC", "LMC", "UMC", "MIC", "LMY", "INB",
-    "EAS", "ECS", "LCN", "MEA", "NAC", "SAS", "SSF", "AFE", "AFW",
-    "ARB", "CEB", "CSS", "EAP", "EAR", "EMU", "FCS", "HPC",
-    "IBD", "IBT", "IDA", "IDB", "IDX", "LAC", "LDC", "LTE",
-    "MNA", "OED", "OSS", "PRE", "PSS", "PST", "SAS", "SSA",
-    "SST", "TEA", "TEC", "TLA", "TMN", "TSA", "TSS", "UMC",
-    "EUU", "EUR",
+    "WLD",
+    "HIC",
+    "LIC",
+    "LMC",
+    "UMC",
+    "MIC",
+    "LMY",
+    "INB",
+    "EAS",
+    "ECS",
+    "LCN",
+    "MEA",
+    "NAC",
+    "SAS",
+    "SSF",
+    "AFE",
+    "AFW",
+    "ARB",
+    "CEB",
+    "CSS",
+    "EAP",
+    "EAR",
+    "EMU",
+    "FCS",
+    "HPC",
+    "IBD",
+    "IBT",
+    "IDA",
+    "IDB",
+    "IDX",
+    "LAC",
+    "LDC",
+    "LTE",
+    "MNA",
+    "OED",
+    "OSS",
+    "PRE",
+    "PSS",
+    "PST",
+    "SAS",
+    "SSA",
+    "SST",
+    "TEA",
+    "TEC",
+    "TLA",
+    "TMN",
+    "TSA",
+    "TSS",
+    "UMC",
+    "EUU",
+    "EUR",
 }
 wdi = wdi[~wdi["country_code"].isin(AGGREGATES)].copy()
 
@@ -55,7 +99,12 @@ print("=" * 70)
 print("\n  Chart 41: Development anatomy at $15k")
 
 # Use latest available data for each country
-latest = wdi.sort_values("year", ascending=False).groupby("country_code").first().reset_index()
+latest = (
+    wdi.sort_values("year", ascending=False)
+    .groupby("country_code")
+    .first()
+    .reset_index()
+)
 latest = latest[latest["gdppc_ppp_current"].notna()].copy()
 
 # Define GDP bins
@@ -84,7 +133,10 @@ for gdp_bin in labels:
         ax.errorbar(
             labels.index(gdp_bin),
             data.median(),
-            yerr=[[data.median() - data.quantile(0.25)], [data.quantile(0.75) - data.median()]],
+            yerr=[
+                [data.median() - data.quantile(0.25)],
+                [data.quantile(0.75) - data.median()],
+            ],
             color="black",
             capsize=5,
         )
@@ -104,11 +156,23 @@ for i, gdp_bin in enumerate(labels):
     water = latest[latest["gdp_bin"] == gdp_bin]["basic_water_access_pct"].dropna()
     sanit = latest[latest["gdp_bin"] == gdp_bin]["basic_sanitation_pct"].dropna()
     if len(water) > 0:
-        ax.bar(i - width / 2, water.median(), width, color="steelblue", alpha=0.8,
-               label="Water" if i == 0 else "")
+        ax.bar(
+            i - width / 2,
+            water.median(),
+            width,
+            color="steelblue",
+            alpha=0.8,
+            label="Water" if i == 0 else "",
+        )
     if len(sanit) > 0:
-        ax.bar(i + width / 2, sanit.median(), width, color="darkorange", alpha=0.8,
-               label="Sanitation" if i == 0 else "")
+        ax.bar(
+            i + width / 2,
+            sanit.median(),
+            width,
+            color="darkorange",
+            alpha=0.8,
+            label="Sanitation" if i == 0 else "",
+        )
 ax.set_xticks(range(len(labels)))
 ax.set_xticklabels(labels, rotation=45, fontsize=9)
 ax.set_ylabel("% of population")
@@ -122,10 +186,16 @@ for i, gdp_bin in enumerate(labels):
     data = latest[latest["gdp_bin"] == gdp_bin]["secondary_enrollment_pct"].dropna()
     if len(data) > 0:
         ax.bar(i, data.median(), color=plt.cm.viridis(i / len(labels)), alpha=0.8)
-        ax.errorbar(i, data.median(),
-                    yerr=[[data.median() - data.quantile(0.25)],
-                          [data.quantile(0.75) - data.median()]],
-                    color="black", capsize=5)
+        ax.errorbar(
+            i,
+            data.median(),
+            yerr=[
+                [data.median() - data.quantile(0.25)],
+                [data.quantile(0.75) - data.median()],
+            ],
+            color="black",
+            capsize=5,
+        )
 ax.set_xticks(range(len(labels)))
 ax.set_xticklabels(labels, rotation=45, fontsize=9)
 ax.set_ylabel("Gross enrollment ratio (%)")
@@ -151,10 +221,16 @@ for i, gdp_bin in enumerate(labels):
     data = latest[latest["gdp_bin"] == gdp_bin]["under5_mortality"].dropna()
     if len(data) > 0:
         ax.bar(i, data.median(), color=plt.cm.RdYlGn_r(i / len(labels)), alpha=0.8)
-        ax.errorbar(i, data.median(),
-                    yerr=[[data.median() - data.quantile(0.25)],
-                          [data.quantile(0.75) - data.median()]],
-                    color="black", capsize=5)
+        ax.errorbar(
+            i,
+            data.median(),
+            yerr=[
+                [data.median() - data.quantile(0.25)],
+                [data.quantile(0.75) - data.median()],
+            ],
+            color="black",
+            capsize=5,
+        )
 ax.set_xticks(range(len(labels)))
 ax.set_xticklabels(labels, rotation=45, fontsize=9)
 ax.set_ylabel("Deaths per 1,000 live births")
@@ -203,7 +279,9 @@ print("  -> Saved 41_development_anatomy.png")
 
 # Print the key table
 print("\n  Development anatomy at key thresholds:")
-print(f"  {'Indicator':<25} {'<$2k':<12} {'$5-10k':<12} {'$10-15k':<12} {'$15-25k':<12}")
+print(
+    f"  {'Indicator':<25} {'<$2k':<12} {'$5-10k':<12} {'$10-15k':<12} {'$15-25k':<12}"
+)
 print("  " + "-" * 70)
 for row in summary_data:
     print(f"  {row[0]:<25} {row[1]:<12} {row[2]:<12} {row[3]:<12} {row[4]:<12}")
@@ -280,7 +358,9 @@ ax.scatter(
 )
 
 # Label outliers
-efficient_mort = data[(data["gdppc_ppp_current"] < 10000) & (data["under5_mortality"] < 15)]
+efficient_mort = data[
+    (data["gdppc_ppp_current"] < 10000) & (data["under5_mortality"] < 15)
+]
 for _, r in efficient_mort.iterrows():
     if r["country_code"] in ["CRI", "LKA", "VNM", "CUB", "GEO", "TUN", "UKR"]:
         ax.annotate(
@@ -310,9 +390,9 @@ data = latest_with_gdp[
 if len(data) > 0:
     # Normalize: life expectancy 40-85 → 0-1, under5 mortality 2-200 → 1-0
     data["le_norm"] = (data["life_expectancy"].clip(40, 85) - 40) / 45
-    data["mort_norm"] = 1 - (data["under5_mortality"].clip(2, 200).apply(np.log) - np.log(2)) / (
-        np.log(200) - np.log(2)
-    )
+    data["mort_norm"] = 1 - (
+        data["under5_mortality"].clip(2, 200).apply(np.log) - np.log(2)
+    ) / (np.log(200) - np.log(2))
 
     # Add education if available
     data["sec_norm"] = 0.5  # default
@@ -337,7 +417,10 @@ if len(data) > 0:
     )
     ax.set_yticks(range(len(top_eff)))
     ax.set_yticklabels(
-        [f"{r['country_code']} (${r['gdppc_ppp_current']/1000:.0f}k)" for _, r in top_eff.iterrows()],
+        [
+            f"{r['country_code']} (${r['gdppc_ppp_current']/1000:.0f}k)"
+            for _, r in top_eff.iterrows()
+        ],
         fontsize=9,
     )
     ax.set_xlabel("Welfare per log(GDP/cap)")
@@ -359,19 +442,48 @@ for code in outlier_codes + ["---"] + peer_codes:
     if len(r) == 0:
         continue
     r = r.iloc[0]
-    table_data.append([
-        f"{r.get('country', code)}",
-        f"${r['gdppc_ppp_current']/1000:.1f}k" if pd.notna(r.get("gdppc_ppp_current")) else "—",
-        f"{r['life_expectancy']:.1f}" if pd.notna(r.get("life_expectancy")) else "—",
-        f"{r['under5_mortality']:.0f}" if pd.notna(r.get("under5_mortality")) else "—",
-        f"{r['electricity_access_pct']:.0f}%" if pd.notna(r.get("electricity_access_pct")) else "—",
-        f"{r['secondary_enrollment_pct']:.0f}%" if pd.notna(r.get("secondary_enrollment_pct")) else "—",
-    ])
+    table_data.append(
+        [
+            f"{r.get('country', code)}",
+            (
+                f"${r['gdppc_ppp_current']/1000:.1f}k"
+                if pd.notna(r.get("gdppc_ppp_current"))
+                else "—"
+            ),
+            (
+                f"{r['life_expectancy']:.1f}"
+                if pd.notna(r.get("life_expectancy"))
+                else "—"
+            ),
+            (
+                f"{r['under5_mortality']:.0f}"
+                if pd.notna(r.get("under5_mortality"))
+                else "—"
+            ),
+            (
+                f"{r['electricity_access_pct']:.0f}%"
+                if pd.notna(r.get("electricity_access_pct"))
+                else "—"
+            ),
+            (
+                f"{r['secondary_enrollment_pct']:.0f}%"
+                if pd.notna(r.get("secondary_enrollment_pct"))
+                else "—"
+            ),
+        ]
+    )
 
 if table_data:
     tbl = ax.table(
         cellText=table_data,
-        colLabels=["Country", "GDP/cap", "Life Exp", "U5 Mort", "Electric", "Sec School"],
+        colLabels=[
+            "Country",
+            "GDP/cap",
+            "Life Exp",
+            "U5 Mort",
+            "Electric",
+            "Sec School",
+        ],
         loc="center",
         cellLoc="center",
     )
@@ -425,9 +537,17 @@ fig.suptitle(
 ax = axes[0][0]
 colors_trans = plt.cm.tab10(np.linspace(0, 1, len(transition_countries)))
 for i, (code, name) in enumerate(transition_countries.items()):
-    cdata = wdi[(wdi["country_code"] == code) & wdi["gdppc_ppp_current"].notna()].sort_values("year")
+    cdata = wdi[
+        (wdi["country_code"] == code) & wdi["gdppc_ppp_current"].notna()
+    ].sort_values("year")
     if len(cdata) > 0:
-        ax.plot(cdata["year"], cdata["gdppc_ppp_current"], label=name, color=colors_trans[i], linewidth=2)
+        ax.plot(
+            cdata["year"],
+            cdata["gdppc_ppp_current"],
+            label=name,
+            color=colors_trans[i],
+            linewidth=2,
+        )
 
 ax.axhline(y=15000, color="red", linestyle="--", alpha=0.7, label="$15k threshold")
 ax.set_xlabel("Year")
@@ -441,9 +561,17 @@ ax.set_ylim(500, 80000)
 ax = axes[0][1]
 colors_stalled = plt.cm.Set2(np.linspace(0, 1, len(stalled_countries)))
 for i, (code, name) in enumerate(stalled_countries.items()):
-    cdata = wdi[(wdi["country_code"] == code) & wdi["gdppc_ppp_current"].notna()].sort_values("year")
+    cdata = wdi[
+        (wdi["country_code"] == code) & wdi["gdppc_ppp_current"].notna()
+    ].sort_values("year")
     if len(cdata) > 0:
-        ax.plot(cdata["year"], cdata["gdppc_ppp_current"], label=name, color=colors_stalled[i], linewidth=2)
+        ax.plot(
+            cdata["year"],
+            cdata["gdppc_ppp_current"],
+            label=name,
+            color=colors_stalled[i],
+            linewidth=2,
+        )
 
 ax.axhline(y=15000, color="red", linestyle="--", alpha=0.7, label="$15k threshold")
 ax.set_xlabel("Year")
@@ -456,7 +584,9 @@ ax.set_ylim(500, 80000)
 # Panel C: Structural transformation — agriculture share declining
 ax = axes[1][0]
 for i, (code, name) in enumerate(list(transition_countries.items())[:6]):
-    cdata = wdi[(wdi["country_code"] == code) & wdi["agriculture_va_pct"].notna()].sort_values("year")
+    cdata = wdi[
+        (wdi["country_code"] == code) & wdi["agriculture_va_pct"].notna()
+    ].sort_values("year")
     if len(cdata) > 0:
         ax.plot(cdata["year"], cdata["agriculture_va_pct"], label=name, linewidth=2)
 
@@ -469,16 +599,31 @@ ax.legend(fontsize=9)
 ax = axes[1][1]
 # Compare investment rates of successful vs stalled
 for i, (code, name) in enumerate(list(transition_countries.items())[:5]):
-    cdata = wdi[(wdi["country_code"] == code) & wdi["gross_capital_formation_pct"].notna()].sort_values("year")
+    cdata = wdi[
+        (wdi["country_code"] == code) & wdi["gross_capital_formation_pct"].notna()
+    ].sort_values("year")
     if len(cdata) > 0:
-        ax.plot(cdata["year"], cdata["gross_capital_formation_pct"], label=name,
-                color=colors_trans[i], linewidth=2)
+        ax.plot(
+            cdata["year"],
+            cdata["gross_capital_formation_pct"],
+            label=name,
+            color=colors_trans[i],
+            linewidth=2,
+        )
 
 for i, (code, name) in enumerate(list(stalled_countries.items())[:3]):
-    cdata = wdi[(wdi["country_code"] == code) & wdi["gross_capital_formation_pct"].notna()].sort_values("year")
+    cdata = wdi[
+        (wdi["country_code"] == code) & wdi["gross_capital_formation_pct"].notna()
+    ].sort_values("year")
     if len(cdata) > 0:
-        ax.plot(cdata["year"], cdata["gross_capital_formation_pct"], label=name,
-                color=colors_stalled[i], linewidth=2, linestyle="--")
+        ax.plot(
+            cdata["year"],
+            cdata["gross_capital_formation_pct"],
+            label=name,
+            color=colors_stalled[i],
+            linewidth=2,
+            linestyle="--",
+        )
 
 ax.axhline(y=25, color="green", linestyle=":", alpha=0.5, label="25% threshold")
 ax.set_xlabel("Year")
@@ -493,10 +638,14 @@ print("  -> Saved 43_transition_paths.png")
 
 # Compute transition statistics
 print("\n  Transition statistics:")
-print(f"  {'Country':<15} {'Start GDP':<12} {'Current GDP':<12} {'Years <$3k→>$10k':<18} {'Peak Invest%':<12}")
+print(
+    f"  {'Country':<15} {'Start GDP':<12} {'Current GDP':<12} {'Years <$3k→>$10k':<18} {'Peak Invest%':<12}"
+)
 print("  " + "-" * 70)
 for code, name in transition_countries.items():
-    cdata = wdi[(wdi["country_code"] == code) & wdi["gdppc_ppp_current"].notna()].sort_values("year")
+    cdata = wdi[
+        (wdi["country_code"] == code) & wdi["gdppc_ppp_current"].notna()
+    ].sort_values("year")
     if len(cdata) == 0:
         continue
     first = cdata.iloc[0]
@@ -506,12 +655,20 @@ for code, name in transition_countries.items():
     crossed_10k = cdata[cdata["gdppc_ppp_current"] >= 10000]
     yr_3k = int(crossed_3k.iloc[0]["year"]) if len(crossed_3k) > 0 else None
     yr_10k = int(crossed_10k.iloc[0]["year"]) if len(crossed_10k) > 0 else None
-    transition_yrs = f"{yr_10k - yr_3k}yr ({yr_3k}→{yr_10k})" if yr_3k and yr_10k else "—"
+    transition_yrs = (
+        f"{yr_10k - yr_3k}yr ({yr_3k}→{yr_10k})" if yr_3k and yr_10k else "—"
+    )
 
-    inv = wdi[(wdi["country_code"] == code) & wdi["gross_capital_formation_pct"].notna()]
-    peak_inv = f"{inv['gross_capital_formation_pct'].max():.0f}%" if len(inv) > 0 else "—"
+    inv = wdi[
+        (wdi["country_code"] == code) & wdi["gross_capital_formation_pct"].notna()
+    ]
+    peak_inv = (
+        f"{inv['gross_capital_formation_pct'].max():.0f}%" if len(inv) > 0 else "—"
+    )
 
-    print(f"  {name:<15} ${first['gdppc_ppp_current']/1000:.1f}k      ${last['gdppc_ppp_current']/1000:.1f}k      {transition_yrs:<18} {peak_inv}")
+    print(
+        f"  {name:<15} ${first['gdppc_ppp_current']/1000:.1f}k      ${last['gdppc_ppp_current']/1000:.1f}k      {transition_yrs:<18} {peak_inv}"
+    )
 
 
 ###############################################################################
@@ -542,14 +699,20 @@ for code in ["CHN", "KOR", "IND", "VNM", "NGA", "USA", "ETH", "BWA"]:
     r = data[data["country_code"] == code]
     if len(r) > 0:
         r = r.iloc[0]
-        ax.annotate(code, (r["gdppc_ppp_current"], r["gross_savings_pct_gdp"]),
-                    fontsize=8, fontweight="bold")
+        ax.annotate(
+            code,
+            (r["gdppc_ppp_current"], r["gross_savings_pct_gdp"]),
+            fontsize=8,
+            fontweight="bold",
+        )
 
 ax.set_xscale("log")
 ax.set_xlabel("GDP per capita (PPP)")
 ax.set_ylabel("Gross savings (% GDP)")
 ax.set_title("Domestic Savings Rate\n(fuel for investment)")
-ax.axhline(y=25, color="green", linestyle="--", alpha=0.5, label="25% (high-growth threshold)")
+ax.axhline(
+    y=25, color="green", linestyle="--", alpha=0.5, label="25% (high-growth threshold)"
+)
 ax.axvline(x=15000, color="red", linestyle="--", alpha=0.5)
 ax.legend(fontsize=9)
 
@@ -567,8 +730,12 @@ for code in ["CHN", "KOR", "VNM", "IND", "NGA", "DEU", "ETH"]:
     r = data[data["country_code"] == code]
     if len(r) > 0:
         r = r.iloc[0]
-        ax.annotate(code, (r["gdppc_ppp_current"], r["trade_pct_gdp"]),
-                    fontsize=8, fontweight="bold")
+        ax.annotate(
+            code,
+            (r["gdppc_ppp_current"], r["trade_pct_gdp"]),
+            fontsize=8,
+            fontweight="bold",
+        )
 
 ax.set_xscale("log")
 ax.set_xlabel("GDP per capita (PPP)")
@@ -619,14 +786,20 @@ for code in ["NGA", "NER", "TCD", "MLI", "CHN", "KOR", "IND", "VNM", "USA", "ETH
     r = data[data["country_code"] == code]
     if len(r) > 0:
         r = r.iloc[0]
-        ax.annotate(code, (r["gdppc_ppp_current"], r["fertility_rate"]),
-                    fontsize=8, fontweight="bold")
+        ax.annotate(
+            code,
+            (r["gdppc_ppp_current"], r["fertility_rate"]),
+            fontsize=8,
+            fontweight="bold",
+        )
 
 ax.set_xscale("log")
 ax.set_xlabel("GDP per capita (PPP)")
 ax.set_ylabel("Births per woman")
 ax.set_title("Demographic Transition:\nFertility Falls with Development")
-ax.axhline(y=2.1, color="green", linestyle="--", alpha=0.5, label="Replacement rate (2.1)")
+ax.axhline(
+    y=2.1, color="green", linestyle="--", alpha=0.5, label="Replacement rate (2.1)"
+)
 ax.axvline(x=15000, color="red", linestyle="--", alpha=0.5)
 ax.legend(fontsize=9)
 
@@ -655,31 +828,112 @@ for code in wdi["country_code"].unique():
     cdata = wdi[wdi["country_code"] == code]
     if len(cdata) == 0:
         continue
-    gdp_latest = cdata.sort_values("year", ascending=False)["gdppc_ppp_current"].dropna()
+    gdp_latest = cdata.sort_values("year", ascending=False)[
+        "gdppc_ppp_current"
+    ].dropna()
     if len(gdp_latest) == 0:
         continue
     country = cdata.iloc[0]["country"]
     # Rough SSA identification by well-known SSA countries
     ssa_names = [
-        "Nigeria", "Ethiopia", "Congo, Dem. Rep.", "Tanzania", "South Africa",
-        "Kenya", "Uganda", "Ghana", "Mozambique", "Madagascar", "Cameroon",
-        "Angola", "Niger", "Mali", "Burkina Faso", "Malawi", "Zambia",
-        "Senegal", "Chad", "Somalia", "Zimbabwe", "Rwanda", "Benin",
-        "Burundi", "South Sudan", "Togo", "Sierra Leone", "Congo, Rep.",
-        "Liberia", "Central African Republic", "Mauritania", "Eritrea",
-        "Gambia, The", "Botswana", "Namibia", "Gabon", "Lesotho",
-        "Guinea-Bissau", "Equatorial Guinea", "Mauritius", "Eswatini",
-        "Djibouti", "Comoros", "Cabo Verde", "Guinea", "Cote d'Ivoire",
+        "Nigeria",
+        "Ethiopia",
+        "Congo, Dem. Rep.",
+        "Tanzania",
+        "South Africa",
+        "Kenya",
+        "Uganda",
+        "Ghana",
+        "Mozambique",
+        "Madagascar",
+        "Cameroon",
+        "Angola",
+        "Niger",
+        "Mali",
+        "Burkina Faso",
+        "Malawi",
+        "Zambia",
+        "Senegal",
+        "Chad",
+        "Somalia",
+        "Zimbabwe",
+        "Rwanda",
+        "Benin",
+        "Burundi",
+        "South Sudan",
+        "Togo",
+        "Sierra Leone",
+        "Congo, Rep.",
+        "Liberia",
+        "Central African Republic",
+        "Mauritania",
+        "Eritrea",
+        "Gambia, The",
+        "Botswana",
+        "Namibia",
+        "Gabon",
+        "Lesotho",
+        "Guinea-Bissau",
+        "Equatorial Guinea",
+        "Mauritius",
+        "Eswatini",
+        "Djibouti",
+        "Comoros",
+        "Cabo Verde",
+        "Guinea",
+        "Cote d'Ivoire",
     ]
     if country in ssa_names:
         ssa_codes.add(code)
 
 # Also add well-known SSA codes
-for c in ["NGA", "ETH", "COD", "TZA", "ZAF", "KEN", "UGA", "GHA", "MOZ",
-           "MDG", "CMR", "AGO", "NER", "MLI", "BFA", "MWI", "ZMB", "SEN",
-           "TCD", "ZWE", "RWA", "BEN", "BDI", "SSD", "TGO", "SLE", "COG",
-           "LBR", "CAF", "MRT", "ERI", "GMB", "BWA", "NAM", "GAB", "LSO",
-           "GNB", "GNQ", "MUS", "SWZ", "DJI", "COM", "CPV", "GIN", "CIV"]:
+for c in [
+    "NGA",
+    "ETH",
+    "COD",
+    "TZA",
+    "ZAF",
+    "KEN",
+    "UGA",
+    "GHA",
+    "MOZ",
+    "MDG",
+    "CMR",
+    "AGO",
+    "NER",
+    "MLI",
+    "BFA",
+    "MWI",
+    "ZMB",
+    "SEN",
+    "TCD",
+    "ZWE",
+    "RWA",
+    "BEN",
+    "BDI",
+    "SSD",
+    "TGO",
+    "SLE",
+    "COG",
+    "LBR",
+    "CAF",
+    "MRT",
+    "ERI",
+    "GMB",
+    "BWA",
+    "NAM",
+    "GAB",
+    "LSO",
+    "GNB",
+    "GNQ",
+    "MUS",
+    "SWZ",
+    "DJI",
+    "COM",
+    "CPV",
+    "GIN",
+    "CIV",
+]:
     ssa_codes.add(c)
 
 latest_ssa = latest[latest["country_code"].isin(ssa_codes)].copy()
@@ -714,7 +968,9 @@ for col, label in compare_indicators:
 x = np.arange(len(compare_indicators))
 width = 0.35
 ax.bar(x - width / 2, ssa_vals, width, label="SSA median", color="coral", alpha=0.8)
-ax.bar(x + width / 2, dev_vals, width, label="$15-50k median", color="seagreen", alpha=0.8)
+ax.bar(
+    x + width / 2, dev_vals, width, label="$15-50k median", color="seagreen", alpha=0.8
+)
 ax.set_xticks(x)
 ax.set_xticklabels([label for _, label in compare_indicators], rotation=45, fontsize=9)
 ax.set_title("SSA vs Developed Countries:\nKey Development Indicators")
@@ -725,8 +981,22 @@ ax = axes[0][1]
 ssa_gdps = latest_ssa["gdppc_ppp_current"].dropna()
 all_gdps = latest[latest["gdppc_ppp_current"].notna()]["gdppc_ppp_current"]
 
-ax.hist(all_gdps.apply(np.log10), bins=30, alpha=0.4, color="steelblue", label="World", density=True)
-ax.hist(ssa_gdps.apply(np.log10), bins=20, alpha=0.6, color="coral", label="SSA", density=True)
+ax.hist(
+    all_gdps.apply(np.log10),
+    bins=30,
+    alpha=0.4,
+    color="steelblue",
+    label="World",
+    density=True,
+)
+ax.hist(
+    ssa_gdps.apply(np.log10),
+    bins=20,
+    alpha=0.6,
+    color="coral",
+    label="SSA",
+    density=True,
+)
 ax.axvline(x=np.log10(15000), color="red", linestyle="--", label="$15k")
 ax.set_xlabel("log₁₀(GDP per capita PPP)")
 ax.set_ylabel("Density")
@@ -736,7 +1006,9 @@ ax.legend(fontsize=9)
 # Custom tick labels
 tick_vals = [3, 3.5, 4, 4.5, 5]
 ax.set_xticks(tick_vals)
-ax.set_xticklabels([f"${10**v/1000:.0f}k" if 10**v >= 1000 else f"${10**v:.0f}" for v in tick_vals])
+ax.set_xticklabels(
+    [f"${10**v/1000:.0f}k" if 10**v >= 1000 else f"${10**v:.0f}" for v in tick_vals]
+)
 
 # Panel C: Investment gap
 ax = axes[1][0]
@@ -745,14 +1017,22 @@ ea_latest = latest[latest["country_code"].isin(ea_codes)]
 ea_invest = ea_latest["gross_capital_formation_pct"].dropna()
 
 groups = ["SSA median", "East Asia median", "25% threshold"]
-values = [ssa_invest.median() if len(ssa_invest) > 0 else 0,
-          ea_invest.median() if len(ea_invest) > 0 else 0,
-          25]
+values = [
+    ssa_invest.median() if len(ssa_invest) > 0 else 0,
+    ea_invest.median() if len(ea_invest) > 0 else 0,
+    25,
+]
 colors_bar = ["coral", "steelblue", "green"]
 bars = ax.bar(groups, values, color=colors_bar, alpha=0.8)
 for bar, val in zip(bars, values):
-    ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.5,
-            f"{val:.1f}%", ha="center", fontsize=11, fontweight="bold")
+    ax.text(
+        bar.get_x() + bar.get_width() / 2,
+        bar.get_height() + 0.5,
+        f"{val:.1f}%",
+        ha="center",
+        fontsize=11,
+        fontweight="bold",
+    )
 ax.set_ylabel("Gross capital formation (% GDP)")
 ax.set_title("The Investment Gap")
 
@@ -767,13 +1047,15 @@ for _, r in latest_ssa.iterrows():
         mult = 15000 / r["gdppc_ppp_current"]
         years_3pct = np.log(mult) / np.log(1.03) if mult > 1 else 0
         years_5pct = np.log(mult) / np.log(1.05) if mult > 1 else 0
-        ssa_multipliers.append({
-            "country": r["country"],
-            "gdp": r["gdppc_ppp_current"],
-            "mult": mult,
-            "yrs_3": years_3pct,
-            "yrs_5": years_5pct,
-        })
+        ssa_multipliers.append(
+            {
+                "country": r["country"],
+                "gdp": r["gdppc_ppp_current"],
+                "mult": mult,
+                "yrs_3": years_3pct,
+                "yrs_5": years_5pct,
+            }
+        )
 
 if ssa_multipliers:
     mult_df = pd.DataFrame(ssa_multipliers).sort_values("gdp")
@@ -781,31 +1063,45 @@ if ssa_multipliers:
     table_rows = []
     bottom5 = mult_df.head(5)
     for _, r in bottom5.iterrows():
-        table_rows.append([
-            r["country"][:20],
-            f"${r['gdp']/1000:.1f}k",
-            f"{r['mult']:.1f}x",
-            f"{r['yrs_3']:.0f}yr" if r["mult"] > 1 else "—",
-            f"{r['yrs_5']:.0f}yr" if r["mult"] > 1 else "—",
-        ])
-    table_rows.append(["—— Median ——",
-                       f"${mult_df['gdp'].median()/1000:.1f}k",
-                       f"{mult_df['mult'].median():.1f}x",
-                       f"{mult_df['yrs_3'].median():.0f}yr",
-                       f"{mult_df['yrs_5'].median():.0f}yr"])
+        table_rows.append(
+            [
+                r["country"][:20],
+                f"${r['gdp']/1000:.1f}k",
+                f"{r['mult']:.1f}x",
+                f"{r['yrs_3']:.0f}yr" if r["mult"] > 1 else "—",
+                f"{r['yrs_5']:.0f}yr" if r["mult"] > 1 else "—",
+            ]
+        )
+    table_rows.append(
+        [
+            "—— Median ——",
+            f"${mult_df['gdp'].median()/1000:.1f}k",
+            f"{mult_df['mult'].median():.1f}x",
+            f"{mult_df['yrs_3'].median():.0f}yr",
+            f"{mult_df['yrs_5'].median():.0f}yr",
+        ]
+    )
     top5 = mult_df.tail(5)
     for _, r in top5.iterrows():
-        table_rows.append([
-            r["country"][:20],
-            f"${r['gdp']/1000:.1f}k",
-            f"{r['mult']:.1f}x" if r["mult"] > 1 else "At threshold",
-            f"{r['yrs_3']:.0f}yr" if r["mult"] > 1 else "—",
-            f"{r['yrs_5']:.0f}yr" if r["mult"] > 1 else "—",
-        ])
+        table_rows.append(
+            [
+                r["country"][:20],
+                f"${r['gdp']/1000:.1f}k",
+                f"{r['mult']:.1f}x" if r["mult"] > 1 else "At threshold",
+                f"{r['yrs_3']:.0f}yr" if r["mult"] > 1 else "—",
+                f"{r['yrs_5']:.0f}yr" if r["mult"] > 1 else "—",
+            ]
+        )
 
     tbl = ax.table(
         cellText=table_rows,
-        colLabels=["Country", "Current GDP/cap", "Multiplier", "Years @3%", "Years @5%"],
+        colLabels=[
+            "Country",
+            "Current GDP/cap",
+            "Multiplier",
+            "Years @3%",
+            "Years @5%",
+        ],
         loc="center",
         cellLoc="center",
     )
@@ -849,11 +1145,36 @@ ax.axis("off")
 
 # Summarize the key evidence on cash transfers and productivity
 evidence = [
-    ["GiveDirectly (Kenya)\n3yr RCT", "~$1,000\none-time", "+$270/yr income\n(+38%)", "Assets: +$0.85/dollar\nConsumption: sustained\nEnterprise: modest"],
-    ["GiveDirectly (Kenya)\nGeneral Equilibrium", "$1,871\naverage", "$2.60 local\nmultiplier", "Wages +5.5%, prices\nflat — demand creates\njobs, not inflation"],
-    ["Graduation (6-country)\nBanerjee et al. 2015", "~$1,500\n(asset+cash+coaching)", "+$344/yr income\n(+38%) at year 7", "SUSTAINED 7yr+ later\nSavings up, health up\nMicro-enterprise growth"],
-    ["Ethiopia PSNP\n(public works + cash)", "$68/yr/person", "+$94/yr income\n(+21%)", "Productive assets up\nBUT needs continuation\nfor fragile households"],
-    ["Mexico Progresa/\nOportunidades (CCT)", "$55/month\nconditional", "Children: +0.7yr\nschooling", "HUMAN CAPITAL path\nNext-gen earnings +8%\nNutrition → cognition"],
+    [
+        "GiveDirectly (Kenya)\n3yr RCT",
+        "~$1,000\none-time",
+        "+$270/yr income\n(+38%)",
+        "Assets: +$0.85/dollar\nConsumption: sustained\nEnterprise: modest",
+    ],
+    [
+        "GiveDirectly (Kenya)\nGeneral Equilibrium",
+        "$1,871\naverage",
+        "$2.60 local\nmultiplier",
+        "Wages +5.5%, prices\nflat — demand creates\njobs, not inflation",
+    ],
+    [
+        "Graduation (6-country)\nBanerjee et al. 2015",
+        "~$1,500\n(asset+cash+coaching)",
+        "+$344/yr income\n(+38%) at year 7",
+        "SUSTAINED 7yr+ later\nSavings up, health up\nMicro-enterprise growth",
+    ],
+    [
+        "Ethiopia PSNP\n(public works + cash)",
+        "$68/yr/person",
+        "+$94/yr income\n(+21%)",
+        "Productive assets up\nBUT needs continuation\nfor fragile households",
+    ],
+    [
+        "Mexico Progresa/\nOportunidades (CCT)",
+        "$55/month\nconditional",
+        "Children: +0.7yr\nschooling",
+        "HUMAN CAPITAL path\nNext-gen earnings +8%\nNutrition → cognition",
+    ],
 ]
 
 tbl = ax.table(
@@ -865,7 +1186,9 @@ tbl = ax.table(
 tbl.auto_set_font_size(False)
 tbl.set_fontsize(8)
 tbl.scale(1.1, 2.2)
-ax.set_title("Cash Transfer Evidence: Income Effects and Durability", fontweight="bold", pad=20)
+ax.set_title(
+    "Cash Transfer Evidence: Income Effects and Durability", fontweight="bold", pad=20
+)
 
 # Panel B: The development ladder — what transfers can and cannot do
 ax = axes[0][1]
@@ -873,11 +1196,36 @@ ax.axis("off")
 
 # Draw a conceptual ladder
 ladder_items = [
-    (0.9, "Self-sustaining $15k+ economy", "green", "Markets, industry, services, trade, innovation"),
-    (0.75, "Middle-income $5-15k", "yellowgreen", "Manufacturing, urbanization, secondary education"),
-    (0.6, "Lower-middle $2-5k", "gold", "Agricultural surplus, basic infrastructure, primary education"),
-    (0.45, "Low-income <$2k", "orange", "Subsistence, minimal infrastructure, high mortality"),
-    (0.3, "Extreme poverty <$2.15/day", "red", "Survival mode, stunting, no savings capacity"),
+    (
+        0.9,
+        "Self-sustaining $15k+ economy",
+        "green",
+        "Markets, industry, services, trade, innovation",
+    ),
+    (
+        0.75,
+        "Middle-income $5-15k",
+        "yellowgreen",
+        "Manufacturing, urbanization, secondary education",
+    ),
+    (
+        0.6,
+        "Lower-middle $2-5k",
+        "gold",
+        "Agricultural surplus, basic infrastructure, primary education",
+    ),
+    (
+        0.45,
+        "Low-income <$2k",
+        "orange",
+        "Subsistence, minimal infrastructure, high mortality",
+    ),
+    (
+        0.3,
+        "Extreme poverty <$2.15/day",
+        "red",
+        "Survival mode, stunting, no savings capacity",
+    ),
 ]
 
 for y, label, color, desc in ladder_items:
@@ -886,32 +1234,65 @@ for y, label, color, desc in ladder_items:
     ax.text(0.88, y, desc, ha="left", va="center", fontsize=7, style="italic")
 
 # Add arrows showing what different interventions can do
-ax.annotate("Cash transfers\ncan lift people\nfrom here...", xy=(0.15, 0.3), xytext=(0.02, 0.15),
-            fontsize=8, color="blue", fontweight="bold",
-            arrowprops=dict(arrowstyle="->", color="blue"))
-ax.annotate("...to here\n(maybe)", xy=(0.15, 0.45), xytext=(0.02, 0.52),
-            fontsize=8, color="blue",
-            arrowprops=dict(arrowstyle="->", color="blue"))
-ax.annotate("Graduation programs\ncan push to here", xy=(0.15, 0.6), xytext=(0.02, 0.68),
-            fontsize=8, color="darkgreen", fontweight="bold",
-            arrowprops=dict(arrowstyle="->", color="darkgreen"))
-ax.annotate("Development\n(infrastructure,\ninstitutions,\nindustrial policy)\nrequired", xy=(0.85, 0.75),
-            xytext=(0.88, 0.9), fontsize=8, color="purple", fontweight="bold",
-            arrowprops=dict(arrowstyle="->", color="purple"))
+ax.annotate(
+    "Cash transfers\ncan lift people\nfrom here...",
+    xy=(0.15, 0.3),
+    xytext=(0.02, 0.15),
+    fontsize=8,
+    color="blue",
+    fontweight="bold",
+    arrowprops=dict(arrowstyle="->", color="blue"),
+)
+ax.annotate(
+    "...to here\n(maybe)",
+    xy=(0.15, 0.45),
+    xytext=(0.02, 0.52),
+    fontsize=8,
+    color="blue",
+    arrowprops=dict(arrowstyle="->", color="blue"),
+)
+ax.annotate(
+    "Graduation programs\ncan push to here",
+    xy=(0.15, 0.6),
+    xytext=(0.02, 0.68),
+    fontsize=8,
+    color="darkgreen",
+    fontweight="bold",
+    arrowprops=dict(arrowstyle="->", color="darkgreen"),
+)
+ax.annotate(
+    "Development\n(infrastructure,\ninstitutions,\nindustrial policy)\nrequired",
+    xy=(0.85, 0.75),
+    xytext=(0.88, 0.9),
+    fontsize=8,
+    color="purple",
+    fontweight="bold",
+    arrowprops=dict(arrowstyle="->", color="purple"),
+)
 
 ax.set_xlim(0, 1.5)
 ax.set_ylim(0.1, 1.0)
-ax.set_title("The Development Ladder:\nWhat Each Intervention Can Reach", fontweight="bold")
+ax.set_title(
+    "The Development Ladder:\nWhat Each Intervention Can Reach", fontweight="bold"
+)
 
 # Panel C: Historical investment rates during transition periods
 ax = axes[1][0]
 # For successful countries, track investment rate during their high-growth period
 transition_invest = {}
-for code, name in [("KOR", "Korea"), ("CHN", "China"), ("VNM", "Vietnam"),
-                    ("BWA", "Botswana"), ("THA", "Thailand"), ("IDN", "Indonesia")]:
-    cdata = wdi[(wdi["country_code"] == code)
-                & wdi["gross_capital_formation_pct"].notna()
-                & wdi["gdppc_ppp_current"].notna()].sort_values("year")
+for code, name in [
+    ("KOR", "Korea"),
+    ("CHN", "China"),
+    ("VNM", "Vietnam"),
+    ("BWA", "Botswana"),
+    ("THA", "Thailand"),
+    ("IDN", "Indonesia"),
+]:
+    cdata = wdi[
+        (wdi["country_code"] == code)
+        & wdi["gross_capital_formation_pct"].notna()
+        & wdi["gdppc_ppp_current"].notna()
+    ].sort_values("year")
     if len(cdata) > 0:
         # During transition period (GDP < $15k)
         transition = cdata[cdata["gdppc_ppp_current"] < 15000]
@@ -927,8 +1308,13 @@ vals = list(transition_invest.values())
 colors_inv = ["steelblue"] * (len(names) - 1) + ["coral"]
 bars = ax.barh(range(len(names)), vals, color=colors_inv, alpha=0.8)
 for bar, val in zip(bars, vals):
-    ax.text(bar.get_width() + 0.3, bar.get_y() + bar.get_height() / 2,
-            f"{val:.1f}%", va="center", fontsize=10)
+    ax.text(
+        bar.get_width() + 0.3,
+        bar.get_y() + bar.get_height() / 2,
+        f"{val:.1f}%",
+        va="center",
+        fontsize=10,
+    )
 ax.set_yticks(range(len(names)))
 ax.set_yticklabels(names)
 ax.set_xlabel("Median investment rate during transition (% GDP)")
@@ -943,13 +1329,41 @@ ax.axis("off")
 
 requirements = [
     ["Component", "What It Means", "Can Transfers Help?"],
-    ["Agricultural\nproductivity", "Green Revolution:\nhigher yields, freed labor", "No — needs seeds,\nirrigation, extension"],
-    ["Basic\ninfrastructure", "Roads, electricity,\nwater, sanitation", "No — public investment\nand planning required"],
-    ["Human capital", "Primary → secondary\neducation, health", "YES — conditional transfers\nimprove school attendance\nand nutrition"],
-    ["Institutional\ncapacity", "Tax collection, rule of law,\nproperty rights", "No — governance reform\nneeded"],
-    ["Structural\ntransformation", "Agriculture → industry\n→ services", "No — industrial policy,\ntrade, FDI needed"],
-    ["Demographic\ntransition", "Fertility decline,\nworking-age bulge", "Partially — health +\neducation → lower fertility"],
-    ["Domestic\nsavings", "25-35% of GDP invested\ndomestically", "No — need income growth\nfirst"],
+    [
+        "Agricultural\nproductivity",
+        "Green Revolution:\nhigher yields, freed labor",
+        "No — needs seeds,\nirrigation, extension",
+    ],
+    [
+        "Basic\ninfrastructure",
+        "Roads, electricity,\nwater, sanitation",
+        "No — public investment\nand planning required",
+    ],
+    [
+        "Human capital",
+        "Primary → secondary\neducation, health",
+        "YES — conditional transfers\nimprove school attendance\nand nutrition",
+    ],
+    [
+        "Institutional\ncapacity",
+        "Tax collection, rule of law,\nproperty rights",
+        "No — governance reform\nneeded",
+    ],
+    [
+        "Structural\ntransformation",
+        "Agriculture → industry\n→ services",
+        "No — industrial policy,\ntrade, FDI needed",
+    ],
+    [
+        "Demographic\ntransition",
+        "Fertility decline,\nworking-age bulge",
+        "Partially — health +\neducation → lower fertility",
+    ],
+    [
+        "Domestic\nsavings",
+        "25-35% of GDP invested\ndomestically",
+        "No — need income growth\nfirst",
+    ],
 ]
 
 tbl = ax.table(
@@ -973,7 +1387,11 @@ for i in range(len(requirements) - 1):
     elif text.startswith("Partial"):
         cell.set_facecolor("#ffffcc")
 
-ax.set_title("The 7 Components of Reaching $15k:\nWhat Transfers Can and Cannot Do", fontweight="bold", pad=20)
+ax.set_title(
+    "The 7 Components of Reaching $15k:\nWhat Transfers Can and Cannot Do",
+    fontweight="bold",
+    pad=20,
+)
 
 plt.tight_layout()
 plt.savefig(os.path.join(CHARTS, "46_transfers_vs_development.png"), dpi=150)
@@ -988,7 +1406,8 @@ print("\n" + "=" * 70)
 print("SYNTHESIS: TRANSFERS TO SELF-SUFFICIENCY")
 print("=" * 70)
 
-print("""
+print(
+    """
   THE EVIDENCE ON CASH TRANSFERS AND PRODUCTIVITY:
 
   1. UNCONDITIONAL CASH TRANSFERS (GiveDirectly-style):
@@ -1039,4 +1458,5 @@ print("""
   - One US election cycle can cut this dramatically
   - Countries dependent on external transfers have no sovereign path to prosperity
   - Self-sufficiency at $15k is the only durable outcome
-""")
+"""
+)
