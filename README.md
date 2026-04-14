@@ -324,6 +324,50 @@ Consistent with Richardson et al. (2023): **6 of 9 boundaries transgressed.**
 
 The honest position: the papers are **more right on ecology than on economics.** The "capitalism is mathematically unworkable" framing is wrong — the math shows poverty reduction is working through growth. But the planetary boundaries framing is substantially correct — growth-as-usual, even with carbon decoupling, is ecologically unsustainable across multiple dimensions simultaneously.
 
+### But is it universal? Country-level decomposition
+
+The global aggregates hide enormous variation. Carbon decoupling varied hugely by country — does the same apply to material consumption, nitrogen, biodiversity, and deforestation?
+
+![Material by country](charts/33_material_by_country.png)
+*Top-left: Domestic material consumption per capita varies from 3-5t (India, Nigeria) to 30-50t (US, Australia). China has doubled from 11→24t since 2000. Top-right: 87 countries show declining DMC/cap but 129 are rising — global decoupling is not happening. Bottom-left: material-income elasticity of 0.49 — richer countries use proportionally less material per $ of GDP, but still far more in absolute terms. Bottom-right: rich countries declining, China exploding.*
+
+| Country | DMC/cap 2000 | DMC/cap latest | Change | CO₂/GDP change |
+|---|---|---|---|---|
+| United States | 30.3t | 22.7t | **-25%** | -40% |
+| United Kingdom | 12.3t | 8.2t | **-34%** | -53% |
+| Germany | 16.2t | 13.7t | **-15%** | -44% |
+| Japan | 13.2t | 10.5t | **-21%** | -25% |
+| China | 11.3t | 24.1t | **+113%** | -30% |
+| India | 3.7t | 5.6t | **+52%** | -19% |
+| Brazil | 14.2t | 20.0t | **+41%** | -16% |
+| Indonesia | 4.5t | 7.6t | **+68%** | -20% |
+
+The pattern is striking: **every country is carbon-decoupling, but only rich countries are materially decoupling.** China reduced its CO₂/GDP by 30% while its material consumption per person more than doubled. This is the cleanest evidence that carbon decoupling is not a proxy for ecological sustainability.
+
+![Nitrogen by country](charts/34_nitrogen_by_country.png)
+*Top-left: N fertilizer/ha trajectories since 1961 — China peaked at ~230 kg/ha and is now declining (a policy success), while India, Brazil, and Indonesia are still rising. Top-right: 138 countries have peaked N use, 31 are still rising. Bottom-right: The two trajectories — peaked countries (solid) vs still rising (dashed).*
+
+**Nitrogen is the one area where policy has demonstrably worked in some countries.** China peaked at ~230 kg/ha around 2015 and has declined ~15% — the result of deliberate policy to reduce fertilizer intensity. Germany, France, UK, and Japan all peaked in the 1980s-2000s. But India (+79%), Brazil (+183%), and much of Africa are still on steep upward trajectories.
+
+![Multi-dimensional decoupling scorecard](charts/36_multidim_decoupling.png)
+*Left: Heatmap showing ecological performance across five dimensions (green = good, red = bad). Right: CO₂ decoupling vs material decoupling scatter. Only 6 of 15 countries are decoupling on both carbon AND materials simultaneously — and none are improving on all five dimensions.*
+
+The multi-dimensional scorecard reveals the full picture:
+
+| Country | CO₂/GDP | Material/cap | N fert/ha | Red List | Forest |
+|---|---|---|---|---|---|
+| **UK** | -53% | -34% | -22% | -0.01 | +16% |
+| **Germany** | -44% | -15% | -38% | -0.01 | +1% |
+| **US** | -40% | -25% | +18% | -0.03 | +2% |
+| **China** | -30% | +113% | +5% | -0.10 | +39% |
+| **India** | -19% | +52% | +79% | -0.10 | +12% |
+| **Brazil** | -16% | +41% | +183% | -0.02 | -19% |
+| **Indonesia** | -20% | +68% | +24% | -0.12 | -13% |
+
+**No country is improving on all dimensions.** The UK and Germany come closest — declining carbon, declining materials, declining nitrogen, expanding forests — but even they show small biodiversity deterioration. The developing world is moving in the wrong direction on materials, nitrogen, and biodiversity while making modest carbon-intensity improvements.
+
+The reforestation story has a twist: China (+45%) and India (+14%) are aggressively planting trees, but monoculture plantations don't restore biodiversity. Brazil (-21%) and Indonesia (-17%) are losing primary forest with irreplaceable ecological value.
+
 ---
 
 ## Independent Critical Review
@@ -412,6 +456,7 @@ The nuclear reactor metaphor stands: capitalism is a powerful energy source that
 | [Our World in Data](https://github.com/owid/co2-data) | CO₂ and Greenhouse Gas Emissions | 1750–2024 | CO₂ (production + consumption), CO₂/GDP, CO₂/energy, energy/GDP, trade CO₂ |
 | [Our World in Data](https://github.com/owid/energy-data) | Energy Dataset | 1965–2024, 200+ entities | Solar/wind/fossil generation (TWh), renewable shares, energy mix |
 | [Our World in Data](https://ourworldindata.org/) | Planetary Boundaries | Various, 1961–2024 | Material footprint, Living Planet Index, Red List Index, tree cover loss, N/P fertilizer, water stress |
+| [Our World in Data](https://ourworldindata.org/) | DMC per capita | 1970–2022, 248 countries | Domestic material consumption per capita by country |
 | [World Bank WDI](https://data.worldbank.org/) | ODA & Fiscal Indicators | 1960–2024 | Net ODA received, bilateral ODA by donor, tax revenue/GDP, GDP/capita growth |
 
 ### Analysis Scripts
@@ -434,6 +479,7 @@ python analysis/run_analysis_4.py    # Market reforms, command vs market economi
 python analysis/run_analysis_5.py    # Decoupling, planetary boundaries, trade flows (Charts 19–23)
 python analysis/run_analysis_6.py    # ODA, political economy, energy transition (Charts 24–27)
 python analysis/run_analysis_7.py    # Non-carbon planetary boundaries (Charts 28–32)
+python analysis/run_analysis_8.py    # Country-level ecological decoupling (Charts 33–36)
 ```
 
 ### Analysis Pipeline
@@ -460,6 +506,8 @@ python analysis/run_analysis_7.py    # Non-carbon planetary boundaries (Charts 2
 6. **`run_analysis_6.py`** — Political economy of redistribution. ODA trends vs poverty gaps. The 0.7% GNI target. ODA quality problems (in-donor refugee costs, tied aid). Rich-world growth slowdown. Domestic vs international redistribution correlation. Energy transition S-curve. Terms of trade.
 
 7. **`run_analysis_7.py`** — Non-carbon planetary boundaries. Material footprint per capita and per GDP. Living Planet Index and Red List Index. Tree cover loss and deforestation. Nitrogen and phosphorus fertilizer use vs Rockström boundaries. Water stress. Planetary boundaries scorecard. Material vs carbon decoupling comparison.
+
+8. **`run_analysis_8.py`** — Country-level ecological decomposition. DMC/capita by country. Nitrogen peak analysis (138 peaked, 31 still rising). Red List Index by country. Tree cover loss top 10. Forest reforestation vs deforestation. Multi-dimensional decoupling heatmap and scorecard.
 
 ### Key Methodological Notes
 
@@ -509,6 +557,10 @@ python analysis/run_analysis_7.py    # Non-carbon planetary boundaries (Charts 2
 | 30 | `30_nitrogen_water.png` | N/P fertilizer trends, water stress, freshwater withdrawals |
 | 31 | `31_planetary_scorecard.png` | Planetary boundaries status (8 of 9 processes) |
 | 32 | `32_material_vs_carbon.png` | Material vs carbon intensity decline rates |
+| 33 | `33_material_by_country.png` | DMC/capita trajectories, income scatter, distribution |
+| 34 | `34_nitrogen_by_country.png` | N/ha by country, peak analysis, peaked vs rising |
+| 35 | `35_biodiversity_by_country.png` | Red List by country, tree loss top 10, reforestation |
+| 36 | `36_multidim_decoupling.png` | 5-dimension decoupling heatmap and CO₂ vs material scatter |
 
 ### Tools & Environment
 
