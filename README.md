@@ -193,6 +193,73 @@ This is a critical test. The poor world (countries below $15k GDP/capita) curren
 
 ---
 
+## The Redistribution Gap: What's Actually Delivered vs. What's Proposed
+
+GPT-5.4's sharpest criticism was that we treated redistribution as a simple policy lever without examining whether it actually gets pulled. The data on this is devastating — and it cuts against *both* sides.
+
+### The scale problem
+
+The papers propose redistribution of $1.3–6 trillion per year to close poverty gaps. Here's what the international system actually delivers:
+
+![ODA reality](charts/24_oda_reality.png)
+*Top-left: Global ODA has grown but remains a fraction of even the extreme poverty gap. The green dashed line shows the $2.15/day poverty gap ($332B) — ODA has never reliably exceeded it. Bottom-left: Only 5-6 countries consistently meet the UN 0.7% ODA/GNI target. The US gives 0.22% (heading to ~0.10% after recent cuts); the UK cut from 0.72% to ~0.40%. Bottom-right: The scale problem on a log chart — total ODA is two orders of magnitude smaller than the realistic $6.85/day gap.*
+
+| Flow | Amount | Scale Reference |
+|---|---|---|
+| Total global ODA (2022) | ~$200B | |
+| Poverty gap at $2.15/day | $332B | ODA covers ~60% |
+| Poverty gap at $6.85/day (perfect) | $7,755B | ODA covers ~2.6% |
+| Poverty gap at $6.85/day (realistic 3x) | $23,264B | ODA covers ~0.9% |
+| Papers' proposed redistribution | $1,300–6,000B | **6–30x total current ODA** |
+
+The papers' redistribution proposals aren't just politically difficult — they're asking for 6 to 30 times the entire current international aid system. In 50+ years, the world has never come close to the 0.7% GNI target (the DAC average is 0.36%), and the trend is **downward** — the US and UK, two of the largest donors, are actively cutting.
+
+### And the headline numbers overstate reality
+
+Your point about questionable items being billed as aid is well-documented:
+
+- **14.4% of DAC ODA in 2022** ($29.3B of $204B) was in-donor refugee costs — money that never left the donor country
+- Sweden counted domestic refugee housing as "ODA," inflating its ratio to 1.4% of GNI in 2015
+- Debt relief shows up as "new aid" (Iraq relief added ~$14B to 2005 figures)
+- Administrative costs of aid agencies count
+- ~20% of bilateral ODA is still tied (recipient must buy donor goods, reducing effective value by 15-30%)
+
+Effective real resource transfer to poor countries is roughly **25-40% less** than the headline ODA number suggests.
+
+### The "squeezed middle" is real
+
+The papers treat rich-world redistribution as a policy choice blocked by greed. The data suggests something more structural:
+
+![Domestic redistribution](charts/25_domestic_redistribution.png)
+*Top-left: Tax revenue as % of GDP varies enormously (Sweden ~28%, US ~11%, China ~8%). Bottom-left: Rich-world GDP/capita growth has roughly halved — from 2.5-6.5%/yr in 1960-75 to 0.9-1.7%/yr in 2010-23. This isn't imagined. Bottom-right: Countries with higher domestic tax rates tend to give more ODA — domestic and international redistribution come from the same political wellspring.*
+
+| Country | Growth 1960–75 | Growth 2010–23 | Decline |
+|---|---|---|---|
+| United States | 2.5%/yr | 1.7%/yr | -32% |
+| United Kingdom | 2.3%/yr | 1.0%/yr | -57% |
+| Germany | 3.2%/yr | 1.3%/yr | -59% |
+| France | 4.2%/yr | 0.9%/yr | -79% |
+| Japan | 6.5%/yr | 1.1%/yr | -83% |
+
+When GDP/capita growth halves and domestic inequality widens, the median voter feels stagnant even as aggregate GDP rises. Telling these voters to increase foreign aid is a political non-starter — not because they're selfish, but because their real experience is one of diminishing returns from the growth model.
+
+**This is the deepest challenge to the papers' proposed solution:** redistribution requires political will, political will requires voters who feel they have enough to share, and the rich-world growth slowdown has eroded exactly that feeling. The papers' logical chain — "redistribution is efficient, therefore we should redistribute" — skips the hardest step.
+
+### The energy S-curve: the wildcard
+
+One reason for optimism despite the political economy problem:
+
+![Energy transition S-curve](charts/26_energy_transition_scurve.png)
+*Top-left: Solar generation has gone from 4 TWh (2005) to 2,128 TWh (2024) — a 500x increase, doubling every ~3 years. Top-right: Solar + wind now supply ~15% of global electricity and the curve is steepening. Bottom-left: Fossil fuels have fallen from 94% to 81% of primary energy. Bottom-right: Renewable electricity shares by country — Germany and UK above 50%, world average approaching 30%.*
+
+Solar is doubling every 3 years. If that rate continues:
+- By 2030: ~4,000-5,000 TWh (matching current US total electricity)
+- By 2035: ~10,000 TWh (approaching global electricity needs)
+
+This could resolve the tension between growth and climate in a way that neither the papers' redistribution proposals nor current policy trajectories anticipate. The energy transition is the variable that could make 4-5%/yr decoupling achievable — moving us from the 3°C path to something closer to 2°C.
+
+---
+
 ## Independent Critical Review
 
 *This section was written by GPT-5.4 as an independent assessment of the entire project.*
@@ -277,6 +344,8 @@ The nuclear reactor metaphor stands: capitalism is a powerful energy source that
 | [World Bank PIP](https://pip.worldbank.org/) | Poverty and Inequality Platform | 1981–2024, country + regional | Headcount ratios and poverty gaps at $2.15, $3.65, $6.85, $10.0/day |
 | [Maddison Project](https://www.rug.nl/ggdc/historicaldevelopment/maddison/) | MPD 2023 | 1–2022, 169 entities | GDP per capita (2011 int'l $), population |
 | [Our World in Data](https://github.com/owid/co2-data) | CO₂ and Greenhouse Gas Emissions | 1750–2024 | CO₂ (production + consumption), CO₂/GDP, CO₂/energy, energy/GDP, trade CO₂ |
+| [Our World in Data](https://github.com/owid/energy-data) | Energy Dataset | 1965–2024, 200+ entities | Solar/wind/fossil generation (TWh), renewable shares, energy mix |
+| [World Bank WDI](https://data.worldbank.org/) | ODA & Fiscal Indicators | 1960–2024 | Net ODA received, bilateral ODA by donor, tax revenue/GDP, GDP/capita growth |
 
 ### Analysis Scripts
 
@@ -296,6 +365,7 @@ python analysis/run_analysis_2.py    # Poverty-growth feedback & structural prof
 python analysis/run_analysis_3.py    # Floor-raising, good-life threshold, Preston curve (Charts 13–16)
 python analysis/run_analysis_4.py    # Market reforms, command vs market economies (Charts 17–18)
 python analysis/run_analysis_5.py    # Decoupling, planetary boundaries, trade flows (Charts 19–23)
+python analysis/run_analysis_6.py    # ODA, political economy, energy transition (Charts 24–27)
 ```
 
 ### Analysis Pipeline
@@ -318,6 +388,8 @@ python analysis/run_analysis_5.py    # Decoupling, planetary boundaries, trade f
 5. **`run_analysis_4.py`** — Historical analysis of market reforms and growth. USSR trajectory, sustained growth episodes classified by economic system, China Mao vs reform period comparison.
 
 6. **`run_analysis_5.py`** — Carbon intensity trends and acceleration. Production vs consumption-based emissions. Trade CO₂ flows (exploitation hypothesis test). Carbon budget arithmetic for required decoupling rates. Poor-world-only growth scenario. Energy transition decomposition.
+
+6. **`run_analysis_6.py`** — Political economy of redistribution. ODA trends vs poverty gaps. The 0.7% GNI target. ODA quality problems (in-donor refugee costs, tied aid). Rich-world growth slowdown. Domestic vs international redistribution correlation. Energy transition S-curve. Terms of trade.
 
 ### Key Methodological Notes
 
@@ -358,6 +430,10 @@ python analysis/run_analysis_5.py    # Decoupling, planetary boundaries, trade f
 | 21 | `21_absolute_decoupling.png` | Absolute decoupling & climate constraints |
 | 22 | `22_poor_world_growth_scenario.png` | Poor-world-only growth scenario |
 | 23 | `23_energy_transition.png` | Energy transition progress |
+| 24 | `24_oda_reality.png` | ODA flows vs poverty gaps |
+| 25 | `25_domestic_redistribution.png` | Tax, spending, and the squeezed middle |
+| 26 | `26_energy_transition_scurve.png` | Solar/wind S-curve |
+| 27 | `27_debt_and_trade.png` | Debt and terms of trade constraints |
 
 ### Tools & Environment
 
