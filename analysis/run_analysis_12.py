@@ -199,7 +199,7 @@ latest['name'] = latest['cc'].map(NAMES)
 metrics = ['mean_inc', 'edei_05', 'edei_10', 'edei_20', 'rawls']
 labels = ['ε=0\n(Mean)', 'ε=0.5\n(Mild)', 'ε=1\n(Log)', 'ε=2\n(Strong)', 'ε=∞\n(Rawlsian)']
 
-fig, axes = plt.subplots(1, 5, figsize=(24, 10), sharey=True)
+fig, axes = plt.subplots(1, 5, figsize=(24, 10), sharey=False)
 fig.suptitle('How Much Do You Care About Inequality?\nCountry Rankings Under Different Social Welfare Functions',
              fontsize=16, fontweight='bold', y=1.02)
 
@@ -213,14 +213,41 @@ for g, ccs in GROUPS.items():
     for cc in ccs:
         cc_group[cc] = g
 
-latest_sorted = latest.sort_values('mean_inc', ascending=True)
+# Determine text color for contrast against bar color
+def _text_color(hex_color):
+    """White text on dark bars, dark text on light bars."""
+    r, g, b = int(hex_color[1:3], 16), int(hex_color[3:5], 16), int(hex_color[5:7], 16)
+    luminance = 0.299 * r + 0.587 * g + 0.114 * b
+    return 'white' if luminance < 160 else '#222222'
 
 for ax, metric, label in zip(axes, metrics, labels):
-    sorted_df = latest_sorted.sort_values(metric, ascending=True)
+    sorted_df = latest.sort_values(metric, ascending=True).reset_index(drop=True)
     colors = [group_colors.get(cc_group.get(cc, ''), '#666') for cc in sorted_df['cc']]
-    bars = ax.barh(range(len(sorted_df)), sorted_df[metric] / 1000, color=colors, height=0.7)
-    ax.set_yticks(range(len(sorted_df)))
-    ax.set_yticklabels([NAMES.get(cc, cc) for cc in sorted_df['cc']], fontsize=9)
+    vals = sorted_df[metric] / 1000
+    bars = ax.barh(range(len(sorted_df)), vals, color=colors, height=0.7)
+
+    # Label each bar with country code inside it
+    for i, (bar, cc, v) in enumerate(zip(bars, sorted_df['cc'], vals)):
+        bar_w = bar.get_width()
+        color = colors[i]
+        txt_color = _text_color(color)
+        name = NAMES.get(cc, cc)
+        # Short codes that fit inside bars — use ≤6 char names
+        short = cc if len(name) > 7 else name
+        # Place label inside bar near the left edge
+        if bar_w > vals.max() * 0.15:
+            ax.text(bar_w * 0.03, i, f' {short}', va='center', ha='left',
+                    fontsize=7, fontweight='bold', color=txt_color)
+            # Value at right end inside bar
+            ax.text(bar_w - vals.max() * 0.01, i, f'${v:.0f}k ',
+                    va='center', ha='right', fontsize=6.5, color=txt_color)
+        else:
+            # Very short bar — label outside
+            ax.text(bar_w + vals.max() * 0.01, i, f'{short} ${v:.0f}k',
+                    va='center', ha='left', fontsize=6.5, fontweight='bold',
+                    color='#333333')
+
+    ax.set_yticks([])  # No y-axis labels — country codes are on the bars
     ax.set_xlabel('$000 PPP', fontsize=10)
     ax.set_title(label, fontsize=12, fontweight='bold')
     ax.xaxis.set_major_formatter(mticker.FormatStrFormatter('$%.0fk'))
@@ -563,11 +590,12 @@ print("═"*80)
 print("""
 KEY FINDINGS:
 
-1. AT ε=0 (Mean): The US dominates ($75k). If all you care about is total
-   output per person, the US model wins decisively.
+1. AT ε=0 (Mean): Norway ($90k) leads, followed by the US ($75k).
+   Oil wealth is a confound, but Norway also shows you can escape
+   the resource curse through good institutions and redistribution.
 
-2. AT ε=1 (Log-utility): Norway ($81k), Germany ($54k), Sweden ($55k),
-   France ($47k) are close. The US ($57k) drops below Norway.
+2. AT ε=1 (Log-utility): Norway ($81k) extends its lead. The US ($57k)
+   falls behind Sweden ($55k), Germany ($54k). France ($47k) is close.
    China ($18k) shoots up, validating massive poverty reduction.
 
 3. AT ε=2 (Strong pro-poor): Norway ($73k) still leads. France ($41k)

@@ -312,12 +312,12 @@ This is the Atkinson social welfare function question. The parameter ε controls
 - **ε = ∞**: Rawlsian — only the bottom 20% matters.
 
 ![Welfare rankings](charts/52_welfare_rankings.png)
-*Country rankings shift dramatically depending on how much you care about inequality. At ε=0 (mean), the US leads by far. At ε=∞ (Rawlsian), Norway leads and France, Germany, Sweden, Poland all beat the US. The "right" answer depends on your value judgment about ε.*
+*Country rankings shift dramatically depending on how much you care about inequality. Norway leads at every ε — its oil wealth, managed through a sovereign fund and strong redistribution, is a case study in escaping the resource curse. But the gap between Norway and the US narrows at ε=0 (mean income) and widens enormously at ε=∞ (Rawlsian), where France, Germany, Sweden, and Poland all beat the US. The "right" answer depends on your value judgment about ε.*
 
 | Country | Mean (ε=0) | ε=0.5 | ε=1 (Log) | ε=2 | Rawlsian |
 |---|---|---|---|---|---|
-| Norway | $90k | $86k | $81k | $73k | **$41k** |
-| **US** | **$75k** | $66k | $57k | $44k | $19k |
+| **Norway** | **$90k** | **$86k** | **$81k** | **$73k** | **$41k** |
+| US | $75k | $66k | $57k | $44k | $19k |
 | Germany | $64k | $59k | $54k | $45k | $22k |
 | Sweden | $63k | $59k | $55k | $48k | $25k |
 | France | $54k | $50k | $47k | $41k | $21k |
