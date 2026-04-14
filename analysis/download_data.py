@@ -47,6 +47,23 @@ WDI = {
     "SP.DYN.LE00.IN": "life_expectancy",
     "SH.DYN.MORT": "under5_mortality",
     "NV.IND.MANF.ZS": "manufacturing_va_pct",
+    # Development anatomy indicators
+    "EG.ELC.ACCS.ZS": "electricity_access_pct",
+    "SH.H2O.BASW.ZS": "basic_water_access_pct",
+    "SH.STA.BASS.ZS": "basic_sanitation_pct",
+    "SE.PRM.CMPT.ZS": "primary_completion_pct",
+    "SE.SEC.ENRR": "secondary_enrollment_pct",
+    "SE.ADT.LITR.ZS": "adult_literacy_pct",
+    "SH.XPD.CHEX.PC.CD": "health_expenditure_pc",
+    "NY.GNS.ICTR.ZS": "gross_savings_pct_gdp",
+    "NE.GDI.FTOT.ZS": "gross_capital_formation_pct",
+    "NV.AGR.TOTL.ZS": "agriculture_va_pct",
+    "NV.SRV.TOTL.ZS": "services_va_pct",
+    "SP.DYN.TFRT.IN": "fertility_rate",
+    "IT.NET.USER.ZS": "internet_users_pct",
+    "BX.KLT.DINV.WD.GD.ZS": "fdi_pct_gdp",
+    "GC.TAX.TOTL.GD.ZS": "tax_revenue_pct_gdp",
+    "NE.TRD.GNFS.ZS": "trade_pct_gdp",
 }
 
 all_wdi = []
