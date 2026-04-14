@@ -235,6 +235,57 @@ except Exception as e:
     print(f"  FAILED OWID CO2: {e}")
 
 # ============================================================
+# 6. OECD REVENUE STATISTICS (Total Tax Revenue as % of GDP)
+# ============================================================
+print("\n" + "=" * 60)
+print("OECD REVENUE STATISTICS — TOTAL TAX REVENUE (% GDP)")
+print("=" * 60)
+
+oecd_tax_path = os.path.join(PROC, "oecd_tax_revenue_pct_gdp.csv")
+if os.path.exists(oecd_tax_path) and os.path.getsize(oecd_tax_path) > 100:
+    print(f"  [cached] oecd_tax_revenue_pct_gdp.csv")
+else:
+    print("  Downloading OECD total tax/GDP from SDMX API...")
+    oecd_dfs = []
+    oecd_datasets = [
+        ('DSD_REV_COMP_OECD@DF_RSOECD', 'OECD'),
+        ('DSD_REV_COMP_LAC@DF_RSLAC', 'LAC'),
+        ('DSD_REV_COMP_AFRICA@DF_RSAFRICA', 'Africa'),
+        ('DSD_REV_COMP_ASAP@DF_RSASAP', 'Asia-Pacific'),
+        ('DSD_REV_COMP_GLOBAL@DF_RSGLOBAL', 'Global'),
+    ]
+    for ds_id, label in oecd_datasets:
+        url = (f'https://sdmx.oecd.org/public/rest/data/OECD.CTP.TPS,{ds_id},/'
+               f'.TAX_REV.S13._T..PT_B1GQ.A'
+               f'?startPeriod=1965&endPeriod=2025&dimensionAtObservation=AllDimensions')
+        try:
+            r = session.get(url, headers={'Accept': 'application/vnd.sdmx.data+csv;version=2.0.0'},
+                            timeout=120)
+            if r.status_code == 200:
+                df_oecd = pd.read_csv(io.StringIO(r.text))
+                df_oecd['source'] = label
+                n = df_oecd['REF_AREA'].nunique()
+                print(f"    {label}: {len(df_oecd)} rows, {n} countries")
+                oecd_dfs.append(df_oecd)
+            else:
+                print(f"    {label}: HTTP {r.status_code}")
+            time.sleep(1)
+        except Exception as e:
+            print(f"    {label}: FAILED {e}")
+
+    if oecd_dfs:
+        oecd_all = pd.concat(oecd_dfs, ignore_index=True)
+        oecd_all = oecd_all.drop_duplicates(subset=['REF_AREA', 'TIME_PERIOD'], keep='first')
+        # Simplify to just the columns we need
+        oecd_out = oecd_all[['REF_AREA', 'TIME_PERIOD', 'OBS_VALUE']].copy()
+        oecd_out.columns = ['country_code', 'year', 'total_tax_pct_gdp']
+        oecd_out = oecd_out.dropna(subset=['total_tax_pct_gdp'])
+        oecd_out.to_csv(oecd_tax_path, index=False)
+        print(f"  -> OECD tax/GDP: {len(oecd_out)} rows, {oecd_out['country_code'].nunique()} countries")
+    else:
+        print("  -> FAILED: no OECD data downloaded")
+
+# ============================================================
 # Summary
 # ============================================================
 print("\n" + "=" * 60)

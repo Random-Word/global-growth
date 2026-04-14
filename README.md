@@ -252,7 +252,9 @@ Effective real resource transfer to poor countries is roughly **25-40% less** th
 The papers treat rich-world redistribution as a policy choice blocked by greed. The data suggests something more structural:
 
 ![Domestic redistribution](charts/25_domestic_redistribution.png)
-*Top-left: Tax revenue as % of GDP varies enormously (Sweden ~28%, US ~11%, China ~8%). Bottom-left: Rich-world GDP/capita growth has roughly halved — from 2.5-6.5%/yr in 1960-75 to 0.9-1.7%/yr in 2010-23. This isn't imagined. Bottom-right: Countries with higher domestic tax rates tend to give more ODA — domestic and international redistribution come from the same political wellspring.*
+*Top-left: Total tax revenue as % of GDP (OECD Revenue Statistics) — France ~45%, Sweden ~43%, Germany ~38%, UK ~34%, US ~26%. Bottom-left: Rich-world GDP/capita growth has roughly halved — from 2.5-6.5%/yr in 1960-75 to 0.9-1.7%/yr in 2010-23. This isn't imagined. Bottom-right: Countries with higher total tax burdens tend to give more ODA — domestic and international redistribution come from the same political wellspring.*
+
+> **Data note:** Earlier versions used the WDI indicator GC.TAX.TOTL.GD.ZS (central-government tax revenue only), which is missing entirely for France, Germany, the US, UK, and Japan. Chart 25 now uses [OECD Revenue Statistics](https://www.oecd.org/tax/tax-policy/revenue-statistics.htm), which captures **total general-government tax** including social security contributions, sub-national taxes, and all other levies. This is why France shows ~45% rather than the ~0% the WDI would imply.
 
 | Country | Growth 1960–75 | Growth 2010–23 | Decline |
 |---|---|---|---|
@@ -691,7 +693,8 @@ The nuclear reactor metaphor stands: capitalism is a powerful energy source that
 | [Our World in Data](https://ourworldindata.org/) | DMC per capita | 1970–2022, 248 countries | Domestic material consumption per capita by country |
 | [IEA](https://www.iea.org/) | Critical Minerals Outlook 2025 | 2020–2040 | Transition mineral demand projections by scenario |
 | [USGS](https://pubs.usgs.gov/) | Mineral Commodity Summaries 2025 | Annual | Copper, nickel, lithium, cobalt, rare earth production volumes |
-| [World Bank WDI](https://data.worldbank.org/) | ODA & Fiscal Indicators | 1960–2024 | Net ODA received, bilateral ODA by donor, tax revenue/GDP, GDP/capita growth |
+| [World Bank WDI](https://data.worldbank.org/) | ODA & Fiscal Indicators | 1960–2024 | Net ODA received, bilateral ODA by donor, govt expenditure/GDP, GDP/capita growth |
+| [OECD Revenue Statistics](https://www.oecd.org/tax/tax-policy/revenue-statistics.htm) | Total Tax Revenue (% GDP) | 1965–2024, 145 countries | General-government total tax revenue as % of GDP (OECD + Africa + Asia-Pacific + LAC + Global datasets) |
 
 ### Analysis Scripts
 

@@ -71,7 +71,29 @@ oda_dac_total = fetch_wdi('DC.DAC.TOTL.CD', 'oda_dac_total_usd')
 time.sleep(1)
 
 # Government expenditure and tax revenue
-tax_rev = fetch_wdi('GC.TAX.TOTL.GD.ZS', 'tax_revenue_pct_gdp')
+# NOTE: WDI GC.TAX.TOTL.GD.ZS is central-government-only tax and is MISSING for
+# most rich countries (US, UK, France, Germany, Japan, etc.).  We use OECD Revenue
+# Statistics instead, which gives total general-government tax as % of GDP.
+import os as _os
+_oecd_tax_path = _os.path.join('data', 'processed', 'oecd_tax_revenue_pct_gdp.csv')
+if _os.path.exists(_oecd_tax_path):
+    tax_rev = pd.read_csv(_oecd_tax_path)
+    # OECD uses ISO-2 codes (FRA, DEU…) which are actually ISO-3 — same as WDI.
+    # We need a country_code → country name mapping for chart labels.
+    _name_map_wdi = fetch_wdi('NY.GDP.MKTP.CD', '_tmp_names')
+    time.sleep(1)
+    if len(_name_map_wdi) > 0:
+        _cc2name = _name_map_wdi.drop_duplicates('country_code').set_index('country_code')['country'].to_dict()
+    else:
+        _cc2name = {}
+    tax_rev['country'] = tax_rev['country_code'].map(_cc2name)
+    tax_rev = tax_rev.rename(columns={'total_tax_pct_gdp': 'tax_revenue_pct_gdp'})
+    tax_rev['year'] = tax_rev['year'].astype(int)
+    tax_rev = tax_rev.dropna(subset=['tax_revenue_pct_gdp'])
+    print(f"  OECD tax_revenue_pct_gdp: {len(tax_rev)} rows, {tax_rev['country_code'].nunique()} countries")
+else:
+    print("  WARNING: OECD tax data not found, falling back to WDI (central-govt only)")
+    tax_rev = fetch_wdi('GC.TAX.TOTL.GD.ZS', 'tax_revenue_pct_gdp')
 time.sleep(1)
 # Use general government final consumption expenditure (more reliable than GC.XPN.TOTL.GD.ZS)
 govt_exp = fetch_wdi('NE.CON.GOVT.ZS', 'govt_expense_pct_gdp')
@@ -358,16 +380,19 @@ fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 ax = axes[0, 0]
 if len(tax_rev) > 0:
     key_countries_tax = {
-        'United States': 'US', 'United Kingdom': 'GB', 'Germany': 'DE',
-        'France': 'FR', 'Sweden': 'SE', 'Japan': 'JP',
-        'Brazil': 'BR', 'India': 'IN', 'China': 'CN',
+        'United States': 'USA', 'United Kingdom': 'GBR', 'Germany': 'DEU',
+        'France': 'FRA', 'Sweden': 'SWE', 'Japan': 'JPN',
+        'Brazil': 'BRA', 'China': 'CHN', 'Mexico': 'MEX',
     }
     for name, code in key_countries_tax.items():
+        # Try matching by country name first, fall back to country_code
         d = tax_rev[(tax_rev['country'] == name) & (tax_rev['year'] >= 1990)]
+        if len(d) < 3:
+            d = tax_rev[(tax_rev['country_code'] == code) & (tax_rev['year'] >= 1990)]
         d = d.sort_values('year')
         if len(d) > 3:
             ax.plot(d['year'], d['tax_revenue_pct_gdp'], label=name, linewidth=1.5)
-    ax.set_title('Tax Revenue (% of GDP)', fontsize=12, fontweight='bold')
+    ax.set_title('Total Tax Revenue (% of GDP) — OECD', fontsize=12, fontweight='bold')
     ax.set_ylabel('% of GDP')
     ax.legend(fontsize=8, ncol=2)
 
@@ -404,17 +429,20 @@ if len(gdppc_growth) > 0:
 # 2d: Do high-tax countries give more ODA? (cross-section)
 ax = axes[1, 1]
 if len(tax_rev) > 0:
-    # Get latest tax data for DAC donors and match with ODA/GNI
-    latest_tax = tax_rev[tax_rev['year'] >= 2018].groupby('country')['tax_revenue_pct_gdp'].mean()
+    # Get latest tax data using country_code (OECD uses ISO-3)
+    latest_tax_by_code = tax_rev[tax_rev['year'] >= 2018].groupby('country_code')['tax_revenue_pct_gdp'].mean()
     oda_latest = oda_gni_data[oda_gni_data['year'] >= 2020].groupby('country')['oda_gni'].mean()
     
     matched = []
-    name_map = {'US': 'United States', 'UK': 'United Kingdom', 'Germany': 'Germany',
-                'France': 'France', 'Sweden': 'Sweden', 'Norway': 'Norway',
-                'Denmark': 'Denmark', 'Japan': 'Japan'}
-    for short, full in name_map.items():
-        if full in latest_tax.index and short in oda_latest.index:
-            matched.append({'country': short, 'tax_gdp': latest_tax[full], 'oda_gni': oda_latest[short]})
+    # Map ODA short names → ISO-3 codes for matching with OECD tax data
+    oda_to_iso3 = {'US': 'USA', 'UK': 'GBR', 'Germany': 'DEU',
+                   'France': 'FRA', 'Sweden': 'SWE', 'Norway': 'NOR',
+                   'Denmark': 'DNK', 'Japan': 'JPN', 'Netherlands': 'NLD',
+                   'Canada': 'CAN', 'Italy': 'ITA', 'Australia': 'AUS',
+                   'Switzerland': 'CHE', 'Finland': 'FIN', 'Belgium': 'BEL'}
+    for short, iso3 in oda_to_iso3.items():
+        if iso3 in latest_tax_by_code.index and short in oda_latest.index:
+            matched.append({'country': short, 'tax_gdp': latest_tax_by_code[iso3], 'oda_gni': oda_latest[short]})
     
     mdf = pd.DataFrame(matched)
     if len(mdf) > 3:
@@ -441,10 +469,14 @@ plt.close()
 print("  → Chart 25 saved: domestic_redistribution.png")
 
 # Print key fiscal numbers
-print("\nTax Revenue (% GDP) trends for key countries:")
+print("\nTotal Tax Revenue (% GDP) — OECD Revenue Statistics:")
 if len(tax_rev) > 0:
-    for name in ['United States', 'United Kingdom', 'Germany', 'France', 'Sweden', 'India', 'China']:
-        d = tax_rev[tax_rev['country'] == name].sort_values('year')
+    for code, name in [('USA', 'United States'), ('GBR', 'United Kingdom'), ('DEU', 'Germany'),
+                        ('FRA', 'France'), ('SWE', 'Sweden'), ('JPN', 'Japan'),
+                        ('BRA', 'Brazil'), ('CHN', 'China'), ('MEX', 'Mexico')]:
+        d = tax_rev[tax_rev['country_code'] == code].sort_values('year')
+        if len(d) == 0:
+            d = tax_rev[tax_rev['country'] == name].sort_values('year')
         recent = d[d['year'] >= 2018]['tax_revenue_pct_gdp'].mean()
         early = d[(d['year'] >= 1995) & (d['year'] <= 2005)]['tax_revenue_pct_gdp'].mean()
         if pd.notna(recent):
