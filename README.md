@@ -247,9 +247,9 @@ Your point about questionable items being billed as aid is well-documented:
 
 Effective real resource transfer to poor countries is roughly **25-40% less** than the headline ODA number suggests.
 
-### The "squeezed middle" is real
+### The "squeezed middle" — feeling vs reality
 
-The papers treat rich-world redistribution as a policy choice blocked by greed. The data suggests something more structural:
+The papers treat rich-world redistribution as a policy choice blocked by greed. The data suggests something more nuanced: growth is slower, inequality within countries has widened, but **every income quintile in every rich country got richer in absolute terms**.
 
 ![Domestic redistribution](charts/25_domestic_redistribution.png)
 *Top-left: Total tax revenue as % of GDP (OECD Revenue Statistics) — France ~45%, Sweden ~43%, Germany ~38%, UK ~34%, US ~26%. Bottom-left: Rich-world GDP/capita growth has roughly halved — from 2.5-6.5%/yr in 1960-75 to 0.9-1.7%/yr in 2010-23. This isn't imagined. Bottom-right: Countries with higher total tax burdens tend to give more ODA — domestic and international redistribution come from the same political wellspring.*
@@ -264,9 +264,42 @@ The papers treat rich-world redistribution as a policy choice blocked by greed. 
 | France | 4.2%/yr | 0.9%/yr | -79% |
 | Japan | 6.5%/yr | 1.1%/yr | -83% |
 
-When GDP/capita growth halves and domestic inequality widens, the median voter feels stagnant even as aggregate GDP rises. Telling these voters to increase foreign aid is a political non-starter — not because they're selfish, but because their real experience is one of diminishing returns from the growth model.
+Growth has slowed. But has that actually made people worse off? We need to look at what happened to each income quintile in absolute terms.
 
-**This is the deepest challenge to the papers' proposed solution:** redistribution requires political will, political will requires voters who feel they have enough to share, and the rich-world growth slowdown has eroded exactly that feeling. The papers' logical chain — "redistribution is efficient, therefore we should redistribute" — skips the hardest step.
+### Are rich-world citizens actually worse off? No.
+
+![Quintile real income](charts/47_quintile_real_income.png)
+*Real income by quintile (PPP constant $) for six major economies, 1980–2024. Every quintile in every country saw absolute real income gains. The bottom 20% gained +13% to +65% depending on the country. The top 20% gained more — but no one got poorer.*
+
+| Country | Bottom 20% ~1990 | Bottom 20% latest | Change | Top 20% ~1990 | Top 20% latest | Change |
+|---|---|---|---|---|---|---|
+| United States | $12,426 | $19,250 | **+55%** | $97,633 | $177,777 | +82% |
+| United Kingdom | $11,713 | $19,382 | **+65%** | $70,770 | $102,009 | +44% |
+| France | $15,269 | $20,904 | **+37%** | $77,698 | $107,779 | +39% |
+| Germany | $19,415 | $21,968 | **+13%** | $84,058 | $130,218 | +55% |
+| Sweden | $18,974 | $24,752 | **+30%** | $67,484 | $116,553 | +73% |
+
+The bottom 20% in the United States earns ~$19,250 in real PPP terms. For context:
+
+![Rich-country poor vs global](charts/49_rich_poor_vs_global.png)
+*Left: the bottom 20% in rich countries still earn more than the average person in China, Brazil, Mexico, or Thailand — and 5-10x the average in Nigeria or Bangladesh. Right: Gini trajectories diverge — the US is an outlier, while France held inequality roughly flat and the UK actually reduced it.*
+
+![Income share shifts](charts/48_income_share_shifts.png)
+*Income shares by quintile over time. The top 20% captured a disproportionate share of growth in the US, Germany, and Sweden. France is the exception — the most equal large economy in the dataset.*
+
+![Human development](charts/50_human_development_rich.png)
+*Life expectancy improved 3-5 years in all countries (except the US post-2010 divergence due to opioids and COVID). Under-5 mortality fell dramatically. Tertiary enrollment roughly doubled. These gains are population-wide, not captured by income quintile data alone.*
+
+### Absolute gains, relative frustration
+
+![Absolute vs relative](charts/51_absolute_vs_relative.png)
+*Left: In the US, the top 20% grew ~82% while the bottom 20% grew ~55% (indexed). Right: In France, quintiles grew more equally (~37% bottom vs ~39% top). Both show the same pattern: everyone gained, but growth was unequal in the US and balanced in France.*
+
+**The honest version of the argument:** capitalism has delivered absolute material gains to every quintile in every rich country over the past 30 years. Nobody is poorer in real terms. But the top captured a disproportionate share in most countries (the US being the extreme case), which creates the political dynamic the papers correctly identify: voters who *feel* squeezed relative to their neighbors resist calls to redirect resources abroad.
+
+This is a real problem — but it is a problem of **within-country inequality and political psychology**, not evidence that capitalism "doesn't work." France proves the alternative: you can run a market economy with 45% total tax burden, hold inequality roughly flat, deliver 37% real income growth to the bottom 20%, *and* give 0.56% of GNI in foreign aid. The issue is not capitalism vs. something else. The issue is which *kind* of capitalism — and whether the US model's tolerance for inequality poisons the political well for global redistribution.
+
+**The papers' error is not in identifying the problem (inequality erodes redistribution) — it's in concluding that capitalism itself must be abandoned.** The data shows European social democracy delivering shared growth within a capitalist framework. The failure is specifically American-style low-tax, high-inequality capitalism, not capitalism as such.
 
 ### The energy S-curve: the wildcard
 
@@ -695,6 +728,7 @@ The nuclear reactor metaphor stands: capitalism is a powerful energy source that
 | [USGS](https://pubs.usgs.gov/) | Mineral Commodity Summaries 2025 | Annual | Copper, nickel, lithium, cobalt, rare earth production volumes |
 | [World Bank WDI](https://data.worldbank.org/) | ODA & Fiscal Indicators | 1960–2024 | Net ODA received, bilateral ODA by donor, govt expenditure/GDP, GDP/capita growth |
 | [OECD Revenue Statistics](https://www.oecd.org/tax/tax-policy/revenue-statistics.htm) | Total Tax Revenue (% GDP) | 1965–2024, 145 countries | General-government total tax revenue as % of GDP (OECD + Africa + Asia-Pacific + LAC + Global datasets) |
+| [World Bank WDI](https://data.worldbank.org/) | Income Distribution | 1980–2024 | Income shares by quintile (SI.DST.*), Gini coefficient, life expectancy, under-5 mortality, tertiary enrollment |
 
 ### Analysis Scripts
 
@@ -719,6 +753,7 @@ python analysis/run_analysis_7.py    # Non-carbon planetary boundaries (Charts 2
 python analysis/run_analysis_8.py    # Country-level ecological decoupling (Charts 33–36)
 python analysis/run_analysis_9.py    # Transition minerals vs fossil fuels (Charts 37–40)
 python analysis/run_analysis_10.py   # Transfers to self-sufficiency (Charts 41–46)
+python analysis/run_analysis_11.py   # Rich-world quintile income analysis (Charts 47–51)
 ```
 
 ### Analysis Pipeline
@@ -751,6 +786,7 @@ python analysis/run_analysis_10.py   # Transfers to self-sufficiency (Charts 41�
 9. **`run_analysis_9.py`** — Transition minerals vs fossil fuels. Extraction volume comparison (340:1 mass ratio). Ecological harm across 6 dimensions. Burn-once vs recycle-forever asymmetry. Specific mineral concerns in context (lithium water, DRC cobalt, Indonesian nickel, copper tailings). Self-correction of false equivalence claim.
 
 10. **`run_analysis_10.py`** — From transfers to self-sufficiency. Development anatomy at $15k (what the "good life" threshold actually provides). Efficient outliers (countries achieving good welfare below $15k). Historical transition paths ($3k→$10k timelines and investment rates). Investment and structural transformation requirements. SSA multi-dimensional gap analysis. Cash transfer evidence vs development requirements (GiveDirectly, BRAC graduation model, conditional transfers). The 7 components of reaching $15k.
+11. **`run_analysis_11.py`** — Are rich-world citizens actually worse off? Real income by quintile (PPP constant $) for US, UK, France, Germany, Japan, Sweden from 1980–2024. Income share shifts (stacked area). Rich-country bottom 20% vs developing-country average income. Gini coefficient trajectories. Life expectancy, child mortality, tertiary enrollment trends. Indexed quintile growth (US vs France models). Tests the claim that capitalism is "untenable" because rich-world citizens aren't benefiting — finding that every quintile in every country gained in absolute terms.
 
 ### Key Methodological Notes
 
@@ -815,6 +851,11 @@ python analysis/run_analysis_10.py   # Transfers to self-sufficiency (Charts 41�
 | 44 | `44_investment_structure.png` | Savings, trade, structural transformation, demographic transition vs GDP |
 | 45 | `45_ssa_gap.png` | SSA multi-dimensional gap vs developed countries; distance to $15k |
 | 46 | `46_transfers_vs_development.png` | Transfer evidence; development ladder; 7 components of $15k |
+| 47 | `47_quintile_real_income.png` | Real income by quintile for 6 rich countries, 1980–2024 |
+| 48 | `48_income_share_shifts.png` | Income share stacked area — who captured growth? |
+| 49 | `49_rich_poor_vs_global.png` | Rich-country bottom 20% vs developing-country average; Gini trends |
+| 50 | `50_human_development_rich.png` | Life expectancy, child mortality, tertiary enrollment; summary scorecard |
+| 51 | `51_absolute_vs_relative.png` | US vs France indexed quintile growth — absolute vs relative |
 
 ### Tools & Environment
 
