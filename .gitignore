@@ -1,0 +1,15 @@
+# Python / Data
+.venv/
+__pycache__/
+*.pyc
+data/raw/
+data/processed/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
