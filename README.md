@@ -16,7 +16,7 @@ Thirteen analyses and 65 charts later, here is what the data shows:
 
 2. **But growth transformed the scale of the redistribution problem — dramatically at the bottom, modestly at higher thresholds.** The $6.85/day poverty gap fell from 18% to 1.6% of world GDP — from a genuinely crushing burden to a large but conceivable one. At $2.15/day, the gap is now smaller than existing aid flows. But 3.14 billion people remain below $6.85/day, a $3.1 trillion shortfall that international transfers cannot reliably close — not because the money doesn't exist, but because there is no sovereign authority to guarantee it. Domestic transfers (pensions, disability, UBI) work because states have taxing power and accountability to recipients. International aid has neither: one political pivot in a major donor can halve it overnight.
 
-3. **The ecological constraint is real and differentiated.** Carbon has plausible technological pathways (renewables), though deployment is far from sufficient. Material use, nitrogen, phosphorus, and biodiversity lack equivalent exits. Six of nine planetary boundaries are breached.
+3. **The ecological constraint is real and differentiated.** Carbon has a clear technological pathway (renewables) that requires deployment at unprecedented speed. Nitrogen (3.4× over) is addressable through a stack of agricultural bioengineering, food technology, and precision farming — but requires breakthroughs (especially nitrogen-fixing cereals) not yet deployed. The aggregate "material footprint" metric overstates the constraint by treating all tonnes as equal; the boundary-specific problems (nitrogen, biodiversity, land use) are genuinely severe while the mass-based metric is weaker than the carbon budget. Six of nine planetary boundaries are breached.
 
 4. **Redistribution relieves poverty but has not historically built lasting prosperity on its own.** Every successful development transition also required high investment rates, structural transformation, and institutional capacity — though transfers play a real role in human capital and immediate relief.
 
@@ -79,7 +79,7 @@ This is arguably the papers' strongest claim. Six of nine planetary boundaries a
 |---|---|---|---|
 | Climate change (CO₂) | 350 ppm | 424 ppm | **Exceeded** |
 | Biosphere integrity (LPI) | 90 (index) | 27 (index) | **Exceeded** |
-| Nitrogen fixation | 35 Tg/yr | 120 Tg/yr | **Exceeded (3.4×)** |
+| Nitrogen fixation | ~44 Tg/yr | ~150 Tg/yr | **Exceeded (3.4×)** |
 | Land-system change | 75% forests | 68% forests | **Exceeded** |
 | Freshwater use | 4,000 km³/yr | ~3,949 km³/yr | At limit |
 | Phosphorus flow | 11 Tg/yr | ~9 Tg/yr | Near limit |
@@ -161,7 +161,7 @@ The poor world (below $15k GDP/capita) produces only 20% of global CO₂ despite
 ![Poor-world-only growth scenario](charts/22_poor_world_growth_scenario.png)
 *The planetary boundary problem is overwhelmingly a rich-world emissions problem, not a poor-world growth problem.*
 
-### Beyond carbon: harder problems with fewer solutions
+### Beyond carbon: harder problems with emerging solutions
 
 Carbon gets the headlines, but the non-carbon boundaries are arguably more concerning — because they lack equivalent technological exits.
 
@@ -177,11 +177,11 @@ The technology pathway analysis reveals a clear pattern:
 |---|---|---|
 | **Carbon** | Clear (solar/wind) | Deployment speed |
 | **Freshwater** | Partial (desalination) | Too expensive for agriculture (70% of use) |
-| **Nitrogen** | Governance only | Cheap energy makes it *worse* (more fertilizer) |
-| **Phosphorus** | None (recycling only) | An element — cannot be synthesized |
-| **Biodiversity** | None | Habitat loss requires political solutions |
+| **Nitrogen** | Emerging (bioengineering stack) | N-fixing cereals (holy grail, 10-20yr), cultivated meat, precision ag. Full stack could reach boundary but requires multiple breakthroughs |
+| **Phosphorus** | Partial (recycling, recovery) | An element — cannot be synthesized, but can be recovered from waste streams |
+| **Biodiversity** | Indirect (food tech → land release) | Population peak + ag tech could free 1-2B ha, but only if food technology scales |
 
-Abundant cheap energy solves the energy-system boundaries but not the biogeochemical or ecological ones. **The papers' critique is weakest where technology has a plausible path (carbon) and strongest where it doesn't (nitrogen, phosphorus, biodiversity).** The honest response requires both: technology-driven decoupling for energy *and* governance-driven restraint for land use and biogeochemistry.
+Abundant cheap energy solves the energy-system boundaries and *enables* the agricultural technology stack (precision farming, controlled-environment agriculture, cultivated meat) — but the biogeochemical boundaries also require bioengineering breakthroughs and governance. **The papers' critique is weakest where technology has a clear deployment path (carbon), moderate where technology solutions exist but require breakthroughs (nitrogen, food/land), and strongest where harm is irreversible (biodiversity loss already incurred).** The honest response requires technology-driven decoupling for energy, bioengineering for agriculture, *and* governance-driven restraint for land use.
 
 ### The implied policy differentiation
 
@@ -197,7 +197,7 @@ The analysis so far establishes that rich-world material throughput is ecologica
 |---|---|---|
 | **Carbon** | Electrify everything; direct air capture at scale | DAC at gigatonne scale is unproven |
 | **Freshwater** | Desalination becomes viable even for agriculture | Distribution infrastructure |
-| **Nitrogen** | Green ammonia replaces fossil-fuel-based fertilizer | Doesn't solve *over-application* — still a governance problem |
+| **Nitrogen** | Precision ag, controlled-environment farming (95% N efficiency), cultivated meat (eliminates feed-grain demand), eliminates combustion NOx | N-fixing cereals are the biggest lever but still in R&D (Pivot Bio, ENSA, Gates CSIA). Full stack needed: precision ag alone only reaches 2.4× (insufficient) |
 | **Materials** | Recycling becomes economically dominant; circular loops close | Mining the initial stock; some elements scarce |
 | **Food/Land** | Vertical farming, precision fermentation, cultured meat | Cultural adoption; transition timeline |
 | **Biodiversity** | If food production intensifies off-land, farmland returns to nature | Requires active rewilding, not just stopping damage |
