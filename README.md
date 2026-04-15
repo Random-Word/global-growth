@@ -166,10 +166,10 @@ The poor world (below $15k GDP/capita) produces only 20% of global CO₂ despite
 Carbon gets the headlines, but the non-carbon boundaries are arguably more concerning — because they lack equivalent technological exits.
 
 ![Material footprint](charts/28_material_footprint.png)
-*Material intensity of GDP is declining at only 0.4%/yr — compared to 1.8%/yr for carbon. There is no "solar panel for copper." Material decoupling has no energy-transition equivalent.*
+*Material intensity of GDP is declining at only 0.4%/yr — compared to 1.8%/yr for carbon. But see the discussion below on whether aggregate material tonnage is the right metric: a tonne of sand is not a tonne of burned coal.*
 
 ![Material vs carbon decoupling](charts/32_material_vs_carbon.png)
-*Since 2000, carbon intensity fell ~30% while material intensity fell only ~8%. Keeping material extraction flat under 3% GDP growth requires 3%/yr decoupling — 6× the current rate.*
+*Since 2000, carbon intensity fell ~30% while material intensity fell only ~8%. However, the composition of material extraction matters enormously — the energy transition eliminates the most ecologically damaging 15% entirely.*
 
 The technology pathway analysis reveals a clear pattern:
 
@@ -204,11 +204,27 @@ The analysis so far establishes that rich-world material throughput is ecologica
 
 **The food revolution is the second key.** Precision fermentation and cultured meat are on S-curves of their own. If they scale — and cost curves suggest they could — some estimates project freeing up to 75% of agricultural land — the single biggest lever for biodiversity, nitrogen, phosphorus, and the land-system boundary simultaneously. Agriculture is the primary driver of four of the six transgressed boundaries. Shrinking its footprint solves more ecological problems than any other single intervention.
 
-**But universal US-level *material consumption* still doesn't fit.** Even with aggressive technology assumptions — eliminating fossil fuels entirely (−5.5 t/cap), cutting biomass 60% via food technology (−2.1 t), 90% metal recycling (−1.5 t), efficient construction (−2.0 t), and digital substitution (−1.0 t) — the US material footprint drops from 22.7 to ~10.6 tonnes per capita. The sustainable per-capita budget for 8.5 billion people is ~5.9 tonnes. Even the optimistic scenario is still 1.8× over.
+**But does "material footprint" measure the right thing?** The optimistic technology scenario above still leaves the US at ~10.6 tonnes per capita against a "sustainable" budget of ~5.9 (50 Gt ÷ 8.5 billion people). That sounds alarming — until you ask what the 50 Gt limit actually measures and where it comes from.
 
-At current dematerialization rates (0.4%/yr), closing this gap takes 338 years. At 3%/yr (never achieved): 46 years. At 5%/yr (unprecedented): 28 years.
+The ~50 Gt "safe" material extraction limit (UNEP International Resource Panel; Bringezu 2015, Hickel et al. 2022) is far less rigorous than the carbon budget. The carbon budget rests on hard physics: CO₂ concentrations → radiative forcing → temperature, with a clear causal chain. The material budget is an aggregate mass estimate of ecosystem capacity to absorb extraction impacts — and it treats all tonnes as equal. A tonne of sand from a quarry and a tonne of rainforest cleared for soybeans count the same. They are obviously not the same.
 
-**The crucial reframe: welfare can decouple from material throughput even when GDP doesn't fully.** The US economy is already 82% services by value. The marginal unit of American welfare is increasingly weightless — streaming, telehealth, education, AI tools, social connection, creative work. Welfare growth may be far less materially intensive than past GDP growth — better health outcomes, richer experiences, more knowledge, and more creativity do not require proportionally more tonnes of stuff. Whether this constitutes fully "weightless" growth or merely *lighter* growth is an open empirical question.
+Current global extraction (~100 Gt/yr) breaks down roughly as:
+
+| Category | Gt/yr | Share | Ecological character |
+|---|---|---|---|
+| Construction minerals (sand, gravel, stone) | 44 | 44% | Quarries, mostly local. Among the *least* ecologically damaging per tonne |
+| Biomass (crops, wood, fiber) | 24 | 24% | Agriculture and forestry. Primary driver of land, nitrogen, and phosphorus boundaries |
+| Fossil fuels (coal, oil, gas) | 15 | 15% | *Burned and gone*. Drives the carbon boundary. Eliminated by solar/wind/nuclear |
+| Metal ores | 10 | 10% | Mining. Concentrated ecological damage, but recyclable |
+| Industrial minerals | 7 | 7% | Chemicals, fertilizer feedstocks |
+
+After the energy and food transitions, the composition changes radically: fossil fuels (15 Gt) disappear entirely, agricultural biomass drops sharply, and metal ore extraction falls with circular-economy recycling. What remains is mostly construction minerals and recycled metals — ecologically far less damaging per tonne than what was removed. Whether ~55 Gt of mostly sand, gravel, and recycled steel is ecologically equivalent to today's 100 Gt (which includes burning fossil fuels and clearing forests) is not a question the aggregate metric can answer.
+
+This matters because the aggregate material footprint metric is doing heavy argumentative lifting in both our document and the papers we're responding to. The *boundary-specific* problems — nitrogen fixation at 3.4× the safe limit, biodiversity collapse (73% LPI decline), land-system change — are well-measured and genuinely severe. The "total material extraction" aggregate is a weaker, more contested measure that may significantly overstate the ecological constraint on a post-transition economy.
+
+One comparison illustrates the point: solar is roughly 4,000× less materially intensive than coal per lifetime GWh, because fossil fuels *burn through* their material input while renewables *reuse* their structure. The energy transition does not just solve the carbon problem — it eliminates 15% of global material extraction and transforms energy from a consumable input to durable capital. Nuclear power is similarly capital-intensive but fuel-light. A world running on solar, wind, and nuclear does not face the same material constraint as a world running on coal and oil, even if the aggregate tonnage metric doesn't fully capture that difference.
+
+**The crucial reframe: welfare can decouple from material throughput even when GDP doesn't fully.** The US economy is already 82% services by value. The marginal unit of American welfare is increasingly weightless — streaming, telehealth, education, AI tools, social connection, creative work. Welfare growth may be far less materially intensive than past GDP growth — better health outcomes, richer experiences, more knowledge, and more creativity do not require proportionally more tonnes of stuff. Whether this constitutes fully "weightless" growth or merely *lighter* growth is an open empirical question. But a future of continued improvement in living standards — more abundance, more research, more exploration, more wonders — does not require proportionally more material extraction, especially once energy is cheap, clean, and abundant.
 
 What does this good future look like concretely?
 
