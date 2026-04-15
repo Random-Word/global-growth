@@ -18,11 +18,11 @@ Thirteen analyses and 65 charts later, here is what the data shows:
 
 3. **The ecological constraint is real and differentiated.** Carbon has a clear technological pathway (renewables) that requires deployment at unprecedented speed. Nitrogen (3.4× over) is addressable through a stack of agricultural bioengineering, food technology, and precision farming — but requires breakthroughs (especially nitrogen-fixing cereals) not yet deployed. The aggregate "material footprint" metric overstates the constraint by treating all tonnes as equal; the boundary-specific problems (nitrogen, biodiversity, land use) are genuinely severe while the mass-based metric is weaker than the carbon budget. Six of nine planetary boundaries are breached.
 
-4. **Redistribution relieves poverty but has not historically built lasting prosperity on its own.** Every successful development transition also required high investment rates, structural transformation, and institutional capacity — though transfers play a real role in human capital and immediate relief.
+4. **Poverty is a flow problem, not a stock problem.** The papers frame poverty as a gap to be filled with transfers. But even if you lifted everyone above $6.85/day tomorrow, you'd need to do it again next year — forever — unless the underlying economies develop the productive capacity to sustain welfare. Aid is humanitarian insurance (~10% of total resource flows to the developing world); investment is the growth driver (FDI alone is 4× all ODA). The 2025 USAID cuts are a tragic natural experiment: humanitarian catastrophe, but probably minimal growth impact — because aid was never the growth engine.
 
-5. **The development recipe is clear and not region-specific.** High savings, high investment, early fertility decline, trade openness, and capable states predict success. Bangladesh, Rwanda, and Vietnam demonstrate this is not an "Asian" formula.
+5. **The development recipe is clear and not region-specific.** Peace, macroeconomic stability, high investment rates (25–40% of GDP), early fertility decline, trade openness, and capable states predict success. Bangladesh, Rwanda, and Vietnam demonstrate this is not an "Asian" formula. The most powerful rich-country levers are not aid but trade access, FDI facilitation, and cheaper remittance corridors.
 
-6. **The remaining barriers are political-economic and ecological, not arithmetic.** The world has the productive capacity to end extreme poverty and the historical evidence to know what works. What it lacks is the political will — and possibly the systemic incentives — to deliver redistribution, decarbonization, and development assistance at the necessary scale.
+6. **Sustainable consumption is about composition, not deprivation.** The ecological constraint is real but the aggregate "material footprint" conflates sand with burned coal. The ecologically destructive components of consumption — fossil fuels, nitrogen-intensive agriculture, land clearing — are artifacts of current technology, not inherent to high welfare. A post-transition economy at ~9 t/cap (mostly construction maintenance and recycled metals) has *less* ecological impact than today's 5 t/cap economy that includes fossil fuels and deforestation. The remaining barriers are political-economic — but those may not be separable from the system itself.
 
 ---
 
@@ -224,6 +224,19 @@ This matters because the aggregate material footprint metric is doing heavy argu
 
 One comparison illustrates the point: solar is roughly 4,000× less materially intensive than coal per lifetime GWh, because fossil fuels *burn through* their material input while renewables *reuse* their structure. The energy transition does not just solve the carbon problem — it eliminates 15% of global material extraction and transforms energy from a consumable input to durable capital. Nuclear power is similarly capital-intensive but fuel-light. A world running on solar, wind, and nuclear does not face the same material constraint as a world running on coal and oil, even if the aggregate tonnage metric doesn't fully capture that difference.
 
+**What does a sustainable consumption target actually look like?** The aggregate material footprint obscures a crucial insight: different categories of consumption have vastly different ecological impacts. Decomposing the US footprint (22.7 t/cap) into sustainable targets by category:
+
+| Category | Current US | Sustainable Target | How |
+|---|---|---|---|
+| Fossil fuels | 5.5 t/cap | 0.0 | Solar/wind/nuclear |
+| Construction | 7.5 | 4.0 | Dense urbanism (Japanese/European density) |
+| Biomass/food | 4.0 | 2.0 | Precision ag + bioreactor protein + waste reduction |
+| Metals | 3.0 | 1.5 | Circular economy, 90%+ recycling with cheap clean energy |
+| Other/imports | 2.7 | 1.5 | Lighter manufactured goods, digital substitution |
+| **TOTAL** | **22.7** | **9.0** | |
+
+The naive "sustainable budget" is 5.9 t/cap (50 Gt ÷ 8.5B). But if you weight by actual ecological damage rather than mass — fossil fuels cause ~40× more damage per tonne than construction minerals — the effective sustainable budget for a post-transition economy is closer to 8–10 t/cap. A person at 9 t/cap of mostly construction maintenance and recycled metal has *less* ecological impact than a person at 5 t/cap whose footprint includes fossil fuels and deforestation-driven agriculture. **Sustainable consumption is not about less stuff. It is about different stuff and different methods.**
+
 **The crucial reframe: welfare can decouple from material throughput even when GDP doesn't fully.** The US economy is already 82% services by value. The marginal unit of American welfare is increasingly weightless — streaming, telehealth, education, AI tools, social connection, creative work. Welfare growth may be far less materially intensive than past GDP growth — better health outcomes, richer experiences, more knowledge, and more creativity do not require proportionally more tonnes of stuff. Whether this constitutes fully "weightless" growth or merely *lighter* growth is an open empirical question. But a future of continued improvement in living standards — more abundance, more research, more exploration, more wonders — does not require proportionally more material extraction, especially once energy is cheap, clean, and abundant.
 
 What does this good future look like concretely?
@@ -248,14 +261,45 @@ This is not utopian fantasy — every component is on an observable S-curve or h
 
 ## Building Prosperity, Not Just Sending Checks
 
-Cash transfers are indispensable for immediate poverty relief. But the question for durable prosperity is different: what actually transforms a $4,000/capita economy into a $15,000 one?
+The papers frame poverty as a stock problem: X billion people are below the line, the gap is $Y trillion, redistribute it. But poverty is a *flow* problem. Even if you transferred $3.1 trillion to lift every person above $6.85/day, you would need to do it again next year, and the year after — forever — unless those economies develop the productive capacity to sustain rising welfare independently. The question for durable prosperity is: what actually transforms a $4,000/capita economy into a $15,000 one?
+
+### Aid is the emergency room, not the cure
+
+The scale of resource flows to developing countries reveals the real story:
+
+| Flow | ~$B/yr | Character |
+|---|---|---|
+| Foreign Direct Investment (FDI) | 870 | Factories, telecom, retail — brings capital + technology + management |
+| Remittances | 656 | Workers abroad → families directly, zero bureaucratic overhead |
+| Portfolio investment | 300 | Stocks, bonds in emerging markets |
+| Official Development Assistance (ODA) | 224 | Government-to-government aid |
+| South-South investment (China, etc.) | 150 | Belt and Road, development loans |
+| Private philanthropy (international) | 75 | Gates Foundation, charities, NGOs |
+
+**ODA is ~10% of total resource flows to developing countries.** FDI is 4× ODA. Remittances are 3×. The growth-relevant flows dwarf the aid flows.
+
+The academic evidence (Banerjee, Duflo, Easterly, Deaton, Moyo) converges on a nuanced consensus: aid *is* effective for specific interventions (vaccines, bed nets, famine relief, primary education) but has *not* generated sustained economic growth at the country level. No country has grown its way out of poverty via aid alone. Every success story — Korea, China, Vietnam, Bangladesh, Botswana, Chile — relied on FDI, exports, domestic savings, and institutional reform.
+
+Most aid is not designed to generate growth, and this is not a failure — PEPFAR is designed to save HIV patients, not grow GDP, and it succeeds at what it is designed to do. But conflating humanitarian aid with development strategy leads to confused policy on both sides. The clean narrative ("aid doesn't work") is wrong for emergencies; the clean narrative ("just redistribute more") is wrong for growth.
+
+### The 2025 aid cuts: a tragic natural experiment
+
+In early 2025, the US effectively dismantled USAID (~10,000 staff, 60–80% of bilateral programs frozen), and the UK cut ODA from 0.5% to 0.3% of GNI. By December 2025, the Trump administration began replacing multilateral aid with bilateral health deals — 17 African countries signed as of March 2026.
+
+The humanitarian impact has been **severe and immediate**: PEPFAR disruptions affecting 20M+ people on antiretrovirals, WFP food shipments delayed in Ethiopia/Somalia/Sudan, UNFPA family planning funding cut entirely. These are the programs where aid clearly saves lives, and the cuts cause measurable suffering.
+
+The growth impact, ~15 months in, appears **small** — as the aid-effectiveness literature would predict. Aid was 3–5% of GDP for the median SSA country; FDI was 2–3%, remittances 3–4%, domestic revenue 15–20%. The countries that *were* growing fast (Rwanda, Bangladesh, Vietnam) were not primarily aid-dependent. The countries most hurt — Somalia, South Sudan, DRC — were fragile states where aid was substituting for non-functioning governments, not driving growth trajectories.
+
+The tragedy is that the cuts hit *both* categories indiscriminately: PEPFAR (humanitarian, saves lives), Power Africa (investment, builds growth), and MCC compacts (the gold standard of growth-oriented aid) all frozen together. This is the sovereignty problem from our executive summary made concrete: international aid has no institutional guarantee, and one political pivot in a major donor can halve it overnight.
+
+**Private philanthropy** (~$75B/yr internationally) is more politically stable — Gates Foundation operations continued through the USAID shutdown — but cannot replace $224B in ODA, particularly for large-scale humanitarian emergencies. And the elephant in the room remains **remittances** ($656B/yr): 3× all government ODA, going directly to families with zero bureaucratic overhead, completely insulated from donor politics. In many countries, remittances already dwarf aid: Philippines ($37B remittances vs $1.5B ODA), India ($125B), Kenya ($4.1B vs $3.2B).
 
 ### The development recipe is clear — and it isn't about aid
 
 ![Divergent development paths](charts/60_divergent_paths.png)
 *East Asia pulled away from all other regions on income, savings, investment, trade openness, and education. The fertility panel is the leading indicator: East Asia began the demographic transition 20–30 years before Sub-Saharan Africa.*
 
-The factors that distinguish countries that took off from those that didn't are neither mysterious nor region-specific:
+The cross-country growth literature (Barro, Rodrik, Acemoglu, Hausmann, Pritchett) identifies a hierarchy. **Necessary conditions** (without these, nothing else works): physical security and basic macroeconomic stability. **Growth accelerators** (fundable from multiple sources): high investment rates, demographic transition, trade integration, infrastructure, and human capital. The factors that distinguish countries that took off from those that didn't:
 
 - **High domestic savings** (30–45% in East Asia vs 10–20% in SSA) — funds investment without foreign debt
 - **High investment rates** (25–40% of GDP) — the only statistically significant predictor of growth in our cross-country analysis (r = +0.69, p < 0.001)
@@ -265,12 +309,29 @@ The factors that distinguish countries that took off from those that didn't are 
 
 This recipe is not "Asian." Bangladesh (+310% GDP/capita), Rwanda (+191%), Ethiopia (+231%), and Chile (+175%) all followed variations of the same pattern. Argentina (European, resource-rich) grew slower than Rwanda (African, landlocked, post-genocide). The relevant variable is institutional, not cultural or geographic.
 
+### What rich countries can actually do
+
+The most powerful development levers available to rich countries are, paradoxically, not about money:
+
+**High impact (directly drive growth):**
+- **Trade access.** Allow developing-country exports into rich-world markets. Bangladesh's $47B/yr garment industry was enabled by EU preferential access. Vietnam's $370B in exports followed trade agreements. This is the single most effective development tool — and costs donor countries almost nothing in aggregate GDP, though the political costs are concentrated in specific industries. Rich-world agricultural subsidies (EU CAP, US Farm Bill) that undercut developing-country farmers do active harm.
+- **FDI facilitation.** Development Finance Institutions (US DFC, UK BII, Germany DEG) co-invest with private capital to de-risk pioneer investments. A $50M DFI investment in a solar project can unlock $500M in private follow-on. This is not aid — it is catalytic capital.
+- **Remittance cost reduction.** SSA remittance costs average 7.9% — the highest in the world, against a UN target of 3%. Halving them would transfer ~$3–4B/yr more to African families, more than many aid programs, at essentially zero fiscal cost to donor governments.
+
+**Moderate impact (build conditions for growth):**
+- **Infrastructure investment** structured as loans, not grants — World Bank/IDA, AfDB, MCC compacts. Africa's infrastructure gap is ~$100–170B/yr; ODA covers ~$15–20B. China's Belt and Road, whatever its terms, has provided more infrastructure to Africa in 20 years than all Western donors combined.
+- **Girls' education and family planning** — the highest-return investments in development, driving the demographic transition that unlocks everything else. Returns are real but generational (20–30 years).
+
+**What rich countries should *stop* doing** often matters as much: agricultural subsidies that undercut poor farmers, enabling capital flight and tax havens, arms sales to conflict zones, tied aid (where contractors must be from the donor country), and expensive remittance corridors.
+
+**The hardest truth:** the most important determinant of growth — institutional quality (Acemoglu & Robinson 2012) — is the variable outsiders have the *least* ability to change. Rwanda built institutions internally. So did Botswana. So did Korea. External "governance programs" have a poor track record. The things only developing countries can do — build institutions, maintain peace, invest domestically, complete the demographic transition, choose dense urbanization over sprawl — are the most important things.
+
 ### The demographic transition is the leading indicator
 
 ![Demographic dividend](charts/62_demographic_dividend.png)
 *Fertility decline since 1975 predicts GDP growth since 1990 — regardless of region. East Asia began the transition in the 1960s; SSA only in the 1990s. This 20–30 year head start is the single most important divergence driver.*
 
-When fertility falls, dependency ratios improve, women enter the labor force, families invest more per child, and savings rates rise. Bangladesh — a Muslim-majority South Asian country — achieved replacement-rate fertility through female education and family planning programs, all while growing 310%.
+When fertility falls, dependency ratios improve, women enter the labor force, families invest more per child, and savings rates rise. Bangladesh — a Muslim-majority South Asian country — achieved replacement-rate fertility through female education and family planning programs, all while growing 310%. SSA is now entering this transition (TFR falling from ~6 to ~4), which is the single strongest reason for cautious optimism about the region's next 30 years.
 
 ### Transfers can relieve poverty but cannot build economies
 
@@ -283,7 +344,7 @@ The evidence on transfers is real but limited:
 - **Graduation programs** (BRAC): 38% income gains sustained 7+ years — the best evidence that designed programs can create self-sustaining livelihoods
 - **Conditional transfers** (Bolsa Família, Progresa): +0.7 years schooling, +8% next-generation earnings — works through children over 20–30 years
 
-Historically, no country has reached $15,000 GDP/capita through transfers alone — every successful transition also required agricultural productivity gains, infrastructure investment (25–45% of GDP), export manufacturing, functioning institutions, and a demographic transition. This does not mean transfers are unimportant; no serious critic proposes transfers as a complete development model. The real proposal from redistribution advocates is transfers *plus* public investment *plus* structural transformation — a combination that looks less like "just sending checks" and more like what successful developers actually did, funded partly from external sources. The danger of *permanent* transfer dependency, however, is real: the entire ODA system delivers ~$203B/yr, and one political pivot in a major donor can halve it overnight.
+The key distinction is between "aid" structured as *investment* (infrastructure loans, DFI equity, trade capacity, girls' education) and "aid" structured as *consumption* (food aid, cash transfers, emergency health). Both are valuable. Only the first generates growth. The tragedy of indiscriminate aid cuts — like 2025 — is that they destroy both categories simultaneously. And the real proposal from redistribution advocates is transfers *plus* public investment *plus* structural transformation — a combination that looks less like "just sending checks" and more like what successful developers actually did, funded partly from external sources.
 
 ---
 
@@ -308,6 +369,10 @@ Historically, no country has reached $15,000 GDP/capita through transfers alone 
 The world has enough productive capacity to end extreme poverty. It has enough historical evidence to know what economic institutions promote development. It has enough ecological data to know the current trajectory is unsustainable across multiple dimensions.
 
 **Growth shrank the poverty gap from 18% to 1.6% of world GDP at meaningful thresholds. The remaining barriers are political-economic and ecological — but those may not be separable from the system itself.**
+
+Poverty is a *flow problem*, not a stock problem. Even if global redistribution closed the gap at $6.85/day — costing perhaps $1.1 trillion annually — every dollar would need to flow again next year unless the recipient economies had developed the productive capacity to sustain that welfare independently. The papers' redistribution arithmetic treats poverty as a reservoir to be filled; the development evidence says it is a leak to be fixed. Both the filling and the fixing are needed, but confusing one for the other leads to policy failure.
+
+The good news is that the growth drivers are not mysterious: peace, investment, demographic transition, trade, institutions. The most powerful rich-country levers — trade access, FDI facilitation, cheaper remittance corridors — cost almost nothing in fiscal terms and dwarf the impact of ODA on growth trajectories. The most important things — institutional quality, domestic savings, security — are things only developing countries can do for themselves.
 
 Capitalism is a powerful energy source that has generated unprecedented material progress and made redistribution cheaper than at any point in history. The question is whether we can build the containment structures — redistribution, climate policy, ecological governance, development strategy — fast enough. The papers make a compelling case that the containment is currently insufficient. They do not make a compelling case that the reactor should be shut down.
 
