@@ -324,7 +324,11 @@ ax.plot(
 )
 ax.axhline(1300, color="red", ls="--", lw=1.5, alpha=0.6)
 ax.text(
-    2014.5, 1350, "US peak demand ≈ 1,300 GW (for reference)", color="red", fontsize=9
+    2014.5,
+    1350,
+    "US total installed generating capacity ≈ 1,300 GW (for reference)",
+    color="red",
+    fontsize=9,
 )
 
 ax.set_xlabel("Year")
@@ -370,7 +374,6 @@ lcos = pd.DataFrame(
             "Iron-air\n(100h pilot est.)",
         ],
         "lcos": [180, 210, 320, 180, 150, 25, 80],  # $/MWh discharged
-        "proven_at_gw": [True, True, False, False, True, False, False],
         "tier": [1, 1, 2, 2, 1, 3, 3],
     }
 )
@@ -382,10 +385,11 @@ bars = ax.bar(
     range(len(lcos)), lcos["lcos"], color=bar_colors, edgecolor="black", linewidth=1
 )
 
-# Annotate bars
-for i, (bar, proven) in enumerate(zip(bars, lcos["proven_at_gw"])):
+# Annotate bars (label matches assigned tier)
+tier_label = {1: "✓ proven at GW scale", 2: "commercial, scaling", 3: "pilot / target only"}
+for i, bar in enumerate(bars):
     h = bar.get_height()
-    marker = "✓ at GW scale" if proven else "pre-commercial"
+    marker = tier_label[lcos["tier"].iloc[i]]
     ax.text(
         bar.get_x() + bar.get_width() / 2,
         h + 8,
@@ -468,10 +472,10 @@ ax.set_title(
 ax.legend(loc="upper left", fontsize=9)
 ax.grid(True, alpha=0.3)
 
-# Lithium panel (IEA CM Outlook 2024, STEPS vs NZE; figures in kt LCE)
+# Lithium panel (IEA CM Outlook 2024, STEPS vs NZE; figures in kt lithium content)
 ax = axes[1]
 years_li = [2023, 2030, 2040]
-steps = [170, 520, 900]  # kt LCE/yr
+steps = [170, 520, 900]  # kt lithium content / yr
 nze = [170, 820, 1700]
 announced_li = [170, 480, 650]
 ax.plot(years_li, steps, "-o", color="#0072b2", lw=2.5, label="IEA STEPS demand")
@@ -485,7 +489,7 @@ ax.plot(
     label="Announced project capacity",
 )
 ax.set_xlabel("Year")
-ax.set_ylabel("kt lithium (LCE) / yr")
+ax.set_ylabel("kt lithium (contained metal) / yr")
 ax.set_title(
     "Lithium: announced projects cover ~65% of STEPS\n" "~40% of NZE demand by 2040",
     fontsize=11,
@@ -686,22 +690,26 @@ sector = pd.DataFrame(
             "Road transport",
             "Industry: low-temp\nheat (<200°C)",
             "Industry: high-temp\nheat (>400°C)",
-            "Industry: feedstock\n(petchem, steel, cement)",
+            "Industry: process\nfeedstocks (petchem, H2-DRI)",
+            "Cement\n(process CO2)",
             "Aviation",
             "Shipping",
             "Agriculture",
+            "Other (rail, pipelines,\ncommercial, unspecified)",
         ],
-        "share_final": [29, 19, 8, 15, 13, 3, 3, 2],  # % of global final energy
-        "tier": [1, 1, 2, 2, 3, 3, 3, 2],
+        "share_final": [30, 20, 8, 15, 7, 3, 3, 3, 2, 9],  # % of global final energy (sums to 100)
+        "tier": [1, 1, 2, 2, 3, 3, 3, 3, 2, 2],
         "pathway": [
             "Heat pumps + elec + insulation",
             "EVs (cars), e-trucks emerging",
             "Industrial heat pumps, electric boilers",
             "Green H2, electric arc, CCS — scaling",
-            "H2-DRI steel, new cement chem, biogenic petchem — pre-commercial at scale",
+            "H2-DRI steel, biogenic petchem — pre-commercial at scale",
+            "CCS or novel chemistries (CSA, geopolymer) — calcination CO2",
             "SAF (bio/synthetic) — 0.2% share, expensive",
             "Ammonia/methanol, battery-electric short-haul — early pilots",
             "Electric tractors, low-C fertilizers, precision ag",
+            "Mostly already electrified or efficiency-driven",
         ],
     }
 )
