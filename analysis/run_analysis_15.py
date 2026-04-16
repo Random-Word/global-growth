@@ -47,7 +47,7 @@ IMF_LIGHT = {
     "BWA": "Botswana",
     "MYS": "Malaysia",
     "THA": "Thailand",  # Used IMF in 1997 but rarely otherwise
-    "CHL": "Chile",     # Used IMF in 1980s but reformed independently
+    "CHL": "Chile",  # Used IMF in 1980s but reformed independently
     "BGD": "Bangladesh",
     "RWA": "Rwanda",
     "IDN": "Indonesia",
@@ -67,18 +67,33 @@ ASIAN_NO_IMF = {
 
 # Sub-Saharan Africa: for structural adjustment era comparison
 SSA_COUNTRIES = {
-    "GHA": "Ghana", "KEN": "Kenya", "SEN": "Senegal", "TZA": "Tanzania",
-    "ZMB": "Zambia", "MOZ": "Mozambique", "NGA": "Nigeria", "UGA": "Uganda",
-    "ETH": "Ethiopia", "MLI": "Mali", "BFA": "Burkina Faso", "MWI": "Malawi",
-    "CMR": "Cameroon", "CIV": "Côte d'Ivoire", "MDG": "Madagascar",
+    "GHA": "Ghana",
+    "KEN": "Kenya",
+    "SEN": "Senegal",
+    "TZA": "Tanzania",
+    "ZMB": "Zambia",
+    "MOZ": "Mozambique",
+    "NGA": "Nigeria",
+    "UGA": "Uganda",
+    "ETH": "Ethiopia",
+    "MLI": "Mali",
+    "BFA": "Burkina Faso",
+    "MWI": "Malawi",
+    "CMR": "Cameroon",
+    "CIV": "Côte d'Ivoire",
+    "MDG": "Madagascar",
 }
 
 # ── Data fetching ───────────────────────────────────────────────────────────
-ALL_COUNTRIES = list(set(
-    list(IMF_HEAVY.keys()) + list(IMF_LIGHT.keys()) +
-    list(ASIAN_IMF.keys()) + list(ASIAN_NO_IMF.keys()) +
-    list(SSA_COUNTRIES.keys())
-))
+ALL_COUNTRIES = list(
+    set(
+        list(IMF_HEAVY.keys())
+        + list(IMF_LIGHT.keys())
+        + list(ASIAN_IMF.keys())
+        + list(ASIAN_NO_IMF.keys())
+        + list(SSA_COUNTRIES.keys())
+    )
+)
 
 INDICATORS = {
     "NY.GDP.PCAP.PP.KD": "GDP per capita (PPP, constant 2021$)",
@@ -100,7 +115,9 @@ for code, label in INDICATORS.items():
             # Reshape: rows are country, columns are years
             df = df.drop(columns=["Country"], errors="ignore")
             # Columns are like 'YR1970', 'YR1971', etc
-            df.columns = [int(c.replace("YR", "")) if "YR" in str(c) else c for c in df.columns]
+            df.columns = [
+                int(c.replace("YR", "")) if "YR" in str(c) else c for c in df.columns
+            ]
             data[code] = df
             print(f"  ✓ {label}: {df.shape}")
     except Exception as e:
@@ -173,7 +190,12 @@ ax.axhline(100, color="gray", ls="--", alpha=0.3)
 
 # Panel B: Average GDP per capita growth by decade
 ax = axes[1]
-decades = [("1980s", 1980, 1989), ("1990s", 1990, 1999), ("2000s", 2000, 2009), ("2010s", 2010, 2019)]
+decades = [
+    ("1980s", 1980, 1989),
+    ("1990s", 1990, 1999),
+    ("2000s", 2000, 2009),
+    ("2010s", 2010, 2019),
+]
 width = 0.35
 x = np.arange(len(decades))
 heavy_vals = []
@@ -182,8 +204,12 @@ for label, ys, ye in decades:
     heavy_vals.append(get_group_avg("NY.GDP.PCAP.KD.ZG", IMF_HEAVY, ys, ye))
     light_vals.append(get_group_avg("NY.GDP.PCAP.KD.ZG", IMF_LIGHT, ys, ye))
 
-bars1 = ax.bar(x - width/2, heavy_vals, width, label="IMF-heavy", color="#d32f2f", alpha=0.8)
-bars2 = ax.bar(x + width/2, light_vals, width, label="IMF-light", color="#1976d2", alpha=0.8)
+bars1 = ax.bar(
+    x - width / 2, heavy_vals, width, label="IMF-heavy", color="#d32f2f", alpha=0.8
+)
+bars2 = ax.bar(
+    x + width / 2, light_vals, width, label="IMF-light", color="#1976d2", alpha=0.8
+)
 ax.set_xticks(x)
 ax.set_xticklabels([d[0] for d in decades])
 ax.set_ylabel("Avg GDP/capita growth (%/yr)")
@@ -196,14 +222,27 @@ for bars in [bars1, bars2]:
     for bar in bars:
         h = bar.get_height()
         if not np.isnan(h):
-            ax.annotate(f"{h:.1f}%", xy=(bar.get_x() + bar.get_width()/2, h),
-                       xytext=(0, 3), textcoords="offset points", ha="center", fontsize=8)
+            ax.annotate(
+                f"{h:.1f}%",
+                xy=(bar.get_x() + bar.get_width() / 2, h),
+                xytext=(0, 3),
+                textcoords="offset points",
+                ha="center",
+                fontsize=8,
+            )
 
-fig.suptitle("IMF-Heavy vs IMF-Light Countries: Growth Trajectories",
-             fontsize=14, fontweight="bold", y=1.02)
+fig.suptitle(
+    "IMF-Heavy vs IMF-Light Countries: Growth Trajectories",
+    fontsize=14,
+    fontweight="bold",
+    y=1.02,
+)
 fig.tight_layout()
-fig.savefig(os.path.join(CHARTS_DIR, "72_imf_heavy_vs_light_growth.png"),
-            dpi=150, bbox_inches="tight")
+fig.savefig(
+    os.path.join(CHARTS_DIR, "72_imf_heavy_vs_light_growth.png"),
+    dpi=150,
+    bbox_inches="tight",
+)
 plt.close()
 print("  Saved chart 72")
 
@@ -219,8 +258,12 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 ax = axes[0]
 crisis_countries = {**ASIAN_IMF, **ASIAN_NO_IMF}
 colors_crisis = {
-    "KOR": ("#d32f2f", "-"), "THA": ("#e57373", "-"), "IDN": ("#ff8a80", "-"),
-    "MYS": ("#1976d2", "--"), "CHN": ("#64b5f6", "--"), "VNM": ("#90caf9", "--"),
+    "KOR": ("#d32f2f", "-"),
+    "THA": ("#e57373", "-"),
+    "IDN": ("#ff8a80", "-"),
+    "MYS": ("#1976d2", "--"),
+    "CHN": ("#64b5f6", "--"),
+    "VNM": ("#90caf9", "--"),
 }
 for cc, name in crisis_countries.items():
     ts = get_country_series("NY.GDP.PCAP.PP.KD", cc, list(range(1994, 2010)))
@@ -231,8 +274,13 @@ for cc, name in crisis_countries.items():
 
 ax.axvline(1997, color="gray", ls=":", lw=1, alpha=0.7)
 ax.axvline(1998, color="gray", ls=":", lw=1, alpha=0.7)
-ax.annotate("Crisis", xy=(1997.5, ax.get_ylim()[1] * 0.95 if ax.get_ylim()[1] > 100 else 95),
-           ha="center", fontsize=9, color="gray")
+ax.annotate(
+    "Crisis",
+    xy=(1997.5, ax.get_ylim()[1] * 0.95 if ax.get_ylim()[1] > 100 else 95),
+    ha="center",
+    fontsize=9,
+    color="gray",
+)
 ax.set_xlabel("Year")
 ax.set_ylabel("GDP per capita (indexed, 1996 = 100)")
 ax.set_title("A. GDP per capita recovery paths")
@@ -245,7 +293,9 @@ for cc, name in crisis_countries.items():
     ts = get_country_series("NY.GDP.PCAP.KD.ZG", cc, list(range(1995, 2005)))
     if not ts.empty:
         color, ls = colors_crisis[cc]
-        ax.plot(ts.index, ts.values, lw=2, label=name, color=color, ls=ls, marker="o", ms=4)
+        ax.plot(
+            ts.index, ts.values, lw=2, label=name, color=color, ls=ls, marker="o", ms=4
+        )
 
 ax.axvline(1997, color="gray", ls=":", lw=1, alpha=0.7)
 ax.axhline(0, color="black", lw=0.5)
@@ -254,11 +304,18 @@ ax.set_ylabel("GDP per capita growth (%)")
 ax.set_title("B. Annual growth rates around the crisis")
 ax.legend(fontsize=8, loc="lower right")
 
-fig.suptitle("1997 Asian Financial Crisis: IMF Program vs No IMF Program",
-             fontsize=14, fontweight="bold", y=1.02)
+fig.suptitle(
+    "1997 Asian Financial Crisis: IMF Program vs No IMF Program",
+    fontsize=14,
+    fontweight="bold",
+    y=1.02,
+)
 fig.tight_layout()
-fig.savefig(os.path.join(CHARTS_DIR, "73_asian_crisis_imf_vs_no_imf.png"),
-            dpi=150, bbox_inches="tight")
+fig.savefig(
+    os.path.join(CHARTS_DIR, "73_asian_crisis_imf_vs_no_imf.png"),
+    dpi=150,
+    bbox_inches="tight",
+)
 plt.close()
 print("  Saved chart 73")
 
@@ -290,8 +347,16 @@ for label, ys, ye in eras:
     stds.append(np.std(country_avgs) if country_avgs else np.nan)
 
 colors_era = ["#4caf50", "#d32f2f", "#1976d2", "#ff9800"]
-bars = ax.bar(range(len(eras)), vals, color=colors_era, alpha=0.8,
-              yerr=stds, capsize=5, edgecolor="gray", linewidth=0.5)
+bars = ax.bar(
+    range(len(eras)),
+    vals,
+    color=colors_era,
+    alpha=0.8,
+    yerr=stds,
+    capsize=5,
+    edgecolor="gray",
+    linewidth=0.5,
+)
 ax.set_xticks(range(len(eras)))
 ax.set_xticklabels([e[0] for e in eras])
 ax.set_ylabel("Avg GDP/capita growth (%/yr)")
@@ -299,8 +364,15 @@ ax.set_title("A. SSA growth by era (15 countries)")
 ax.axhline(0, color="black", lw=0.5)
 for i, v in enumerate(vals):
     if not np.isnan(v):
-        ax.annotate(f"{v:.1f}%", xy=(i, v), xytext=(0, 5 if v >= 0 else -15),
-                   textcoords="offset points", ha="center", fontsize=10, fontweight="bold")
+        ax.annotate(
+            f"{v:.1f}%",
+            xy=(i, v),
+            xytext=(0, 5 if v >= 0 else -15),
+            textcoords="offset points",
+            ha="center",
+            fontsize=10,
+            fontweight="bold",
+        )
 
 # Panel B: SSA investment rates by era
 ax = axes[1]
@@ -308,22 +380,42 @@ inv_vals = []
 for label, ys, ye in eras:
     inv_vals.append(get_group_avg("NE.GDI.TOTL.ZS", SSA_COUNTRIES, ys, ye))
 
-bars2 = ax.bar(range(len(eras)), inv_vals, color=colors_era, alpha=0.8,
-               edgecolor="gray", linewidth=0.5)
+bars2 = ax.bar(
+    range(len(eras)),
+    inv_vals,
+    color=colors_era,
+    alpha=0.8,
+    edgecolor="gray",
+    linewidth=0.5,
+)
 ax.set_xticks(range(len(eras)))
 ax.set_xticklabels([e[0] for e in eras])
 ax.set_ylabel("Gross capital formation (% GDP)")
 ax.set_title("B. SSA investment rates by era")
 for i, v in enumerate(inv_vals):
     if not np.isnan(v):
-        ax.annotate(f"{v:.0f}%", xy=(i, v), xytext=(0, 5),
-                   textcoords="offset points", ha="center", fontsize=10, fontweight="bold")
+        ax.annotate(
+            f"{v:.0f}%",
+            xy=(i, v),
+            xytext=(0, 5),
+            textcoords="offset points",
+            ha="center",
+            fontsize=10,
+            fontweight="bold",
+        )
 
-fig.suptitle("Sub-Saharan Africa: Growth Before, During, and After Structural Adjustment",
-             fontsize=14, fontweight="bold", y=1.02)
+fig.suptitle(
+    "Sub-Saharan Africa: Growth Before, During, and After Structural Adjustment",
+    fontsize=14,
+    fontweight="bold",
+    y=1.02,
+)
 fig.tight_layout()
-fig.savefig(os.path.join(CHARTS_DIR, "74_ssa_structural_adjustment_eras.png"),
-            dpi=150, bbox_inches="tight")
+fig.savefig(
+    os.path.join(CHARTS_DIR, "74_ssa_structural_adjustment_eras.png"),
+    dpi=150,
+    bbox_inches="tight",
+)
 plt.close()
 print("  Saved chart 74")
 
@@ -365,11 +457,18 @@ ax.set_ylabel("Education expenditure (% GDP)")
 ax.set_title("B. Education spending")
 ax.legend(fontsize=9)
 
-fig.suptitle("Social Spending: IMF-Heavy vs IMF-Light Countries",
-             fontsize=14, fontweight="bold", y=1.02)
+fig.suptitle(
+    "Social Spending: IMF-Heavy vs IMF-Light Countries",
+    fontsize=14,
+    fontweight="bold",
+    y=1.02,
+)
 fig.tight_layout()
-fig.savefig(os.path.join(CHARTS_DIR, "75_social_spending_imf_groups.png"),
-            dpi=150, bbox_inches="tight")
+fig.savefig(
+    os.path.join(CHARTS_DIR, "75_social_spending_imf_groups.png"),
+    dpi=150,
+    bbox_inches="tight",
+)
 plt.close()
 print("  Saved chart 75")
 
@@ -391,40 +490,72 @@ for cc, name in all_study.items():
     growth_avg = get_country_series("NY.GDP.PCAP.KD.ZG", cc, list(range(1990, 2024)))
     if not gdp_1990.empty and not growth_avg.empty and 1990 in gdp_1990.index:
         group = "IMF-heavy" if cc in IMF_HEAVY else "IMF-light"
-        scatter_data.append({
-            "code": cc, "name": name,
-            "gdp_1990": gdp_1990[1990],
-            "avg_growth": growth_avg.mean(),
-            "group": group,
-        })
+        scatter_data.append(
+            {
+                "code": cc,
+                "name": name,
+                "gdp_1990": gdp_1990[1990],
+                "avg_growth": growth_avg.mean(),
+                "group": group,
+            }
+        )
 
 sdf = pd.DataFrame(scatter_data)
 if not sdf.empty:
-    for group, color, marker in [("IMF-heavy", "#d32f2f", "o"), ("IMF-light", "#1976d2", "^")]:
+    for group, color, marker in [
+        ("IMF-heavy", "#d32f2f", "o"),
+        ("IMF-light", "#1976d2", "^"),
+    ]:
         gdf = sdf[sdf["group"] == group]
-        ax.scatter(gdf["gdp_1990"], gdf["avg_growth"], c=color, marker=marker,
-                  s=80, label=group, alpha=0.85, edgecolors="white", linewidth=0.5)
+        ax.scatter(
+            gdf["gdp_1990"],
+            gdf["avg_growth"],
+            c=color,
+            marker=marker,
+            s=80,
+            label=group,
+            alpha=0.85,
+            edgecolors="white",
+            linewidth=0.5,
+        )
         for _, row in gdf.iterrows():
-            ax.annotate(row["code"], (row["gdp_1990"], row["avg_growth"]),
-                       xytext=(5, 3), textcoords="offset points", fontsize=7)
+            ax.annotate(
+                row["code"],
+                (row["gdp_1990"], row["avg_growth"]),
+                xytext=(5, 3),
+                textcoords="offset points",
+                fontsize=7,
+            )
 
     ax.set_xlabel("GDP per capita in 1990 (PPP, constant 2021$)")
     ax.set_ylabel("Average GDP/capita growth 1990–2023 (%/yr)")
-    ax.set_title("The Selection Problem: Countries Seek IMF Help Because They're In Crisis",
-                fontsize=12, fontweight="bold")
+    ax.set_title(
+        "The Selection Problem: Countries Seek IMF Help Because They're In Crisis",
+        fontsize=12,
+        fontweight="bold",
+    )
     ax.legend(fontsize=10)
     ax.axhline(0, color="black", lw=0.5)
 
     # Add note
-    ax.text(0.02, 0.02,
-            "Countries that relied heavily on IMF programs were generally poorer\n"
-            "and more crisis-prone to begin with — making causal inference difficult.",
-            transform=ax.transAxes, fontsize=8, va="bottom", style="italic",
-            bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.3))
+    ax.text(
+        0.02,
+        0.02,
+        "Countries that relied heavily on IMF programs were generally poorer\n"
+        "and more crisis-prone to begin with — making causal inference difficult.",
+        transform=ax.transAxes,
+        fontsize=8,
+        va="bottom",
+        style="italic",
+        bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.3),
+    )
 
 fig.tight_layout()
-fig.savefig(os.path.join(CHARTS_DIR, "76_imf_selection_problem.png"),
-            dpi=150, bbox_inches="tight")
+fig.savefig(
+    os.path.join(CHARTS_DIR, "76_imf_selection_problem.png"),
+    dpi=150,
+    bbox_inches="tight",
+)
 plt.close()
 print("  Saved chart 76")
 
@@ -452,8 +583,13 @@ ax.set_ylabel("Gross capital formation (% GDP)")
 ax.set_title("A. Investment rates")
 ax.legend(fontsize=9)
 ax.axhline(25, color="green", ls=":", alpha=0.4)
-ax.annotate("25% threshold\n(development minimum)", xy=(1982, 25.5),
-           fontsize=7, color="green", alpha=0.7)
+ax.annotate(
+    "25% threshold\n(development minimum)",
+    xy=(1982, 25.5),
+    fontsize=7,
+    color="green",
+    alpha=0.7,
+)
 
 # Panel B: Current account balance
 ax = axes[1]
@@ -471,11 +607,18 @@ ax.set_title("B. External balance")
 ax.legend(fontsize=9)
 ax.axhline(0, color="black", lw=0.5)
 
-fig.suptitle("Investment & External Balance: IMF-Heavy vs IMF-Light Countries",
-             fontsize=14, fontweight="bold", y=1.02)
+fig.suptitle(
+    "Investment & External Balance: IMF-Heavy vs IMF-Light Countries",
+    fontsize=14,
+    fontweight="bold",
+    y=1.02,
+)
 fig.tight_layout()
-fig.savefig(os.path.join(CHARTS_DIR, "77_investment_imf_groups.png"),
-            dpi=150, bbox_inches="tight")
+fig.savefig(
+    os.path.join(CHARTS_DIR, "77_investment_imf_groups.png"),
+    dpi=150,
+    bbox_inches="tight",
+)
 plt.close()
 print("  Saved chart 77")
 
@@ -487,7 +630,11 @@ print("\n" + "=" * 70)
 print("SUMMARY: IMF-Heavy vs IMF-Light Countries")
 print("=" * 70)
 
-for period_name, ys, ye in [("1980–1999", 1980, 1999), ("2000–2023", 2000, 2023), ("1990–2023", 1990, 2023)]:
+for period_name, ys, ye in [
+    ("1980–1999", 1980, 1999),
+    ("2000–2023", 2000, 2023),
+    ("1990–2023", 1990, 2023),
+]:
     print(f"\n  {period_name}:")
     for group_name, group_dict in [("IMF-heavy", IMF_HEAVY), ("IMF-light", IMF_LIGHT)]:
         g = get_group_avg("NY.GDP.PCAP.KD.ZG", group_dict, ys, ye)
@@ -505,7 +652,9 @@ for cc, name in {**ASIAN_IMF, **ASIAN_NO_IMF}.items():
     recovery = get_country_series("NY.GDP.PCAP.KD.ZG", cc, list(range(1999, 2006)))
     trough = g98.iloc[0] if not g98.empty else np.nan
     rec_avg = recovery.mean() if not recovery.empty else np.nan
-    print(f"  {name:25s}: 1998 trough={trough:+.1f}%  recovery 1999-2005={rec_avg:+.1f}%/yr")
+    print(
+        f"  {name:25s}: 1998 trough={trough:+.1f}%  recovery 1999-2005={rec_avg:+.1f}%/yr"
+    )
 
 # SSA era comparison
 print("\n" + "=" * 70)
