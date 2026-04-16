@@ -19,6 +19,10 @@ CHARTS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "charts")
 os.makedirs(CHARTS_DIR, exist_ok=True)
 
 # ── Country groups ──────────────────────────────────────────────────────────
+# Selection criteria: hand-picked to illustrate well-known development
+# trajectories ("success" = sustained high growth; "challenge" = slower growth
+# or debt crises).  Group averages use EQUAL country weights, which do not
+# reflect population or GDP size — China and Botswana count the same.
 SUCCESS = {
     "KOR": "South Korea",
     "CHN": "China",
@@ -86,7 +90,11 @@ def fetch_indicator(indicator, economies, years=range(1970, 2024)):
 
 
 def group_avg(df, group_dict, label):
-    """Average values for a group of countries by year."""
+    """Average values for a group of countries by year.
+
+    Uses equal country weights (unweighted mean), so small economies
+    count the same as large ones.  See cohort note above.
+    """
     sub = df[df["economy"].isin(group_dict.keys())].copy()
     avg = sub.groupby("year")["value"].mean().reset_index()
     avg["group"] = label
@@ -356,7 +364,10 @@ ds_rev = pd.merge(
     how="inner",
 )
 # Rough approximation: debt_service_pct_revenue ≈ (debt_service/GNI) / (revenue/GDP) * 100
-# Since GNI ≈ GDP for most countries, this is a reasonable approximation
+# Since GNI ≈ GDP for most countries, this is a reasonable approximation.
+# NOTE: This is a ROUGH PROXY.  GNI can diverge from GDP significantly for
+# countries with large net factor income flows (e.g. remittance-heavy or
+# resource-rent economies).  Treat the resulting ratio as indicative.
 ds_rev["ds_pct_revenue"] = (ds_rev["debt_service_gni"] / ds_rev["revenue_gdp"]) * 100
 
 # Latest available year comparison
@@ -479,7 +490,10 @@ except Exception as e:
 
 if not has_composition:
     print("  Debt composition data not available via API. Using known data for chart.")
-    # Use well-documented debt composition data (World Bank IDS 2024, IMF)
+    # Hardcoded fallback: approximate shares from World Bank International
+    # Debt Statistics (IDS) 2024 edition and IMF WEO Oct-2023.
+    # These are hand-entered round numbers, not exact.  Update if newer
+    # IDS data becomes available.
     # SSA external debt composition 2023 (% of total external debt)
     ssa_comp = pd.DataFrame(
         {
@@ -786,9 +800,11 @@ COMPARISON:
 
 THE CAUSAL QUESTION:
 Is high debt a CAUSE of low growth or a SYMPTOM?
-Both: it is a vicious cycle.
-- Low growth → low revenue → borrow to fund basics → high debt
-- High debt service → less investment → low growth
+The descriptive data cannot settle this; both directions are plausible
+and the relationship is likely reinforcing (a vicious cycle), but we
+cannot establish causation from these cross-country comparisons alone.
+- Low growth is associated with low revenue → borrowing → high debt
+- High debt service is associated with less investment → low growth
 Breaking the cycle requires either:
   a) Debt relief (external: HIPC/MDRI model)
   b) Growth acceleration (internal: investment + exports)

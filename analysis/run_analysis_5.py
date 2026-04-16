@@ -29,7 +29,11 @@ CHART_DIR = "charts"
 co2 = pd.read_csv("data/raw/owid_co2.csv")
 maddison = pd.read_csv("data/processed/maddison.csv")
 
-# Income groups (World Bank 2024 thresholds on GNI per capita, we'll approximate with GDP per capita)
+# Income groups — hand-selected country lists loosely guided by World Bank 2024
+# GNI per-capita thresholds.  Ideally these would be assigned algorithmically
+# (e.g. merge WB classification table or apply threshold cuts to the data), but
+# the lists below were curated manually and may not match the official WB
+# groupings exactly.
 HIGH_INCOME = [
     "United States",
     "United Kingdom",
@@ -723,6 +727,9 @@ print("─" * 80)
 fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 
 # 4a: Countries with absolute CO2 decoupling (GDP up, CO2 down)
+# NOTE: Published literature (e.g. Haberl et al. 2020) identifies ~30+ countries
+# with absolute decoupling.  Only a hand-selected sample of 7 high-income
+# economies is plotted here; the chart should not be read as exhaustive.
 ax = axes[0, 0]
 absolute_decouplers = [
     "United States",
@@ -970,6 +977,10 @@ print("─" * 80)
 mad = maddison[maddison["year"] == 2022].dropna(subset=["gdppc", "pop"])
 
 # Define "good life" threshold from our earlier analysis: ~$15,000 PPP (2017 int'l $)
+# NOTE: Maddison GDP/cap values are in 2011 international dollars, whereas this
+# $15k target was derived from 2017-PPP WDI data in run_analysis_3.  The two
+# price bases are not directly comparable, so the required growth multiples and
+# timelines computed below should be treated as approximate.
 GOOD_LIFE_THRESHOLD = 15000
 DECENT_LIFE = (
     6850  # roughly $6.85/day * 365 * PPP adjustment ≈ corresponds to UMI threshold
@@ -1278,7 +1289,8 @@ print(
    - The rich world COULD sustain most of its material standard internally
    - The real trade dependency runs the other way: poor countries depend on exports to rich markets
 
-4. ABSOLUTE DECOUPLING IS HAPPENING IN ~30+ COUNTRIES
+4. ABSOLUTE DECOUPLING IS HAPPENING (published estimates cite ~30+ countries;
+   only a hand-selected sample of ~7 is examined here)
    - US, UK, Germany, France, Japan all peaked and are declining in absolute CO₂
    - But the rates are too slow for 1.5°C (need ~3.5%/yr, achieving ~2-3%/yr)
    - Solar + storage acceleration could change this dramatically

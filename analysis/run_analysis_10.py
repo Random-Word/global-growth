@@ -98,9 +98,14 @@ print("=" * 70)
 ###############################################################################
 print("\n  Chart 41: Development anatomy at $15k")
 
-# Use latest available data for each country
+# Cross-sectional snapshot: for each country+indicator, take the most recent
+# available value within a recent window (2018-2023).  Each indicator may come
+# from a different year within that window, which is unavoidable when coverage
+# varies across indicators and countries.
+RECENT_WINDOW = (2018, 2023)
+_recent = wdi[(wdi["year"] >= RECENT_WINDOW[0]) & (wdi["year"] <= RECENT_WINDOW[1])].copy()
 latest = (
-    wdi.sort_values("year", ascending=False)
+    _recent.sort_values("year", ascending=False)
     .groupby("country_code")
     .first()
     .reset_index()
@@ -502,7 +507,16 @@ print("  -> Saved 42_efficient_outliers.png")
 ###############################################################################
 print("\n  Chart 43: Successful transition paths")
 
-# Track countries that went from <$3k to >$10k GDP/cap (PPP)
+# Hand-picked cohorts.  Selection criteria:
+#   transition_countries — countries that started below ~$3k GDP/cap (PPP) in
+#     their earliest WDI observation and subsequently crossed $10k, spanning
+#     diverse regions and decades (East Asia, SE Asia, S Asia, Africa, LatAm,
+#     E Europe).  India is included as an in-progress transition.
+#   stalled_countries — countries that were below $3k in the 1990s and remain
+#     below or near $10k today, covering major SSA economies plus Mexico as a
+#     middle-income-trap example.
+# Ideally these would be computed from the data (as in run_analysis_2.py), but
+# the narrative labels and curated diversity are hard to replicate automatically.
 transition_countries = {
     "KOR": "South Korea",
     "CHN": "China",
@@ -516,7 +530,7 @@ transition_countries = {
     "IND": "India",
 }
 
-# Stalled countries for comparison
+# See selection criteria note above.
 stalled_countries = {
     "NGA": "Nigeria",
     "COD": "DR Congo",
@@ -650,7 +664,10 @@ for code, name in transition_countries.items():
         continue
     first = cdata.iloc[0]
     last = cdata.iloc[-1]
-    # Find year crossed $3k and $10k
+    # Find year crossed $3k and $10k in current-PPP terms.
+    # NOTE: thresholds are approximate because gdppc_ppp_current uses the
+    # last year's PPP conversion factor, not a constant-PPP series, so
+    # earlier crossing years are shifted by cumulative PPP-base changes.
     crossed_3k = cdata[cdata["gdppc_ppp_current"] >= 3000]
     crossed_10k = cdata[cdata["gdppc_ppp_current"] >= 10000]
     yr_3k = int(crossed_3k.iloc[0]["year"]) if len(crossed_3k) > 0 else None
@@ -1436,7 +1453,9 @@ print(
   Cash transfers can move people from extreme poverty ($2.15) to low-income ($5-6/day).
   They CANNOT build the institutional and physical infrastructure needed to reach $15k.
   
-  No country has ever transferred its way to $15k GDP/capita. Every success required:
+  No country has yet reached $15k GDP/cap primarily through external transfers.
+  Success cases share common elements, though institutional and historical
+  context matters:
   1. Agricultural productivity revolution (freeing labor)
   2. Infrastructure investment (roads, electricity, ports)
   3. Human capital investment (education, health)

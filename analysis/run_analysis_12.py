@@ -38,6 +38,18 @@ warnings.filterwarnings("ignore")
 sns.set_theme(style="whitegrid", palette="colorblind")
 CHART_DIR = "charts"
 
+# ── Load PIP survey mean income (actual household-survey data) ────────────────
+import os
+
+pip_mean = pd.read_csv(
+    os.path.join("data", "raw", "pip_country_2.15.csv"),
+    usecols=["country_code", "reporting_year", "reporting_level", "mean"],
+)
+pip_mean = pip_mean[pip_mean["reporting_level"] == "national"].copy()
+pip_mean["survey_mean_annual"] = pip_mean["mean"] * 365.25
+pip_mean = pip_mean.rename(columns={"country_code": "cc", "reporting_year": "year"})
+pip_mean = pip_mean[["cc", "year", "survey_mean_annual"]].dropna()
+
 # ── Robust WDI downloader ─────────────────────────────────────────────────────
 session = requests.Session()
 retries = Retry(total=5, backoff_factor=2, status_forcelist=[429, 500, 502, 503, 504])
@@ -117,6 +129,15 @@ Q_COLS = ["bottom20", "q2", "q3", "q4", "top20"]
 # Only keep rows where all quintiles + GDP are present
 complete = merged.dropna(subset=Q_COLS + ["gdppc_ppp"]).copy()
 complete = complete.sort_values(["cc", "year"])
+
+# Merge PIP survey mean income (household-survey-based, not GDP/cap)
+complete = complete.merge(pip_mean, on=["cc", "year"], how="left")
+complete["survey_mean_annual"] = complete.groupby("cc")[
+    "survey_mean_annual"
+].transform(lambda s: s.interpolate(method="linear", limit_area="inside"))
+# Use survey mean where available; GDP/cap as fallback
+complete["income_base"] = complete["survey_mean_annual"].fillna(complete["gdppc_ppp"])
+
 print(
     f"  Complete obs (quintiles + GDP): {len(complete)} rows, {complete['cc'].nunique()} countries"
 )
@@ -124,10 +145,15 @@ print(
 
 # ── Compute quintile incomes and welfare metrics ──────────────────────────────
 def compute_welfare(row):
-    """Compute Atkinson EDEI at multiple epsilon values."""
-    gdppc = row["gdppc_ppp"]
+    """Compute Atkinson EDEI at multiple epsilon values.
+
+    Uses survey mean income (household-survey-based) rather than GDP/cap,
+    because GDP includes corporate earnings, government spending, and capital
+    formation that are not household income.
+    """
+    income_base = row["income_base"]
     shares = np.array([row["bottom20"], row["q2"], row["q3"], row["q4"], row["top20"]])
-    incomes = gdppc * (shares / 20.0)  # avg income per person in each quintile
+    incomes = income_base * (shares / 20.0)  # avg income per person in each quintile
 
     mean_inc = np.mean(incomes)
     # ε=0.5

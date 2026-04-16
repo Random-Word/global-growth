@@ -152,7 +152,7 @@ for pct in ["P5", "P10", "P20", "P50", "P90"]:
     ax.plot(data["year"], data["gdppc"], "-", linewidth=2.5, label=pct)
 
 ax.set_yscale("log")
-ax.set_title("GDP per Capita by Percentile of PEOPLE\n(Population-Weighted)")
+ax.set_title("Population-Weighted Country Distribution of GDP/capita\n(country averages ranked by pop-share, not individual incomes)")
 ax.set_ylabel("GDP per capita (2011 int'l $, log scale)")
 ax.set_xlabel("Year")
 ax.legend(fontsize=10)
@@ -622,6 +622,9 @@ ax.legend(fontsize=10)
 ax.axhline(y=90, color="gray", linestyle="--", alpha=0.3, label="90% line")
 ax.axvline(x=15, color="red", linestyle="--", alpha=0.3)
 ax.text(15.5, 50, "$15k", fontsize=11, color="red")
+# CAVEAT: As the GDP/cap threshold rises, the sample narrows to richer countries
+# that are inherently more likely to meet outcome criteria. The rising curve
+# therefore partly reflects sample selection, not solely a causal threshold effect.
 
 print(f"\n  'Good life' achievement rate by GDP per capita:")
 print(f"  {'GDP/cap':<12} {'LE≥70':<12} {'CM≤25':<12}")

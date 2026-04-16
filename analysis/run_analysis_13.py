@@ -136,6 +136,8 @@ fig.suptitle(
 
 # NOTE: Our ODA data is RECIPIENT-side (ODA received as % of GNI, net ODA in USD).
 # Rich donor countries have no ODA data in our dataset.
+# Donor-side claims in the summary (e.g. "US gives ~0.17%") come from published
+# OECD-DAC figures, NOT from this dataset. They are not directly verifiable here.
 
 # Panel 1: ODA received as % of GNI — key recipients over time
 ax = axes[0, 0]
@@ -169,7 +171,7 @@ total_oda["oda_bn"] = total_oda["oda_net_current_usd"] / 1e9
 ax.fill_between(total_oda["year"], total_oda["oda_bn"], alpha=0.3, color="#3498db")
 ax.plot(total_oda["year"], total_oda["oda_bn"], color="#3498db", linewidth=2)
 ax.set_ylabel("Total ODA Received ($ billion)")
-ax.set_title("Absolute ODA Has Risen, But...")
+ax.set_title("Total ODA Received (study sample), Not All Developing Countries")
 ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, p: f"${x:.0f}b"))
 
 # Panel 3: ODA received vs remittances — latest year, key recipients
@@ -535,6 +537,9 @@ print("CHART 61: DEVELOPMENT SUCCESS STORIES")
 print("═" * 80)
 
 # Rank developing countries by total GDP/cap growth since earliest data
+# NOTE: countries have different earliest-observation years, so total growth
+# percentages are NOT directly comparable across countries with very different
+# time spans.  The ranking is illustrative, not a controlled comparison.
 growth_ranks = []
 for cc in dev_ccs:
     d = df[(df["cc"] == cc) & (df["gdppc_ppp"].notna())].sort_values("year")
@@ -722,7 +727,7 @@ for _, row in fp.iterrows():
     )
 ax.set_xlabel("Fertility decline (1975 → 2020+)")
 ax.set_ylabel("GDP/cap growth (%) since ~1990")
-ax.set_title("Fertility Decline Predicts Growth")
+ax.set_title("Fertility Decline Correlates With Subsequent Growth")
 ax.legend(fontsize=8)
 
 # Panel 2: Timeline — fertility decline happened BEFORE the growth surge in Asia
@@ -1381,13 +1386,16 @@ KEY FINDINGS:
    - Nuance: Norway (1.0%+ GNI) and Sweden (1.0%) prove it's possible to be
      rich AND generous. The greedy ones are USA, Japan — not "capitalism."
 
-2. THE DEVELOPMENT RECIPE IS CLEAR (and it's not genetics):
+2. THE DATA SUGGESTS A CONSISTENT PATTERN (and it's not genetics):
+   (Caveat: this sample is not exhaustive and omitted variables —
+   institutions, geography, colonial history — may confound these
+   correlations.  The associations below are suggestive, not causal proofs.)
    a) HIGH DOMESTIC SAVINGS (30-45% in East Asia vs 10-20% in SSA)
-      → This funds investment without foreign debt
+      → Correlated with investment without foreign debt
    b) HIGH INVESTMENT RATES (25-40% of GDP in East Asia)
       → Roads, factories, power plants, human capital
    c) EARLY FERTILITY DECLINE (1960s in Korea vs 1990s in Nigeria)
-      → Creates "demographic dividend" — fewer dependents per worker
+      → Associated with "demographic dividend" — fewer dependents per worker
    d) TRADE OPENNESS + EXPORT-LED MANUFACTURING
       → Technology transfer, learning-by-doing, scale
    e) EDUCATION INVESTMENT (especially primary and technical)

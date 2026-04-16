@@ -1068,6 +1068,7 @@ if len(valid) > 3:
         fontsize=12,
         fontweight="bold",
     )
+    ax.text(0.5, 0.02, "Note: CO\u2082 normalized by GDP; materials by population \u2014 different metrics", transform=ax.transAxes, fontsize=7, ha='center', color='gray', style='italic')
 
     # Count quadrants
     both_good = valid[(valid["co2_gdp_chg"] < 0) & (valid["dmc_pc_chg"] < 0)]
@@ -1135,7 +1136,7 @@ KEY FINDINGS:
    - Very few countries show improvement
    - Tropical countries (Indonesia, Brazil) face the worst pressure
 
-4. DEFORESTATION: CONCENTRATED BUT PERSISTENT
+4. TREE COVER LOSS (includes wildfire, logging, and deforestation): CONCENTRATED BUT PERSISTENT
    - Brazil, Indonesia, Russia, Canada, and DRC drive most tree cover loss
    - China and India are REFORESTING (tree planting programs)
    - But plantations ≠ biodiversity restoration
@@ -1143,7 +1144,7 @@ KEY FINDINGS:
 5. MULTI-DIMENSIONAL DECOUPLING IS RARE
    - Few countries are decoupling on ALL dimensions simultaneously
    - Carbon decoupling does NOT imply material or ecological decoupling
-   - The UK, Germany, and Sweden come closest to multi-dimensional decoupling
+   - Based on carbon and material metrics, UK, Germany, and Sweden perform relatively well — but a full multi-dimensional ranking incorporating nitrogen, biodiversity, and land use was not computed
    - Developing countries are mostly moving in the wrong direction on materials
 
 IMPLICATIONS:

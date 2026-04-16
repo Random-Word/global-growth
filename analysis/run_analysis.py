@@ -81,7 +81,12 @@ fig.suptitle(
 
 # Get global GDP in current PPP (World aggregate = WLD)
 wdi_world = wdi[wdi["country_code"] == "WLD"].copy()
-gdp_by_year = wdi_world.set_index("year")["gdp_ppp_current"].dropna().to_dict()
+# Use constant-dollar GDP to match the fixed-PPP poverty gap numerator.
+# PIP poverty lines are in 2017 PPP; GDP is in constant 2015 USD.
+# Both are real (inflation-adjusted): the trend-over-time is reliable.
+# The level is approximate because PPP GDP > market-rate GDP for the
+# developing world, but the chart's argument rests on the trend.
+gdp_by_year = wdi_world.set_index("year")["gdp_constant_2015usd"].dropna().to_dict()
 
 results_a1 = {}
 for idx, pl in enumerate([2.15, 3.65, 6.85, 10.0]):
@@ -145,7 +150,7 @@ for idx, pl in enumerate([2.15, 3.65, 6.85, 10.0]):
 
     ax.set_title(f"${pl}/day poverty line")
     ax.set_xlabel("Year")
-    ax.set_ylabel("Poverty Gap (% of Global GDP)", color="b")
+    ax.set_ylabel("Poverty Gap (% of Global GDP, constant $)", color="b")
     ax2.set_ylabel("Poverty Gap ($ billions)", color="r")
 
     lines = l1 + l2
@@ -189,7 +194,16 @@ ax.set_title(
     fontweight="bold",
 )
 ax.set_xlabel("Year")
-ax.set_ylabel("Poverty Gap (% of Global GDP PPP)")
+ax.set_ylabel("Poverty Gap (% of Global GDP, constant $)")
+ax.text(
+    0.02,
+    0.02,
+    "Gap in 2017 PPP $; GDP in constant 2015 US$. Level approximate; trend reliable.",
+    transform=ax.transAxes,
+    fontsize=7,
+    color="gray",
+    style="italic",
+)
 ax.legend(fontsize=12)
 ax.set_xlim(1990, None)
 plt.savefig(os.path.join(CHARTS, "01b_poverty_gap_combined.png"))
@@ -218,20 +232,13 @@ for idx, pl in enumerate([2.15, 3.65, 6.85, 10.0]):
     ax = axes[idx // 2][idx % 2]
 
     # Pivot to get regions over time
-    region_mapping = {
-        "EAS": "East Asia & Pacific",
-        "SAS": "South Asia",
-        "SSA": "Sub-Saharan Africa",
-        "ECS": "Europe & Central Asia",
-        "LCN": "Latin America & Caribbean",
-        "MEA": "Middle East & N. Africa",
-        "AFE": "Eastern & Southern Africa",
-        "AFW": "Western & Central Africa",
-    }
+    # Non-overlapping regions only (exclude AFE/AFW which are sub-regions of SSF)
+    non_overlapping = {"EAS", "SAS", "SSF", "ECS", "LCN", "MEA", "NAC"}
 
     for _, grp in reg.groupby("region_code"):
+        rcode = grp["region_code"].iloc[0]
         rname = grp["region_name"].iloc[0]
-        if "World" in rname or "total" in rname.lower():
+        if rcode not in non_overlapping:
             continue
         data = grp.sort_values("reporting_year")
         ax.plot(
@@ -305,9 +312,8 @@ print("  -> Saved 02b_poverty_key_countries.png")
 
 # China's share of global poverty reduction
 reg215 = pip_regional["2.15"]
-world_data = (
-    reg215.groupby("reporting_year").agg({"pop_in_poverty": "sum"}).reset_index()
-)
+# Use WLD row only — summing sub-regions double-counts (SSF = AFE + AFW)
+world_data = reg215[reg215["region_code"] == "WLD"][["reporting_year", "pop_in_poverty"]].copy()
 china_data = pip215[pip215["country_code"] == "CHN"].sort_values("reporting_year")
 
 # Find overlapping years
@@ -1283,9 +1289,12 @@ ax.legend(fontsize=7, ncol=2)
 # 5. Regional poverty decomposition
 ax = axes[1][1]
 reg215 = pip_regional["2.15"]
+# Non-overlapping regions only (exclude AFE/AFW sub-regions of SSF)
+non_overlapping_summary = {"EAS", "SAS", "SSF", "ECS", "LCN", "MEA", "NAC"}
 for _, grp in reg215.groupby("region_code"):
+    rcode = grp["region_code"].iloc[0]
     rname = grp["region_name"].iloc[0]
-    if "World" in rname:
+    if rcode not in non_overlapping_summary:
         continue
     data = grp.sort_values("reporting_year")
     ax.plot(

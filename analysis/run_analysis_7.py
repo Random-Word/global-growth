@@ -204,9 +204,9 @@ if len(mat_foot_pc) > 0:
             merged['mat_idx'] = merged['total_mat'] / base_mat * 100
             
             ax.plot(merged['Year'], merged['gdp_idx'], label='World GDP', color='blue', linewidth=2)
-            ax.plot(merged['Year'], merged['mat_idx'], label='Material extraction', color='brown', linewidth=2)
+            ax.plot(merged['Year'], merged['mat_idx'], label='Material footprint', color='brown', linewidth=2)
             ax.axhline(y=100, color='gray', linewidth=0.5, linestyle=':')
-            ax.set_title(f'GDP vs Material Extraction (indexed, {base_yr:.0f}=100)', fontsize=12, fontweight='bold')
+            ax.set_title(f'GDP vs Material Footprint (indexed, {base_yr:.0f}=100)', fontsize=12, fontweight='bold')
             ax.set_ylabel(f'Index ({base_yr:.0f}=100)')
             ax.legend(fontsize=10)
             
@@ -214,7 +214,7 @@ if len(mat_foot_pc) > 0:
             gdp_growth = (merged['gdp_idx'].iloc[-1] / 100 - 1) * 100
             mat_growth = (merged['mat_idx'].iloc[-1] / 100 - 1) * 100
             print(f"\n  GDP growth since {base_yr:.0f}: +{gdp_growth:.0f}%")
-            print(f"  Material extraction growth: +{mat_growth:.0f}%")
+            print(f"  Material footprint growth: +{mat_growth:.0f}%")
             if mat_growth < gdp_growth:
                 print(f"  → RELATIVE decoupling (materials grow slower than GDP)")
             if mat_growth <= 0:
@@ -288,7 +288,9 @@ if len(lpi) > 0:
         # Just take whatever entity has the most data
         ent_counts = lpi.groupby('Entity').size()
         if len(ent_counts) > 0:
-            global_lpi = lpi[lpi['Entity'] == ent_counts.idxmax()].sort_values('Year')
+            fallback_ent = ent_counts.idxmax()
+            print(f"  ⚠ LPI: 'World'/'Global' not found; falling back to entity '{fallback_ent}'")
+            global_lpi = lpi[lpi['Entity'] == fallback_ent].sort_values('Year')
     
     if len(global_lpi) > 0:
         # LPI is indexed to 1970 = 1.0 (or 100)
@@ -559,6 +561,9 @@ print("CHART 31: PLANETARY BOUNDARIES SCORECARD")
 print("─"*80)
 
 # Build a summary scorecard showing status of each boundary
+# NOTE: Reference values below are from published planetary boundaries literature
+# (Rockström et al. 2009, Steffen et al. 2015, Richardson et al. 2023),
+# not computed from this dataset.
 boundaries = []
 
 # 1. Climate change — from our earlier analysis
@@ -817,22 +822,25 @@ THE PAPERS' ECOLOGICAL CASE IS STRONGER THAN JUST CARBON
 1. MATERIAL FOOTPRINT IS NOT DECOUPLING (ABSOLUTELY)
    - World material footprint per capita has RISEN since 2000
    - Relative decoupling (material/GDP declining) IS happening, but slowly
-   - Total global material extraction continues to grow
+   - Total global material footprint continues to grow
    - Carbon decoupling is significantly faster than material decoupling
-   - There is no energy transition equivalent for materials
+   - Material footprint reduction requires multiple parallel strategies
+     (circular economy, food tech, dense urbanization)
 
 2. BIODIVERSITY LOSS IS CATASTROPHIC AND ACCELERATING
    - Living Planet Index: ~69% decline in monitored wildlife since 1970
    - Latin America & Caribbean: ~94% decline (worst region)
    - Red List Index steadily declining worldwide
-   - Deforestation: ~5+ Mha/yr of tree cover loss (persists at high levels)
+   - Tree cover loss: ~5+ Mha/yr (includes fire, logging, and deforestation)
    - This is largely irreversible — you can't bring back extinct species
 
 3. NITROGEN CYCLE IS SEVERELY BREACHED
-   - Industrial N fixation (~120 Tg/yr) is 3.5x the safe boundary (35 Tg/yr)
+   - Industrial N fixation (~120 Tg/yr) is 3.5x the safe boundary
+     (35 Tg/yr per Rockström 2009; Richardson 2023 revised to 62 Tg/yr)
    - This is the MOST breached boundary after biodiversity
    - Causes: dead zones, algal blooms, groundwater contamination, N₂O (GHG)
-   - No easy technological fix — tied directly to food production for 8B people
+   - Difficult but not impossible — options include precision ag,
+     N-fixing cereals, food system transformation
 
 4. PHOSPHORUS IS APPROACHING ITS BOUNDARY  
    - P flow to oceans (~8-10 Tg/yr) approaching 11 Tg/yr boundary
@@ -855,9 +863,11 @@ IMPLICATIONS FOR THE DEBATE:
 The papers' ecological critique is STRONGER than they even argue.
 They focus on carbon, but the material/biodiversity/nitrogen picture is worse:
 - Carbon has a clear tech pathway (renewables replacing fossil)
-- Material extraction has NO energy-transition equivalent
+- Material footprint reduction requires multiple parallel strategies
+  (circular economy, food tech, dense urbanization)
 - Biodiversity loss is irreversible
-- Nitrogen boundary is 3.5x exceeded with no clear solution at scale
+- Nitrogen boundary is 1.9–3.4x exceeded (depending on boundary definition)
+  with solutions at varying stages of deployment
 
 This DOES NOT prove "capitalism is unworkable" — these problems existed under
 Soviet economies too (Aral Sea, Chernobyl, massive pollution). But it DOES

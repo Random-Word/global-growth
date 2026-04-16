@@ -4,25 +4,27 @@
 
 This project uses World Bank, Maddison Project, Our World in Data, OECD, IEA, and USGS data to examine two papers arguing that growth-based poverty elimination is physically impossible and redistribution is the only viable path. The analysis was conducted collaboratively between a human analyst and AI assistants (Claude Opus 4.6 and GPT-5.4). All code, data, and figures are reproducible.
 
-> The full exploratory analysis with all 65 charts, three rounds of GPT-5.4 critical review, and detailed supporting material is preserved in [README_v2_archive.md](README_v2_archive.md).
+> The full exploratory analysis with all 77 charts, three rounds of GPT-5.4 critical review, and detailed supporting material is preserved in [README_v2_archive.md](README_v2_archive.md).
 
 ---
 
 ## Executive Summary
 
-Thirteen analyses and 65 charts later, here is what the data shows:
+Fifteen analyses and 77 charts later, here is what the data shows:
 
-1. **Growth alone cannot end poverty fast enough** at meaningful thresholds. Only 5% of GDP growth reaches the poorest 60%. The papers are right about this.
+1. **Growth alone cannot end poverty fast enough** at meaningful thresholds. Only 5% of GDP growth reaches the poorest 60% [[2]](#references-and-sources). The papers are right about this.
 
 2. **But growth transformed the scale of the redistribution problem — dramatically at the bottom, modestly at higher thresholds.** The $6.85/day poverty gap fell from 18% to 1.6% of world GDP — from a genuinely crushing burden to a large but conceivable one. At $2.15/day, the gap is now smaller than existing aid flows. But 3.14 billion people remain below $6.85/day, a $3.1 trillion shortfall that international transfers cannot reliably close — not because the money doesn't exist, but because there is no sovereign authority to guarantee it. Domestic transfers (pensions, disability, UBI) work because states have taxing power and accountability to recipients. International aid has neither: one political pivot in a major donor can halve it overnight.
 
-3. **The ecological constraint is real and differentiated.** Carbon has a clear technological pathway (renewables) that requires deployment at unprecedented speed. Nitrogen (3.4× over) is addressable through a stack of agricultural bioengineering, food technology, and precision farming — but requires breakthroughs (especially nitrogen-fixing cereals) not yet deployed. The aggregate "material footprint" metric overstates the constraint by treating all tonnes as equal; the boundary-specific problems (nitrogen, biodiversity, land use) are genuinely severe while the mass-based metric is weaker than the carbon budget. Six of nine planetary boundaries are breached.
+3. **The ecological constraint is real and differentiated.** Carbon has a clear technological pathway (renewables) that requires deployment at unprecedented speed. Nitrogen (1.9–3.4× over, depending on boundary definition) is addressable through a stack of agricultural bioengineering, food technology, and precision farming — but requires breakthroughs (especially nitrogen-fixing cereals) not yet deployed. The aggregate "material footprint" metric overstates the constraint by treating all tonnes as equal; the boundary-specific problems (nitrogen, biodiversity, land use) are genuinely severe while the mass-based metric is weaker than the carbon budget. Six of nine planetary boundaries are breached — though our analysis directly tests only eight of the nine, and the status of some depends on which published framework is used.
 
 4. **Poverty is a flow problem, not a stock problem.** The papers frame poverty as a gap to be filled with transfers. But even if you lifted everyone above $6.85/day tomorrow, you'd need to do it again next year — forever — unless the underlying economies develop the productive capacity to sustain welfare. Aid is humanitarian insurance (~10% of total resource flows to the developing world); investment is the growth driver (FDI alone is 4× all ODA).
 
-5. **The development recipe is clear and not region-specific.** Peace, macroeconomic stability, high investment rates (25–40% of GDP), early fertility decline, trade openness, and capable states predict success. Bangladesh, Rwanda, and Vietnam demonstrate this is not an "Asian" formula. The most powerful rich-country levers are not aid but trade access, FDI facilitation, and cheaper remittance corridors.
+5. **The development recipe has common elements, but institutional context matters.** Peace, macroeconomic stability, high investment rates (25–40% of GDP), early fertility decline, trade openness, and capable states are associated with success across regions. Bangladesh, Rwanda, and Vietnam demonstrate this is not an "Asian" formula. The most powerful rich-country levers are not aid but trade access, FDI facilitation, and cheaper remittance corridors. But whether this recipe can be replicated under 2020s constraints — tighter carbon budgets, reduced ecological slack, different geopolitics — is genuinely uncertain.
 
-6. **Sustainable consumption is about composition, not deprivation.** The ecological constraint is real but the aggregate "material footprint" conflates sand with burned coal. The ecologically destructive components of consumption — fossil fuels, nitrogen-intensive agriculture, land clearing — are artifacts of current technology, not inherent to high welfare. A post-transition economy at ~9 t/cap (mostly construction maintenance and recycled metals) has *less* ecological impact than today's 5 t/cap economy that includes fossil fuels and deforestation. The target is not less stuff but different stuff — and the technology pathways to get there are on observable S-curves.
+6. **Sustainable consumption is about composition, not deprivation.** The ecological constraint is real but the aggregate "material footprint" conflates sand with burned coal. The ecologically destructive components of consumption — fossil fuels, nitrogen-intensive agriculture, land clearing — are artifacts of current technology, not inherent to high welfare. A post-transition economy at ~9 t/cap (mostly construction maintenance and recycled metals) has *less* ecological impact than today's 5 t/cap economy that includes fossil fuels and deforestation. The target is not less stuff but different stuff — and some technology pathways are deployed (solar), some are plausible but contingent (cultivated meat, circular economy), and some require breakthroughs not yet achieved (nitrogen-fixing cereals). The conclusion survives if deployed technologies succeed; it depends on contingent technologies scaling; it would weaken significantly if breakthroughs stall.
+
+7. **Abundant cheap clean energy is the master key — but not the only lock.** Solar generation grew from 4 TWh (2005) to 2,128 TWh (2024), doubling every ~3.2 years. This S-curve, if it continues, unlocks cascading solutions: electrification eliminates the carbon boundary, cheap desalination addresses freshwater, cheap energy makes recycling and circular economy economically dominant, and cheap energy powers the precision agriculture and controlled-environment farming that could address the nitrogen and land-use boundaries. Energy abundance does not automatically solve the biogeochemical boundaries — those also require bioengineering breakthroughs and governance — but it is the necessary enabling condition for nearly every other solution. The question is whether the S-curve continues, and whether the cascading solutions deploy fast enough.
 
 ---
 
@@ -32,9 +34,9 @@ Two papers were presented as proof that capitalism is "mathematically unworkable
 
 **Paper 1 — "Growth Alone Cannot End Poverty"** makes three interlocking arguments:
 
-- *Arithmetic*: Between 1990–2008, every $100 of per capita growth contributed only $0.60 to poverty reduction below $1/day — a 166:1 inefficiency ratio. The poorest 60% received just 5% of new income. Growth elasticity of poverty collapses at higher thresholds (from –2.0 at $1.90/day to near zero at $6.85), meaning growth increasingly bypasses the poor as ambition rises.
+- *Arithmetic*: Between 1990–2008, every $100 of per capita growth contributed only $0.60 to poverty reduction below $1/day — a 166:1 inefficiency ratio [[1]](#references-and-sources). The poorest 60% received just 5% of new income. Growth elasticity of poverty collapses at higher thresholds (from –2.0 at $1.90/day to near zero at $6.85), meaning growth increasingly bypasses the poor as ambition rises.
 - *Provisioning*: The world already extracts ~100 Gt of materials per year — enough to meet basic needs for 8.5 billion people several times over. The problem is allocation, not production capacity. Decent living standards require roughly 28–40 Gt/yr, well within current extraction. GDP growth is the wrong tool because capital flows toward profitable returns, not essential needs.
-- *Ecological*: Material extraction is already 2× the sustainable limit (~50 Gt/yr). A synthesis of 835 peer-reviewed studies (Haberl et al. 2020) found absolute decoupling of GDP from material use "rare" and never observed at global scale. Even countries with absolute CO₂ decoupling would need 220+ years at achieved rates to cut emissions 95%, overshooting fair-share carbon budgets by 27×. The remaining 1.5°C carbon budget is exhausted in 6–10 years at current emissions.
+- *Ecological*: Material extraction is already 2× the sustainable limit (~50 Gt/yr) [[19]](#references-and-sources). A synthesis of 835 peer-reviewed studies (Haberl et al. 2020) found absolute decoupling of GDP from material use "rare" and never observed at global scale [[18]](#references-and-sources). Even countries with absolute CO₂ decoupling would need 220+ years at achieved rates to cut emissions 95%, overshooting fair-share carbon budgets by 27×. The remaining 1.5°C carbon budget is exhausted in 6–10 years at current emissions.
 
 The paper's strongest claim is not the 175× GDP headline. It is that a system which allocates by profitability rather than need will predictably underdeliver redistribution and ecological restraint — and that historically, it has.
 
@@ -55,14 +57,14 @@ We largely agree with Paper 2's measured framing. Our pushback is mainly against
 
 ### Growth alone is too slow and too blunt
 
-If only 5% of GDP growth reaches the poorest 60%, then relying on undirected growth to eliminate poverty is grotesquely inefficient. Our data confirms this: growth elasticities of poverty decline at higher thresholds, and progress above $6.85/day has been far more modest than the headline $2.15 numbers suggest.
+If only 5% of GDP growth reaches the poorest 60% [[2]](#references-and-sources), then relying on undirected growth to eliminate poverty is grotesquely inefficient. Our data confirms this: growth elasticities of poverty decline at higher thresholds, and progress above $6.85/day has been far more modest than the headline $2.15 numbers suggest.
 
 ![Regional poverty decomposition](charts/02_poverty_by_region.png)
 *At $2.15/day, East Asia's dramatic decline dominates the global story. At $6.85/day, South Asia and Sub-Saharan Africa remain largely unchanged. The "declining poverty" narrative is essentially an East Asian story at higher thresholds.*
 
 ### Redistribution is vastly more efficient
 
-Direct cash transfers deliver $0.85–$0.90 per dollar to recipients. Growth delivers roughly $0.005 per dollar to the poor. That is a 100:1 to 2,000:1 efficiency gap. For pure poverty-gap closure, there is no contest.
+Direct cash transfers deliver $0.85–$0.90 per dollar to recipients [[15]](#references-and-sources). Growth delivers roughly $0.005 per dollar to the poor. That is a 100:1 to 2,000:1 efficiency gap. For pure poverty-gap closure, there is no contest.
 
 ### Sub-Saharan Africa is being left behind
 
@@ -70,21 +72,23 @@ SSA's share of global extreme poverty rose from 13% to 65% while the absolute nu
 
 ### Planetary boundaries are real
 
-This is arguably the papers' strongest claim. Six of nine planetary boundaries are now transgressed, and the non-carbon boundaries are in many ways more alarming than the carbon story.
+This is arguably the papers' strongest claim. According to the Richardson et al. 2023 update [[16]](#references-and-sources), six of nine planetary boundaries are now transgressed. Our analysis covers eight of the nine (excluding novel entities / chemical pollution) and finds four clearly exceeded, three at or near the limit, and one recovering.
 
 ![Planetary boundaries scorecard](charts/31_planetary_scorecard.png)
-*Four boundaries are clearly exceeded (red), three are at or near the limit (orange), and only ozone is recovering — thanks to the Montreal Protocol, one of the few successful global environmental agreements.*
+*Four boundaries are clearly exceeded (red), three are at or near the limit (orange), and only ozone is recovering — thanks to the Montreal Protocol, one of the few successful global environmental agreements. Reference values from Rockström et al. 2009, Steffen et al. 2015, and Richardson et al. 2023.*
 
 | Boundary | Safe Limit | Current | Status |
 |---|---|---|---|
 | Climate change (CO₂) | 350 ppm | 424 ppm | **Exceeded** |
 | Biosphere integrity (LPI) | 90 (index) | 27 (index) | **Exceeded** |
-| Nitrogen fixation | ~44 Tg/yr | ~150 Tg/yr | **Exceeded (3.4×)** |
+| Nitrogen fixation | ~44 Tg/yr¹ | ~150 Tg/yr | **Exceeded (1.9–3.4×)** |
 | Land-system change | 75% forests | 68% forests | **Exceeded** |
 | Freshwater use | 4,000 km³/yr | ~3,949 km³/yr | At limit |
 | Phosphorus flow | 11 Tg/yr | ~9 Tg/yr | Near limit |
 | Ocean acidification | 2.75 Ω | 2.8 Ω | Near limit |
 | Ozone depletion | 276 DU | 284 DU | Safe (recovering) |
+
+*¹Nitrogen: Rockström 2009 set 35 Tg/yr (→3.4× overshoot); Richardson 2023 revised to 62 Tg/yr (→1.9×). We report the range to acknowledge the uncertainty.*
 
 ### Progress depends on which poverty line you use
 
@@ -117,7 +121,25 @@ The papers' most alarming scenario assumes everyone must converge to American co
 
 This reframing, however, creates a moral problem we should not dodge. If $15,000 is "enough" for the poor world, why does the US consume at $75,000 — five times that level? Our own ecological data answers that question uncomfortably: **the US material footprint is 22.7 tonnes per capita against a sustainable limit of 5–8 tonnes.** Rich-world consumption is not just excessive relative to the poor world's needs; it is ecologically indefensible on its own terms. The planetary boundaries analysis in this project shows that even if the poor world stopped growing entirely, the rich world's current throughput still breaches multiple boundaries.
 
-So the honest position is: yes, the poor world needs growth to reach basic welfare thresholds, and that growth does not require American consumption levels. But the rich world also needs to *reduce* its material throughput substantially — and whether market economies can deliver that reduction is genuinely uncertain. The morally defensible endpoint is not universal Americanization or poor-world restraint: it is upward convergence in human welfare and downward convergence in material throughput. Our data shows a few rich countries (UK, Germany) making progress on material decoupling, but none are anywhere near the sustainable limit. This is one of the strongest points in the papers' favor, and the provisioning critique deserves engagement: decent lives require specific material throughputs with real ecological costs, and the world may already produce enough to meet those needs through reallocation rather than further aggregate growth. Our $15k life-expectancy proxy is useful but does not directly rebut that framework.
+So the honest position is: yes, the poor world needs growth to reach basic welfare thresholds, and that growth does not require American consumption levels. But the rich world also needs to *reduce* its material throughput substantially — and whether market economies can deliver that reduction is genuinely uncertain. The morally defensible endpoint is not universal Americanization or poor-world restraint: it is upward convergence in human welfare and downward convergence in material throughput. Our data shows a few rich countries (UK, Germany) making progress on material decoupling, but none are anywhere near the sustainable limit. This is one of the strongest points in the papers' favor.
+
+### Testing the provisioning argument directly
+
+Paper 1's strongest version is not "175× GDP." It is that decent lives require specific material inputs — housing, nutrition, healthcare, sanitation, education, energy — and the world already extracts enough material (~100 Gt/yr) to provide these several times over. The problem, on this view, is not insufficient production but misallocation: capital flows toward profitable returns rather than essential needs, so the poor lack what already exists in aggregate.
+
+This framework can be tested against our own data:
+
+**Where provisioning is right:**
+- At $2.15/day, the poverty gap ($118B) is 0.06% of world GDP. The resources exist. The gap is a distribution failure, not a production failure. This is unambiguously true.
+- Global food production is sufficient to feed ~10 billion people. Roughly one-third is wasted. Hunger is a distribution and poverty problem, not a supply problem (FAO 2023).
+- The Decent Living Standards (DLS) framework (Rao & Min 2018) [[33]](#references-and-sources) estimates basic material needs at 15–28 GJ/cap energy, ~3–5 t/cap material footprint. Global extraction could provide this for everyone within the sustainable boundary — if it were allocated differently.
+
+**Where provisioning is incomplete:**
+- The DLS framework describes a *minimum floor*, not the welfare level ($15k GDP/cap) at which life expectancy reliably reaches 70+. The gap between DLS (~$3–5k) and the good-life threshold (~$15k) is large, and that gap is filled by infrastructure, institutions, and productive capacity — not just material allocation.
+- Provisioning works for *consumables* (food, energy, basic shelter) but not for *capabilities* (healthcare systems, education quality, institutional trust, economic opportunity). You can redistribute grain; you cannot redistribute a functioning hospital system or a capable civil service.
+- The flow problem remains: even perfect one-time redistribution of material goods does not create the *sustained productive capacity* that generates welfare year after year. A country needs not just enough concrete this year but the ability to produce concrete next year — and the institutions to direct it toward housing rather than monuments.
+
+**The honest synthesis:** The provisioning critique is largely correct for basic needs at the lowest thresholds — the world produces enough, and the distribution failure is real and damaging. It becomes progressively less applicable at higher welfare thresholds, where the binding constraint shifts from material allocation to institutional capacity, productive investment, and sustained economic complexity. Our $15k proxy is a GDP correlation, not a direct material-needs calculation — and a provisioning analysis that compares DLS material bundles to post-transition material budgets would be a stronger test than what we present here. We acknowledge this as a gap in our analysis.
 
 ![The good-life threshold](charts/14_good_life_threshold.png)
 *Life expectancy reaches ~75 years around $15k GDP/capita, with sharp diminishing returns beyond that. Countries below this threshold need roughly 2× their current GDP, not 175×. At 5% growth, that is 15 years — not two centuries.*
@@ -127,9 +149,21 @@ So the honest position is: yes, the poor world needs growth to reach basic welfa
 ![ODA vs poverty gap convergence](charts/24b_oda_poverty_gap_convergence.png)
 *The $2.15/day poverty gap fell from $420B to $118B while ODA rose to $203B — they crossed around 2018. At higher thresholds, ODA covers only 6% of the gap. Growth brought the extreme-poverty mountain down to where aid could reach it.*
 
-### But the scale problem at higher thresholds is genuine
+### But the scale problem at higher thresholds is genuine — and the strongest proposals go beyond ODA
 
-The papers propose redistribution of $1.3–6 trillion per year. Total global ODA is ~$224 billion (2024 OECD preliminary), stagnant and trending downward in several major donors. The proposals require 6–30× the entire current international aid system. In 50+ years, the world has never come close to the 0.7% GNI target (the DAC average is 0.36%). Redistribution at the scale needed for $6.85/day is not in any plausible political pipeline. Historically, every development success story — China, South Korea, Vietnam, Bangladesh, Botswana, Chile — was driven by FDI, export manufacturing, domestic savings, and state-directed industrial policy, not by international transfers. Higher-threshold gaps have only ever been closed by sustained domestic growth.
+The papers propose redistribution of $1.3–6 trillion per year. Total global ODA is ~$224 billion (2024 OECD preliminary), stagnant and trending downward in several major donors. That gap — 6–30× the entire current aid system — is the weakest version of the redistribution case, because serious proponents don't propose scaling up ODA alone. The stronger proposals include:
+
+- **Global financial transaction tax (Tobin tax)**: A 0.1% levy on foreign exchange, equity, and derivative trades could raise $200–400B/yr (CEPR, Schulmeister 2014). The EU has debated versions since 2012 without achieving consensus.
+- **SDR reallocation**: The IMF's $650B 2021 Special Drawing Rights allocation went overwhelmingly to rich countries that didn't need it. Rechanneling 30–50% to low-income countries would provide $200–300B in liquidity at near-zero cost. Some reallocation has occurred but at far smaller scale.
+- **Global minimum corporate tax**: The OECD Pillar Two (15% minimum, 2024) could reduce profit-shifting that costs developing countries an estimated $100–240B/yr (Tax Justice Network 2021). Early implementation is underway but enforcement is uncertain.
+- **Carbon border adjustments**: The EU CBAM (phasing in 2026) creates a revenue stream that could partially fund climate adaptation in the Global South, though current designs don't earmark revenue this way.
+- **Wealth taxes on global billionaires**: The Zucman proposal (2% annual tax on billionaire wealth) could raise ~$250B/yr globally. No implementation mechanism exists.
+
+These proposals are more serious than the ODA straw man — several have partial institutional infrastructure and generate revenue without requiring legislative appropriation each year. But they share a fundamental challenge: **no sovereign enforcement mechanism exists for global taxation.** Each proposal requires either (a) universal adoption (which free-rider incentives undermine) or (b) a coalition large enough to make non-participation costly. The EU has spent 13 years failing to implement even a regional financial transaction tax. The 15% global minimum corporate tax — the most advanced proposal — already faces implementation gaps.
+
+The honest assessment: redistribution at the $2.15/day threshold is already achievable within existing institutional capacity. At $6.85/day, the gap ($3.1 trillion) is genuinely beyond any plausible international transfer mechanism that currently exists or is under serious negotiation. The strongest redistribution proposals could plausibly reach $500B–1T/yr — a transformative amount, but still well short of the $6.85 gap. In 50+ years, the world has never come close to the 0.7% GNI target (the DAC average is 0.36%). Higher-threshold gaps have only ever been closed by sustained domestic growth — though advocates correctly note this is partly because the alternative has never been tried at scale.
+
+Historically, every development success story — China, South Korea, Vietnam, Bangladesh, Botswana, Chile — was driven by FDI, export manufacturing, domestic savings, and state-directed industrial policy, not by international transfers. But this observation has a selection bias problem: the international system never *offered* transfers at the scale the papers propose. We cannot know whether a well-resourced global redistribution program would have worked because one has never existed. The strongest case for growth-led development is not that redistribution is impossible in principle, but that the political conditions for it at the necessary scale have never materialized — and that growth has actually delivered results under actually existing institutions.
 
 ---
 
@@ -151,6 +185,9 @@ The carbon budget arithmetic is sobering.
 
 The energy transition is the wildcard. Solar generation grew from 4 TWh (2005) to 2,128 TWh (2024), doubling every ~3.2 years. If that continues, solar could supply 25% of global electricity by 2030. This *could* make 4–5%/yr decoupling achievable — but "could" is carrying substantial weight. The transition requires significant mineral inputs (lithium, cobalt, copper), though extraction volumes are 1–2 orders of magnitude smaller than the fossil fuels they replace, and minerals are recyclable while fossil fuels are burned once.
 
+![Energy transition S-curve](charts/26_energy_transition_scurve.png)
+*Solar generation is on a classic technology S-curve — 4 TWh in 2005 to 2,128 TWh in 2024, doubling every ~3.2 years. If this trajectory continues, solar crosses 25% of electricity by ~2030 and 100% of current electricity by ~2036. This is the curve the ecological argument pivots on: the carbon boundary has a plausible exit; the non-carbon boundaries largely do not.*
+
 ![Decoupling and carbon constraints](charts/21_absolute_decoupling.png)
 *Absolute decoupling is happening in the US, UK, and Germany. But rolling rates of ~2–3%/yr need to at least double for 2°C compatibility at normal growth rates.*
 
@@ -171,17 +208,35 @@ Carbon gets the headlines, but the non-carbon boundaries are arguably more conce
 ![Material vs carbon decoupling](charts/32_material_vs_carbon.png)
 *Since 2000, carbon intensity fell ~30% while material intensity fell only ~8%. However, the composition of material extraction matters enormously — the energy transition eliminates the most ecologically damaging 15% entirely.*
 
-The technology pathway analysis reveals a clear pattern:
+The technology pathway analysis reveals a clear pattern, but with very different evidentiary status across boundaries:
 
-| Boundary | Technology Exit? | Key Constraint |
+**Tier 1 — Deployed and scaling (conclusions robust):**
+
+| Boundary | Technology | Status |
 |---|---|---|
-| **Carbon** | Clear (solar/wind) | Deployment speed |
-| **Freshwater** | Partial (desalination) | Too expensive for agriculture (70% of use) |
-| **Nitrogen** | Emerging (bioengineering stack) | N-fixing cereals (holy grail, 10-20yr), cultivated meat, precision ag. Full stack could reach boundary but requires multiple breakthroughs |
-| **Phosphorus** | Partial (recycling, recovery) | An element — cannot be synthesized, but can be recovered from waste streams |
-| **Biodiversity** | Indirect (food tech → land release) | Population peak + ag tech could free 1-2B ha, but only if food technology scales |
+| **Carbon** | Solar/wind generation (doubling every ~3.2 years) | Commercial, scaling exponentially |
+| **Carbon** | EV adoption, heat pump deployment | Commercial, on S-curves |
+| **Materials** | Industrial recycling (steel, aluminum) | Mature, economics improving with cheap energy |
 
-Abundant cheap energy solves the energy-system boundaries and *enables* the agricultural technology stack (precision farming, controlled-environment agriculture, cultivated meat) — but the biogeochemical boundaries also require bioengineering breakthroughs and governance. **The papers' critique is weakest where technology has a clear deployment path (carbon), moderate where technology solutions exist but require breakthroughs (nitrogen, food/land), and strongest where harm is irreversible (biodiversity loss already incurred).** The honest response requires technology-driven decoupling for energy, bioengineering for agriculture, *and* governance-driven restraint for land use.
+**Tier 2 — Demonstrated but contingent on scaling (conclusions depend on continued progress):**
+
+| Boundary | Technology | Status |
+|---|---|---|
+| **Freshwater** | Desalination | Commercial, but too expensive for agriculture at scale |
+| **Nitrogen** | Precision agriculture, nitrification inhibitors | Commercial, underdeployed; alone insufficient (reaches ~2.4×) |
+| **Food/Land** | Precision fermentation (dairy proteins) | Commercial, scaling |
+| **Phosphorus** | Waste-stream recovery, precision application | Proven, adoption limited |
+
+**Tier 3 — Requires breakthroughs not yet achieved (conclusions speculative if these stall):**
+
+| Boundary | Technology | Key Uncertainty |
+|---|---|---|
+| **Nitrogen** | Nitrogen-fixing cereals | The single biggest lever (~30 Mt reduction); active R&D (Pivot Bio, ENSA, Gates CSIA) but not deployed |
+| **Food/Land** | Cultivated meat at price parity ($2–5/kg) | Fell from $300k/kg to ~$10/kg but parity not achieved |
+| **Carbon** | Direct air capture at gigatonne scale | Demonstrated at small scale; economics uncertain |
+| **Biodiversity** | Active rewilding + land release at scale | Requires food tech to free agricultural land first |
+
+Abundant cheap energy solves the energy-system boundaries and *enables* the agricultural technology stack (precision farming, controlled-environment agriculture, cultivated meat) — but the biogeochemical boundaries also require bioengineering breakthroughs and governance. **The papers' critique is weakest where technology is deployed and scaling (carbon/energy — Tier 1), moderate where solutions exist but require scaling (nitrogen partial, freshwater — Tier 2), and strongest where conclusions depend on breakthroughs not yet achieved (nitrogen-fixing cereals, cultivated meat at parity, biodiversity restoration — Tier 3).** If Tier 3 technologies stall, the nitrogen boundary remains at 2–2.4× overshoot, agricultural land pressure persists, and the papers' core ecological critique stands substantially unrebutted. The honest response requires technology-driven decoupling for energy, bioengineering for agriculture, *and* governance-driven restraint for land use.
 
 ### The implied policy differentiation
 
@@ -193,20 +248,20 @@ The analysis so far establishes that rich-world material throughput is ecologica
 
 **The most important enabling condition is abundant cheap clean energy.** Solar generation grew from 4 TWh (2005) to 2,128 TWh (2024), doubling every ~3.2 years. Extrapolating that S-curve: ~8,000 TWh by 2030 (27% of current electricity), ~29,000 TWh by 2036 (100% of current electricity), and potentially 40% of all primary energy by 2040. If energy becomes abundant and nearly free, it unlocks a cascade of solutions that are currently too expensive:
 
-| Boundary | What cheap clean energy unlocks | What remains hard |
-|---|---|---|
-| **Carbon** | Electrify everything; direct air capture at scale | DAC at gigatonne scale is unproven |
-| **Freshwater** | Desalination becomes viable even for agriculture | Distribution infrastructure |
-| **Nitrogen** | Precision ag, controlled-environment farming (95% N efficiency), cultivated meat (eliminates feed-grain demand), eliminates combustion NOx | N-fixing cereals are the biggest lever but still in R&D (Pivot Bio, ENSA, Gates CSIA). Full stack needed: precision ag alone only reaches 2.4× (insufficient) |
-| **Materials** | Recycling becomes economically dominant; circular loops close | Mining the initial stock; some elements scarce |
-| **Food/Land** | Vertical farming, precision fermentation, cultured meat | Cultural adoption; transition timeline |
-| **Biodiversity** | If food production intensifies off-land, farmland returns to nature | Requires active rewilding, not just stopping damage |
+| Boundary | What cheap clean energy unlocks | What remains hard | Tier |
+|---|---|---|---|
+| **Carbon** | Electrify everything; direct air capture at scale | DAC at gigatonne scale is unproven | 1 (electrification) / 3 (DAC) |
+| **Freshwater** | Desalination becomes viable even for agriculture | Distribution infrastructure | 2 |
+| **Nitrogen** | Precision ag, controlled-environment farming (95% N efficiency), cultivated meat (eliminates feed-grain demand), eliminates combustion NOx | N-fixing cereals are the biggest lever but still in R&D (Pivot Bio, ENSA, Gates CSIA). Full stack needed: precision ag alone only reaches 2.4× (insufficient) | 2 (precision ag) / 3 (N-fixing cereals) |
+| **Materials** | Recycling becomes economically dominant; circular loops close | Mining the initial stock; some elements scarce | 2 |
+| **Food/Land** | Vertical farming, precision fermentation, cultured meat | Cultural adoption; transition timeline | 2 (fermentation) / 3 (cultured meat at parity) |
+| **Biodiversity** | If food production intensifies off-land, farmland returns to nature | Requires active rewilding, not just stopping damage | 3 |
 
 **The food revolution is the second key.** Precision fermentation and cultured meat are on S-curves of their own. If they scale — and cost curves suggest they could — some estimates project freeing up to 75% of agricultural land — the single biggest lever for biodiversity, nitrogen, phosphorus, and the land-system boundary simultaneously. Agriculture is the primary driver of four of the six transgressed boundaries. Shrinking its footprint solves more ecological problems than any other single intervention.
 
 **But does "material footprint" measure the right thing?** The optimistic technology scenario above still leaves the US at ~10.6 tonnes per capita against a "sustainable" budget of ~5.9 (50 Gt ÷ 8.5 billion people). That sounds alarming — until you ask what the 50 Gt limit actually measures and where it comes from.
 
-The ~50 Gt "safe" material extraction limit (UNEP International Resource Panel; Bringezu 2015, Hickel et al. 2022) is far less rigorous than the carbon budget. The carbon budget rests on hard physics: CO₂ concentrations → radiative forcing → temperature, with a clear causal chain. The material budget is an aggregate mass estimate of ecosystem capacity to absorb extraction impacts — and it treats all tonnes as equal. A tonne of sand from a quarry and a tonne of rainforest cleared for soybeans count the same. They are obviously not the same.
+The ~50 Gt "safe" material extraction limit (UNEP International Resource Panel; Bringezu 2015, Hickel et al. 2022) [[19]](#references-and-sources) is far less rigorous than the carbon budget. The carbon budget rests on hard physics: CO₂ concentrations → radiative forcing → temperature, with a clear causal chain. The material budget is an aggregate mass estimate of ecosystem capacity to absorb extraction impacts — and it treats all tonnes as equal. A tonne of sand from a quarry and a tonne of rainforest cleared for soybeans count the same. They are obviously not the same.
 
 Current global extraction (~100 Gt/yr) breaks down roughly as:
 
@@ -278,7 +333,7 @@ The scale of resource flows to developing countries reveals the real story:
 
 **ODA is ~10% of total resource flows to developing countries.** FDI is 4× ODA. Remittances are 3×. The growth-relevant flows dwarf the aid flows.
 
-The academic evidence (Banerjee, Duflo, Easterly, Deaton, Moyo) converges on a nuanced consensus: aid *is* effective for specific interventions (vaccines, bed nets, famine relief, primary education) but has *not* generated sustained economic growth at the country level. No country has grown its way out of poverty via aid alone. Every success story — Korea, China, Vietnam, Bangladesh, Botswana, Chile — relied on FDI, exports, domestic savings, and institutional reform.
+The academic evidence (Banerjee, Duflo, Easterly, Deaton, Moyo) [[23]](#references-and-sources) converges on a nuanced consensus: aid *is* effective for specific interventions (vaccines, bed nets, famine relief, primary education) but has *not* generated sustained economic growth at the country level. No country has grown its way out of poverty via aid alone. Every success story — Korea, China, Vietnam, Bangladesh, Botswana, Chile — relied on FDI, exports, domestic savings, and institutional reform.
 
 Most aid is not designed to generate growth, and this is not a failure — PEPFAR is designed to save HIV patients, not grow GDP, and it succeeds at what it is designed to do. The key distinction is between "aid" structured as *investment* (infrastructure loans, DFI equity, trade capacity, girls' education) and "aid" structured as *consumption* (food aid, cash transfers, emergency health). Both are valuable. Only the first generates growth. The clean narrative ("aid doesn't work") is wrong for emergencies; the clean narrative ("just redistribute more") is wrong for growth.
 
@@ -378,7 +433,7 @@ The most powerful development levers available to rich countries are, paradoxica
 
 **What rich countries should *stop* doing** often matters as much: agricultural subsidies that undercut poor farmers, enabling capital flight and tax havens, arms sales to conflict zones, tied aid (where contractors must be from the donor country), and expensive remittance corridors.
 
-**The hardest truth:** the most important determinant of growth — institutional quality (Acemoglu & Robinson 2012) — is the variable outsiders have the *least* ability to change. Rwanda built institutions internally. So did Botswana. So did Korea. External "governance programs" have a poor track record. The things only developing countries can do — build institutions, maintain peace, invest domestically, complete the demographic transition, choose dense urbanization over sprawl — are the most important things.
+**The hardest truth:** the most important determinant of growth — institutional quality (Acemoglu & Robinson 2012) [[25]](#references-and-sources) — is the variable outsiders have the *least* ability to change. Rwanda built institutions internally. So did Botswana. So did Korea. External "governance programs" have a poor track record. The things only developing countries can do — build institutions, maintain peace, invest domestically, complete the demographic transition, choose dense urbanization over sprawl — are the most important things.
 
 ### The Bretton Woods institutions
 
@@ -436,6 +491,63 @@ Two claims should be distinguished. First: **the evidence rejects mathematical i
 
 ---
 
+## References and Sources
+
+Contested claims, headline numbers, and key frameworks are sourced below. Data sources for charts are listed in the Appendix.
+
+### Poverty and growth
+- **$0.60 per $100 of growth reaching extreme poor**: Woodward 2015, "Incrementum ad Absurdum," *World Economic Review* 4: 43–62. [1]
+- **5% of new income reaching poorest 60%**: Lakner & Milanovic 2016, "Global Income Distribution," *World Bank Economic Review* 30(2): 203–232. [2]
+- **Growth elasticity declining at higher thresholds**: Klasen & Misselhorn 2008; Ravallion 2012, "Why Don't We See Poverty Convergence?" *American Economic Review* 102(1): 504–523. [3]
+- **Poverty headcounts and gaps**: World Bank Poverty and Inequality Platform (PIP), accessed April 2026. [4]
+- **GDP data**: World Bank World Development Indicators (WDI), indicators NY.GDP.MKTP.PP.KD and NY.GDP.MKTP.CD. [5]
+- **BNPL methodology and limitations**: Reddy & Pogge 2010, "How Not to Count the Poor," in Anand, Segal & Stiglitz eds., *Debates on the Measurement of Global Poverty*. [6]
+- **Non-income welfare confirmation (life expectancy, mortality, literacy, calories)**: Kenny 2011, *Getting Better*; Deaton 2013, *The Great Escape*. [7]
+- **China's ~75% share of extreme poverty reduction**: Ravallion 2011, "A Comparative Perspective on Poverty Reduction in Brazil, China, and India," *World Bank Research Observer* 26(1). [8]
+- **3× targeting multiplier**: Ravallion 2009, "How Relevant is Targeting to the Success of an Antipoverty Program?" *World Bank Research Observer* 24(2). [9]
+
+### Redistribution proposals
+- **Global financial transaction tax ($200–400B/yr)**: Schulmeister 2014, CEPR; Baker 2016, "The Benefits of a Financial Transactions Tax," *Tax Policy Center*. [10]
+- **SDR reallocation**: Stiglitz & Bhatt 2021, "IMF and SDR Allocation," various; IMF 2021 allocation report. [11]
+- **Global minimum corporate tax**: OECD 2021, "Two-Pillar Solution"; Tax Justice Network 2021, "State of Tax Justice" ($100–240B estimate). [12]
+- **Zucman billionaire wealth tax**: Zucman 2024, report for G20 Brazil presidency. [13]
+- **ODA figures and 0.7% target**: OECD Development Assistance Committee preliminary 2024 data. [14]
+- **Cash transfer effectiveness ($0.85–$0.90 per dollar)**: GiveDirectly RCTs; Haushofer & Shapiro 2016, *Quarterly Journal of Economics*. [15]
+
+### Ecological boundaries and decoupling
+- **Planetary boundaries framework**: Rockström et al. 2009, *Nature* 461: 472–475; Steffen et al. 2015, *Science* 347(6223); Richardson et al. 2023, *Science Advances* 9(37). [16]
+- **Nitrogen boundary (44 vs 62 Tg/yr)**: Rockström 2009 (35 Tg/yr original); de Vries et al. 2013 (revised upward); Richardson 2023 (62 Tg/yr). [17]
+- **Absolute decoupling "rare"**: Haberl et al. 2020, "A Systematic Review of the Evidence on Decoupling," *Environmental Research Letters* 15(6). [18]
+- **Material footprint 50 Gt safe limit**: Bringezu 2015, "Possible Target Corridor for Sustainable Use of Global Material Resources," *Resources* 4(1); Hickel et al. 2022 synthesis. [19]
+- **Solar S-curve data**: Our World in Data / BP Statistical Review / IEA, via OWID GitHub energy-data repository. [20]
+- **1.5°C carbon budget**: IPCC AR6 WG1, Table SPM.2 (remaining budget from 2020: 400 GtCO₂ for 50% chance). [21]
+- **Carbon budget exhaustion at 6–10 years**: Current emissions ~40 GtCO₂/yr ÷ 400 Gt remaining. [22]
+
+### Development and aid
+- **Aid effectiveness consensus**: Banerjee & Duflo 2011, *Poor Economics*; Easterly 2006, *The White Man's Burden*; Deaton 2013, *The Great Escape*; Moyo 2009, *Dead Aid*. [23]
+- **FDI, remittances, ODA flow magnitudes**: World Bank 2024, *Migration and Development Brief*; OECD DAC statistics; UNCTAD *World Investment Report* 2024. [24]
+- **Development recipe (savings, investment, institutions)**: Barro 1991, *Quarterly Journal of Economics*; Rodrik 2007, *One Economics, Many Recipes*; Acemoglu & Robinson 2012, *Why Nations Fail*. [25]
+- **Demographic dividend**: Bloom, Canning & Sevilla 2003, "The Demographic Dividend," RAND; Galor 2011, *Unified Growth Theory*. [26]
+- **M-Pesa and mobile money**: Jack & Suri 2014, *Science* 354: 1288–1292; Suri & Jack 2016, "The Long-Run Poverty and Gender Impacts of Mobile Money," *Science* 354(6317). [27]
+- **PEPFAR**: PEPFAR 2024 annual report (20M+ on antiretrovirals); 2025 disruptions from press/USAID reporting. [28]
+- **Graduation programs (BRAC)**: Banerjee et al. 2015, "A Multifaceted Program Causes Lasting Progress for the Very Poor," *Science* 348(6236). [29]
+
+### IMF and structural adjustment
+- **IMF program effects on growth**: Barro & Lee 2005, "IMF Programs: Who Is Chosen and What Are the Effects?" *Journal of Monetary Economics*; Dreher 2006, "IMF and Economic Growth," *World Development*. [30]
+- **Structural adjustment critique**: Stiglitz 2002, *Globalization and Its Discontents*; Easterly 2005, "What Did Structural Adjustment Adjust?" *Journal of Development Economics*. [31]
+- **SSA GDP contraction during SAP era**: Maddison Project Database 2023; WDI GDP per capita growth rates. [32]
+
+### Provisioning and decent living standards
+- **Decent Living Standards material requirements**: Rao & Min 2018, "Decent Living Standards: Material Prerequisites for Human Wellbeing," *Social Indicators Research* 138: 225–244. [33]
+- **Global food production sufficiency**: FAO 2023, *The State of Food Security and Nutrition in the World*. [34]
+- **Cultivated meat cost trajectory**: Good Food Institute annual reports 2013–2025. [35]
+
+### Welfare measurement
+- **Atkinson EDEI welfare-weighted growth**: Atkinson 1970, "On the Measurement of Inequality," *Journal of Economic Theory* 2(3): 244–263. [36]
+- **$15k good-life threshold**: Our analysis — GDP/capita above which ≥91% of country-years achieve life expectancy ≥70, using WDI data 1990–2024. Not from external literature. [37]
+
+---
+
 ## Appendix
 
 ### Data Sources
@@ -484,7 +596,7 @@ Fifteen scripts in `analysis/` produce 77 charts. Run sequentially after `downlo
 
 ### Full Chart Atlas
 
-The complete chart index is in [README_v2_archive.md](README_v2_archive.md). Charts featured in this document: 01, 02, 14, 21, 22, 24b, 28, 31, 32, 46, 60, 62, 67, 69. Charts 72–77 are featured in [IMF_WORLD_BANK.md](IMF_WORLD_BANK.md).
+The complete chart index is in [README_v2_archive.md](README_v2_archive.md). Charts featured in this document: 01, 02, 14, 21, 22, 24b, 26, 28, 31, 32, 46, 60, 62, 67, 69. Charts 72–77 are featured in [IMF_WORLD_BANK.md](IMF_WORLD_BANK.md).
 
 ### Tools & Environment
 
@@ -493,4 +605,4 @@ AI assistants: Claude Opus 4.6 (primary analysis and writing), GPT-5.4 (independ
 
 ---
 
-*This project is open-source. All data is from publicly available sources. The full exploratory analysis with all 65 charts and three rounds of independent review is preserved in [README_v2_archive.md](README_v2_archive.md). Reproduce, critique, and extend.*
+*This project is open-source. All data is from publicly available sources. The full exploratory analysis with all 77 charts and three rounds of independent review is preserved in [README_v2_archive.md](README_v2_archive.md). Reproduce, critique, and extend.*

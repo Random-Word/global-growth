@@ -42,6 +42,7 @@ WDI = {
     "NY.GDP.MKTP.CD": "gdp_current_usd",
     "NY.GDP.MKTP.PP.CD": "gdp_ppp_current",
     "NY.GDP.MKTP.KD": "gdp_constant_2015usd",
+    "NY.GDP.MKTP.PP.KD": "gdp_ppp_constant_2021",
     "NY.GDP.PCAP.PP.CD": "gdppc_ppp_current",
     "NY.GDP.PCAP.KD": "gdppc_constant_2015usd",
     "SP.POP.TOTL": "population",

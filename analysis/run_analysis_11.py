@@ -29,6 +29,19 @@ warnings.filterwarnings("ignore")
 sns.set_theme(style="whitegrid", palette="colorblind")
 CHART_DIR = "charts"
 
+# ── Load PIP survey mean income (actual household-survey data) ────────────────
+import os
+
+pip_mean = pd.read_csv(
+    os.path.join("data", "raw", "pip_country_2.15.csv"),
+    usecols=["country_code", "reporting_year", "reporting_level", "mean"],
+)
+pip_mean = pip_mean[pip_mean["reporting_level"] == "national"].copy()
+# PIP mean is daily per-capita income/consumption in 2017 PPP $
+pip_mean["survey_mean_annual"] = pip_mean["mean"] * 365.25
+pip_mean = pip_mean.rename(columns={"reporting_year": "year"})
+pip_mean = pip_mean[["country_code", "year", "survey_mean_annual"]].dropna()
+
 
 # ── Download WDI data for rich countries ───────────────────────────────────────
 def fetch_wdi(indicator, label, countries="all", date_range="1970:2025"):
@@ -112,7 +125,20 @@ for col in quintile_cols + [
             )
 
 if rich_data is not None:
-    # Compute real income at each quintile: avg_income_quintile = GDP_pc * (share/20)
+    # Merge PIP survey mean income (household-survey-based, not GDP/cap)
+    rich_data = rich_data.merge(
+        pip_mean, on=["country_code", "year"], how="left"
+    )
+    # Use survey mean where available; interpolate within each country for gaps
+    rich_data = rich_data.sort_values(["country_code", "year"])
+    rich_data["survey_mean_annual"] = rich_data.groupby("country_code")[
+        "survey_mean_annual"
+    ].transform(lambda s: s.interpolate(method="linear", limit_area="inside"))
+
+    # Compute real income at each quintile using survey mean (not GDP/cap).
+    # GDP/cap includes corporate earnings, government spending, capital formation
+    # that are not household income. Survey mean is actual household income/consumption.
+    income_base = rich_data["survey_mean_annual"].fillna(rich_data["gdppc_ppp"])
     for q, col in [
         ("Q1_bottom20", "bottom20_share"),
         ("Q2", "q2_share"),
@@ -120,7 +146,7 @@ if rich_data is not None:
         ("Q4", "q4_share"),
         ("Q5_top20", "top20_share"),
     ]:
-        rich_data[f"income_{q}"] = rich_data["gdppc_ppp"] * (rich_data[col] / 20)
+        rich_data[f"income_{q}"] = income_base * (rich_data[col] / 20)
 
     print(
         f"  Rich-country dataset: {len(rich_data)} rows, {rich_data['country_code'].nunique()} countries"
@@ -688,6 +714,16 @@ print("  → Chart 51 saved: absolute_vs_relative.png")
 # ══════════════════════════════════════════════════════════════════════════════
 # SUMMARY
 # ══════════════════════════════════════════════════════════════════════════════
+# Compute US top quintile share change for summary
+us_top_chg_str = "N/A"
+if rich_data is not None:
+    us = rich_data[
+        (rich_data["country_code"] == "USA") & rich_data["top20_share"].notna()
+    ].sort_values("year")
+    if len(us) >= 2:
+        chg = us["top20_share"].iloc[-1] - us["top20_share"].iloc[0]
+        us_top_chg_str = f"{chg:+.1f}"
+
 print("\n" + "═" * 80)
 print("SUMMARY: ARE RICH-WORLD CITIZENS WORSE OFF?")
 print("═" * 80)
@@ -717,7 +753,7 @@ Key findings:
    countries, which creates political barriers to international redistribution."
    That's a real problem — but it's a political problem, not an economic failure.
 """.format(
-        us_top_chg=f"placeholder"
+        us_top_chg=us_top_chg_str
     )
 )
 

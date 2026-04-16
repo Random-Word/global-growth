@@ -29,7 +29,17 @@ CHART_DIR = "charts"
 
 
 # ── Download ODA and fiscal data from World Bank ──────────────────────────────
-def fetch_wdi(indicator, label, date_range="1960:2024"):
+# WDI aggregate codes to filter out (income groups, regions, etc.)
+AGGREGATE_CODES = {
+    'WLD', 'LIC', 'LMC', 'UMC', 'HIC', 'LMY', 'MIC', 'SSF', 'SSA',
+    'EAS', 'ECS', 'LCN', 'MEA', 'NAC', 'SAS', 'EAP', 'ECA', 'LAC',
+    'MNA', 'OED', 'OSS', 'PSS', 'EMU', 'EUU', 'ARB', 'CEB', 'CSS',
+    'FCS', 'HPC', 'IBD', 'IBT', 'IDA', 'IDX', 'LDC', 'LTE', 'TEA',
+    'TEC', 'TLA', 'TMN', 'TSA', 'TSS', 'PRE', 'PST', 'INX',
+}
+
+
+def fetch_wdi(indicator, label, date_range="1960:2024", filter_aggregates=True):
     """Fetch a WDI indicator for all countries."""
     url = f"https://api.worldbank.org/v2/country/all/indicator/{indicator}"
     params = {"date": date_range, "format": "json", "per_page": 20000}
@@ -39,9 +49,13 @@ def fetch_wdi(indicator, label, date_range="1960:2024"):
         if len(data) > 1 and data[1]:
             rows = []
             for item in data[1]:
+                cc = item["country"]["id"]
+                # Filter out aggregate entities to avoid double-counting
+                if filter_aggregates and (cc in AGGREGATE_CODES or len(cc) != 3):
+                    continue
                 rows.append(
                     {
-                        "country_code": item["country"]["id"],
+                        "country_code": cc,
                         "country": item["country"]["value"],
                         "year": int(item["date"]),
                         label: item["value"],
@@ -345,7 +359,9 @@ if len(donor_oda) > 0 and len(gdppc_ppp) > 0:
     # We'll use a simpler approach — known ODA/GNI ratios over time from bilateral flows
     pass
 
-# Manual key data points from well-known OECD DAC statistics
+# Manual key data points from OECD DAC statistics (https://data.oecd.org/oda/net-oda.htm)
+# NOTE: Hand-collected benchmarks, not a complete time series from the API.
+# 2025 values are projections based on announced budget changes, not final data.
 oda_gni_data = pd.DataFrame(
     [
         # Historical ODA/GNI for key donors (%, well-documented)
@@ -654,6 +670,11 @@ if len(tax_rev) > 0:
         ax.set_ylabel("ODA (% of GNI)")
         ax.set_title(
             "Do High-Tax Countries Give More Aid?", fontsize=12, fontweight="bold"
+        )
+        ax.text(
+            0.05, 0.02,
+            f"N={len(mdf)} OECD donors. Small sample; treat as suggestive, not conclusive.",
+            transform=ax.transAxes, fontsize=7, color="gray", style="italic",
         )
 
 plt.suptitle(
@@ -1144,17 +1165,20 @@ if len(oda_ts) > 0:
         linestyle="--",
     )
 ax.set_title("Poverty Gaps vs Global ODA Over Time", fontsize=12, fontweight="bold")
-ax.set_ylabel("Billion $ (gaps in PPP, ODA in nominal)")
+ax.set_ylabel("Billion $")
 ax.set_xlabel("Year")
 ax.legend(fontsize=9)
 ax.set_yscale("log")
 ax.set_ylim(50, 10000)
 ax.set_xlim(1981, 2024)
 ax.annotate(
-    "ODA ≈ poverty gap\nat $2.15/day by ~2018",
-    xy=(2018, 170),
-    fontsize=9,
-    bbox=dict(boxstyle="round", facecolor="lightyellow", alpha=0.5),
+    "CAUTION: Gaps in 2017 PPP $, ODA in nominal $.\n"
+    "Not directly comparable — shown together\n"
+    "only to illustrate scale convergence.",
+    xy=(1983, 60),
+    fontsize=7,
+    color="gray",
+    style="italic",
 )
 
 # Panel B: Ratio of ODA to poverty gap at each threshold

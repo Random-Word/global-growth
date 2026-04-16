@@ -163,9 +163,15 @@ colors_bar = {
     "USA": "#1f77b4",
 }
 for i, (name, vals) in enumerate(decade_data.items()):
-    vals_clean = [v if not np.isnan(v) else 0 for v in vals]
+    # Leave missing decades as gaps, not zeros — 0% growth ≠ no data
+    vals_plot = [v if not np.isnan(v) else 0 for v in vals]
+    mask = [not np.isnan(v) for v in vals]
+    positions = x + i * width
+    bar_colors = [colors_bar[name] if m else "none" for m in mask]
+    bar_edges = [colors_bar[name] if m else "none" for m in mask]
     ax.bar(
-        x + i * width, vals_clean, width, label=name, color=colors_bar[name], alpha=0.8
+        positions, vals_plot, width, label=name,
+        color=bar_colors, edgecolor=bar_edges, alpha=0.8
     )
 
 ax.set_xticks(x + width * 2)
@@ -305,7 +311,13 @@ for cc in mad["countrycode"].unique():
 df_ep = pd.DataFrame(episodes).sort_values("span", ascending=False)
 
 # Classify economic system during the growth episode
-# This requires domain knowledge — code the major ones
+# NOTE: This classification requires domain knowledge and is inherently
+# subjective. Almost all modern economies involve some market mechanisms,
+# so "market vs command" is a spectrum, not a binary. We code along a
+# spectrum: pure command, state-directed, mixed, market-oriented, free market.
+# The reader should note that only a handful of economies were ever truly
+# command-based, which makes "every episode involved markets" partly
+# definitional rather than a strong empirical finding.
 market_reform_countries = {
     "CHN": "State-directed + market reform (1978)",
     "KOR": "State-directed industrial policy + market",
@@ -664,13 +676,20 @@ EMPIRICAL FINDINGS:
    didn't just accelerate growth — they made it sustainable and less
    prone to catastrophic policy errors.
 
-4. EVERY SUSTAINED >4% NON-RESOURCE GROWTH EPISODE INVOLVED MARKETS
+4. EVERY SUSTAINED >4% NON-RESOURCE GROWTH EPISODE INVOLVED MARKET MECHANISMS
    In the data: not a single sustained (10+ year) non-resource growth
    episode above 4% occurred in a pure command economy. The closest
    is the USSR 1928-1940 (and that involved forced collectivization/
    famine). Ethiopia under the EPRDF is arguably the most "command-like"
    recent success, but even that involved significant market mechanisms
    and foreign investment.
+   
+   CAVEAT: This finding is partly definitional — almost all modern economies
+   use price signals and private enterprise to some degree, so "involved
+   markets" is a low bar. The more interesting variation is the DEGREE of
+   state direction: East Asian successes were heavily state-directed,
+   not laissez-faire. The data rejects pure command economics, but does
+   not endorse any particular market model.
 
 5. COUNTEREXAMPLES ARE WEAK
    - Cuba: never sustained >4% growth for a decade

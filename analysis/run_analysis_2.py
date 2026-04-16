@@ -62,7 +62,7 @@ print("=" * 70)
 
 fig, axes = plt.subplots(2, 2, figsize=(16, 14))
 fig.suptitle(
-    "Does Poverty Reduction Drive Subsequent Growth?", fontsize=16, fontweight="bold"
+    "Poverty, Growth, and the Virtuous Cycle", fontsize=16, fontweight="bold"
 )
 
 # Panel A: Initial poverty level vs subsequent growth
@@ -83,19 +83,21 @@ gdp_2019 = wdi[
 gdp_2019 = gdp_2019.sort_values("year").drop_duplicates("country_code", keep="last")
 
 merged_q1 = pov2000.merge(
-    gdp_2000[["country_code", "gdppc_constant_2015usd"]], on="country_code"
+    gdp_2000[["country_code", "year", "gdppc_constant_2015usd"]], on="country_code"
 )
 merged_q1 = merged_q1.merge(
-    gdp_2019[["country_code", "gdppc_constant_2015usd"]],
+    gdp_2019[["country_code", "year", "gdppc_constant_2015usd"]],
     on="country_code",
     suffixes=("_start", "_end"),
 )
+# Compute actual elapsed years from data, not hardcoded
+merged_q1["elapsed_years"] = merged_q1["year_end"] - merged_q1["year_start"]
 merged_q1["annual_growth"] = (
     (
         merged_q1["gdppc_constant_2015usd_end"]
         / merged_q1["gdppc_constant_2015usd_start"]
     )
-    ** (1 / 20)
+    ** (1 / merged_q1["elapsed_years"])
     - 1
 ) * 100
 merged_q1 = merged_q1[merged_q1["annual_growth"].between(-10, 20)]
@@ -163,15 +165,16 @@ mer = pov1990[["country_code", "headcount"]].merge(
 mer["pov_change_90s"] = (mer["headcount_00"] - mer["headcount_90"]) * 100  # ppt change
 
 mer2 = mer.merge(
-    gdp_2000[["country_code", "gdppc_constant_2015usd"]], on="country_code"
+    gdp_2000[["country_code", "year", "gdppc_constant_2015usd"]], on="country_code"
 )
 mer2 = mer2.merge(
-    gdp_2010[["country_code", "gdppc_constant_2015usd"]],
+    gdp_2010[["country_code", "year", "gdppc_constant_2015usd"]],
     on="country_code",
     suffixes=("_00", "_10"),
 )
+mer2["elapsed_years"] = mer2["year_10"] - mer2["year_00"]
 mer2["growth_00s"] = (
-    (mer2["gdppc_constant_2015usd_10"] / mer2["gdppc_constant_2015usd_00"]) ** (1 / 10)
+    (mer2["gdppc_constant_2015usd_10"] / mer2["gdppc_constant_2015usd_00"]) ** (1 / mer2["elapsed_years"])
     - 1
 ) * 100
 mer2 = mer2[mer2["growth_00s"].between(-10, 20)]
@@ -193,8 +196,10 @@ ax.set_xlabel("Change in extreme poverty rate 1990→2000 (ppt)")
 ax.set_ylabel("Annual GDP/capita growth 2000-2010 (%)")
 ax.axvline(x=0, color="gray", linestyle="--", alpha=0.3)
 
-# Panel C: The demand multiplier logic — income levels and local business activity
-# Use mean income from PIP data to look at consumption multipliers
+# Panel C: Household consumption share proxy — survey mean vs GDP per capita
+# This is a ROUGH PROXY, not a direct measure of household consumption share.
+# Survey means capture household income/consumption; GDP includes corporate
+# earnings, government spending, and capital formation.
 ax = axes[1][0]
 
 # What share of GDP is household consumption in low vs mid vs high income countries?
@@ -216,7 +221,9 @@ pip_with_gdp["income_group"] = pd.cut(
     bins=[0, 2000, 5000, 15000, 100000],
     labels=["<$2k", "$2-5k", "$5-15k", "$15k+"],
 )
-# Mean survey income / GDP per capita ratio (rough proxy for how much GDP is captured as consumption)
+# Mean survey income / GDP per capita ratio (rough proxy — NOT a precise
+# measure of household consumption share, since survey welfare aggregates
+# differ from national-accounts household final consumption)
 pip_with_gdp["mean_annual"] = pip_with_gdp["mean"] * 365  # daily to annual
 pip_with_gdp["cons_gdp_ratio"] = (
     pip_with_gdp["mean_annual"] / pip_with_gdp["gdppc_ppp_current"]
@@ -658,21 +665,26 @@ fig.suptitle(
     fontweight="bold",
 )
 
-# Track countries that substantially reduced both $2.15 and $6.85 poverty
-success_countries = [
-    "CHN",
-    "VNM",
-    "IDN",
-    "THA",
-    "MYS",
-    "BRA",
-    "COL",
-    "PER",
-    "TUR",
-    "POL",
-    "ROU",
-]
-stalled_countries = ["NGA", "COD", "MDG", "MOZ", "TCD", "BFA", "MLI", "NER"]
+# Define cohorts using reproducible criteria rather than hand-picking:
+# "Success" = had ≥30% $2.15 headcount around 1990, reduced to <10% by ~2020
+# "Stalled" = had ≥30% $2.15 headcount around 1990, still ≥30% around 2020
+# This lets the data define the groups rather than our priors.
+pov_early = pip215[pip215["reporting_year"].between(1988, 1995)].copy()
+pov_early = pov_early.sort_values("reporting_year").drop_duplicates("country_code", keep="last")
+pov_late = pip215[pip215["reporting_year"].between(2018, 2023)].copy()
+pov_late = pov_late.sort_values("reporting_year").drop_duplicates("country_code", keep="last")
+
+cohort_df = pov_early[["country_code", "headcount"]].merge(
+    pov_late[["country_code", "headcount"]], on="country_code", suffixes=("_early", "_late")
+)
+success_countries = cohort_df[
+    (cohort_df["headcount_early"] >= 0.30) & (cohort_df["headcount_late"] < 0.10)
+]["country_code"].tolist()
+stalled_countries = cohort_df[
+    (cohort_df["headcount_early"] >= 0.30) & (cohort_df["headcount_late"] >= 0.30)
+]["country_code"].tolist()
+print(f"  Data-defined success cohort ({len(success_countries)}): {success_countries[:8]}")
+print(f"  Data-defined stalled cohort ({len(stalled_countries)}): {stalled_countries[:8]}")
 
 # Panel A: GDP per capita trajectories
 ax = axes[0][0]

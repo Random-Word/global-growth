@@ -56,6 +56,9 @@ transition_minerals = {
 }
 # For clean energy specifically (subset of above) — IEA estimates ~7 Mt in 2023
 # going to ~30 Mt by 2040 under SDS
+# NOTE: Sum is approximate — lithium in LCE, rare earths in REO, others in mine
+# production tonnes. Not strictly comparable masses. Manganese and copper are
+# dominated by non-energy uses (~90% Mn for steel, ~70% Cu for electrical/plumbing).
 transition_total_kt = sum(transition_minerals.values())  # kt
 transition_total_mt = transition_total_kt / 1000  # Mt
 
@@ -475,12 +478,21 @@ ratio_deaths = fossil_deaths / mineral_deaths
 ax4.text(
     0.5,
     0.6,
-    f"Fossil fuels kill\n{ratio_deaths:.0f}× more people",
+    f"Fossil fuel *air pollution* kills\n{ratio_deaths:.0f}× more than mining\n*accidents & local pollution*",
     ha="center",
     fontsize=11,
     style="italic",
     transform=ax4.transAxes,
     bbox=dict(boxstyle="round", facecolor="lightyellow", alpha=0.8),
+)
+ax4.text(
+    0.5,
+    0.02,
+    "Note: Fossil = ambient air pollution (population-wide exposure);\nMining = occupational accidents & local pollution",
+    ha="center",
+    fontsize=7,
+    transform=ax4.transAxes,
+    bbox=dict(boxstyle="round", facecolor="white", alpha=0.7),
 )
 
 fig.suptitle(
@@ -603,11 +615,20 @@ ax2.plot(years_cum, mineral_virgin_annual, color="#FF8C00", linewidth=2)
 ax2.set_xlabel("Year")
 ax2.set_ylabel("Million tonnes per year")
 ax2.set_title(
-    "Transition Mineral Demand\nVirgin vs Recycled (NZE Scenario)",
+    "Illustrative: Transition Mineral Demand\nVirgin vs Recycled (NZE Scenario)",
     fontweight="bold",
     fontsize=11,
 )
 ax2.legend(fontsize=9, loc="upper left")
+ax2.text(
+    0.5,
+    0.02,
+    "Illustrative scenario using assumed growth & recycling rates — not from published model",
+    ha="center",
+    fontsize=7,
+    transform=ax2.transAxes,
+    bbox=dict(boxstyle="round", facecolor="lightyellow", alpha=0.8),
+)
 ax2.annotate(
     "Recycling of first-generation\nbatteries & solar panels\nkicks in around 2040",
     xy=(2042, mineral_recycled_annual[17] + mineral_virgin_annual[17]),

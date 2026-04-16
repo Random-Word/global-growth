@@ -3,7 +3,7 @@ Analysis 15: IMF & World Bank — Help or Harm?
 
 Key questions:
 1. Do countries that relied heavily on IMF programs grow faster or slower?
-2. The 1997 Asian crisis natural experiment: Korea/Thailand/Indonesia (IMF) vs Malaysia (rejected IMF)
+2. The 1997 Asian crisis historical comparison: Korea/Thailand/Indonesia (IMF) vs Malaysia (rejected IMF)
 3. Did structural adjustment (1980s-90s) improve or damage African growth?
 4. Social spending before/during/after IMF program eras
 5. The "repeat customer" puzzle: do frequent IMF users grow more?
@@ -26,6 +26,25 @@ os.makedirs(CHARTS_DIR, exist_ok=True)
 
 # ── Country groups ──────────────────────────────────────────────────────────
 # IMF-heavy: countries that had many/frequent IMF programs since 1980
+#
+# SELECTION NOTE: These groups are manually curated based on qualitative
+# reputation as frequent vs infrequent IMF borrowers, NOT derived from actual
+# IMF arrangement data (e.g. the MONA database of IMF-supported programs).
+# Criteria used: countries widely cited in the aid/IMF literature as repeat
+# program users (Easterly 2005, Dreher 2006, Vreeland 2007).
+#
+# Ideally these lists would be built programmatically from the MONA database
+# (https://www.imf.org/external/np/pdr/mona/) by counting arrangements per
+# country-decade.  That would avoid the ad-hoc judgment calls below.
+#
+# Known caveats for the "IMF-light" group:
+#   - Thailand had a major IMF program during the 1997 crisis
+#   - Chile relied on IMF assistance during the 1982-83 debt crisis
+#   - Indonesia had an extensive IMF program 1997-2003
+#   - Bangladesh has had multiple IMF facilities (ECF/PRGF)
+#   - India drew on IMF support during its 1991 balance-of-payments crisis
+# These countries are classified as "light" because IMF reliance was episodic
+# rather than chronic, but the binary grouping is a simplification.
 IMF_HEAVY = {
     "ARG": "Argentina",
     "GHA": "Ghana",
@@ -250,7 +269,13 @@ print("  Saved chart 72")
 # ═══════════════════════════════════════════════════════════════════════════
 # CHART 73: 1997 Asian Crisis — IMF vs No-IMF recovery
 # ═══════════════════════════════════════════════════════════════════════════
-print("\n── Chart 73: 1997 Asian Crisis natural experiment ──")
+# NOTE: This is a historical comparison, not a true natural experiment.
+# The "control" group (Malaysia, China, Vietnam) includes countries that were
+# not equally exposed to the crisis, weakening causal inference about IMF
+# program effects.  Malaysia is the closest to a valid counterfactual (same
+# crisis exposure, different policy choice), but even that comparison is
+# confounded by Malaysia's capital controls and different economic structure.
+print("\n── Chart 73: 1997 Asian Crisis historical comparison ──")
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
@@ -328,6 +353,15 @@ print("\n── Chart 74: SSA growth across structural adjustment eras ──")
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
 # Panel A: SSA average GDP per capita growth by era
+# NOTE: SAP start dates varied significantly by country.  Ghana began its ERP
+# in 1983; Tanzania resisted until 1986; Nigeria's SAP ran 1986-1992; Ethiopia
+# only undertook adjustment after 1991.  Using fixed calendar eras is a
+# simplification — early adopters (Ghana, Senegal) are misclassified as
+# "pre-SAP" in 1980-82 when they had not yet started, while late adopters
+# (Ethiopia, Tanzania) are attributed SAP effects for years before they
+# participated.  A country-specific treatment-date approach would be more
+# rigorous but requires individual program start/end dates from the MONA
+# database or Dreher (2006) dataset.
 eras = [
     ("Pre-SAP\n1970–1979", 1970, 1979),
     ("SAP era\n1980–1999", 1980, 1999),
@@ -421,7 +455,16 @@ print("  Saved chart 74")
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# CHART 75: Social spending — health & education during IMF program eras
+# CHART 75: Social spending — health & education, IMF-heavy vs IMF-light
+#
+# NOTE: The file header (question 4) asks about spending "before/during/after
+# IMF program eras", but this chart only compares IMF-heavy vs IMF-light
+# groups over 2000-2021 (the period with available health/education data).
+# It does NOT show a before/during/after-program time comparison for
+# individual countries.  Answering the stated question would require
+# country-specific IMF program dates and pre-/post-program spending windows.
+# What this chart DOES show: whether countries with chronic IMF exposure
+# spend differently on health/education than countries that avoided the IMF.
 # ═══════════════════════════════════════════════════════════════════════════
 print("\n── Chart 75: Social spending patterns ──")
 
@@ -458,7 +501,7 @@ ax.set_title("B. Education spending")
 ax.legend(fontsize=9)
 
 fig.suptitle(
-    "Social Spending: IMF-Heavy vs IMF-Light Countries",
+    "Social Spending (2000–2021): IMF-Heavy vs IMF-Light Countries",
     fontsize=14,
     fontweight="bold",
     y=1.02,
