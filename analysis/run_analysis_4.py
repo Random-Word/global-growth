@@ -170,8 +170,13 @@ for i, (name, vals) in enumerate(decade_data.items()):
     bar_colors = [colors_bar[name] if m else "none" for m in mask]
     bar_edges = [colors_bar[name] if m else "none" for m in mask]
     ax.bar(
-        positions, vals_plot, width, label=name,
-        color=bar_colors, edgecolor=bar_edges, alpha=0.8
+        positions,
+        vals_plot,
+        width,
+        label=name,
+        color=bar_colors,
+        edgecolor=bar_edges,
+        alpha=0.8,
     )
 
 ax.set_xticks(x + width * 2)

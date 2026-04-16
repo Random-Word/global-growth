@@ -132,9 +132,9 @@ complete = complete.sort_values(["cc", "year"])
 
 # Merge PIP survey mean income (household-survey-based, not GDP/cap)
 complete = complete.merge(pip_mean, on=["cc", "year"], how="left")
-complete["survey_mean_annual"] = complete.groupby("cc")[
-    "survey_mean_annual"
-].transform(lambda s: s.interpolate(method="linear", limit_area="inside"))
+complete["survey_mean_annual"] = complete.groupby("cc")["survey_mean_annual"].transform(
+    lambda s: s.interpolate(method="linear", limit_area="inside")
+)
 # Use survey mean where available; GDP/cap as fallback
 complete["income_base"] = complete["survey_mean_annual"].fillna(complete["gdppc_ppp"])
 

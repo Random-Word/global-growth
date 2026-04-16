@@ -313,7 +313,9 @@ print("  -> Saved 02b_poverty_key_countries.png")
 # China's share of global poverty reduction
 reg215 = pip_regional["2.15"]
 # Use WLD row only — summing sub-regions double-counts (SSF = AFE + AFW)
-world_data = reg215[reg215["region_code"] == "WLD"][["reporting_year", "pop_in_poverty"]].copy()
+world_data = reg215[reg215["region_code"] == "WLD"][
+    ["reporting_year", "pop_in_poverty"]
+].copy()
 china_data = pip215[pip215["country_code"] == "CHN"].sort_values("reporting_year")
 
 # Find overlapping years

@@ -126,9 +126,7 @@ for col in quintile_cols + [
 
 if rich_data is not None:
     # Merge PIP survey mean income (household-survey-based, not GDP/cap)
-    rich_data = rich_data.merge(
-        pip_mean, on=["country_code", "year"], how="left"
-    )
+    rich_data = rich_data.merge(pip_mean, on=["country_code", "year"], how="left")
     # Use survey mean where available; interpolate within each country for gaps
     rich_data = rich_data.sort_values(["country_code", "year"])
     rich_data["survey_mean_annual"] = rich_data.groupby("country_code")[

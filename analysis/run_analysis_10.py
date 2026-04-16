@@ -103,7 +103,9 @@ print("\n  Chart 41: Development anatomy at $15k")
 # from a different year within that window, which is unavoidable when coverage
 # varies across indicators and countries.
 RECENT_WINDOW = (2018, 2023)
-_recent = wdi[(wdi["year"] >= RECENT_WINDOW[0]) & (wdi["year"] <= RECENT_WINDOW[1])].copy()
+_recent = wdi[
+    (wdi["year"] >= RECENT_WINDOW[0]) & (wdi["year"] <= RECENT_WINDOW[1])
+].copy()
 latest = (
     _recent.sort_values("year", ascending=False)
     .groupby("country_code")

@@ -61,9 +61,7 @@ print("=" * 70)
 # reduction should predict future growth (virtuous cycle).
 
 fig, axes = plt.subplots(2, 2, figsize=(16, 14))
-fig.suptitle(
-    "Poverty, Growth, and the Virtuous Cycle", fontsize=16, fontweight="bold"
-)
+fig.suptitle("Poverty, Growth, and the Virtuous Cycle", fontsize=16, fontweight="bold")
 
 # Panel A: Initial poverty level vs subsequent growth
 ax = axes[0][0]
@@ -174,7 +172,8 @@ mer2 = mer2.merge(
 )
 mer2["elapsed_years"] = mer2["year_10"] - mer2["year_00"]
 mer2["growth_00s"] = (
-    (mer2["gdppc_constant_2015usd_10"] / mer2["gdppc_constant_2015usd_00"]) ** (1 / mer2["elapsed_years"])
+    (mer2["gdppc_constant_2015usd_10"] / mer2["gdppc_constant_2015usd_00"])
+    ** (1 / mer2["elapsed_years"])
     - 1
 ) * 100
 mer2 = mer2[mer2["growth_00s"].between(-10, 20)]
@@ -670,12 +669,18 @@ fig.suptitle(
 # "Stalled" = had ≥30% $2.15 headcount around 1990, still ≥30% around 2020
 # This lets the data define the groups rather than our priors.
 pov_early = pip215[pip215["reporting_year"].between(1988, 1995)].copy()
-pov_early = pov_early.sort_values("reporting_year").drop_duplicates("country_code", keep="last")
+pov_early = pov_early.sort_values("reporting_year").drop_duplicates(
+    "country_code", keep="last"
+)
 pov_late = pip215[pip215["reporting_year"].between(2018, 2023)].copy()
-pov_late = pov_late.sort_values("reporting_year").drop_duplicates("country_code", keep="last")
+pov_late = pov_late.sort_values("reporting_year").drop_duplicates(
+    "country_code", keep="last"
+)
 
 cohort_df = pov_early[["country_code", "headcount"]].merge(
-    pov_late[["country_code", "headcount"]], on="country_code", suffixes=("_early", "_late")
+    pov_late[["country_code", "headcount"]],
+    on="country_code",
+    suffixes=("_early", "_late"),
 )
 success_countries = cohort_df[
     (cohort_df["headcount_early"] >= 0.30) & (cohort_df["headcount_late"] < 0.10)
@@ -683,8 +688,12 @@ success_countries = cohort_df[
 stalled_countries = cohort_df[
     (cohort_df["headcount_early"] >= 0.30) & (cohort_df["headcount_late"] >= 0.30)
 ]["country_code"].tolist()
-print(f"  Data-defined success cohort ({len(success_countries)}): {success_countries[:8]}")
-print(f"  Data-defined stalled cohort ({len(stalled_countries)}): {stalled_countries[:8]}")
+print(
+    f"  Data-defined success cohort ({len(success_countries)}): {success_countries[:8]}"
+)
+print(
+    f"  Data-defined stalled cohort ({len(stalled_countries)}): {stalled_countries[:8]}"
+)
 
 # Panel A: GDP per capita trajectories
 ax = axes[0][0]

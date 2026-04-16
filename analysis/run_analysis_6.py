@@ -31,11 +31,50 @@ CHART_DIR = "charts"
 # ── Download ODA and fiscal data from World Bank ──────────────────────────────
 # WDI aggregate codes to filter out (income groups, regions, etc.)
 AGGREGATE_CODES = {
-    'WLD', 'LIC', 'LMC', 'UMC', 'HIC', 'LMY', 'MIC', 'SSF', 'SSA',
-    'EAS', 'ECS', 'LCN', 'MEA', 'NAC', 'SAS', 'EAP', 'ECA', 'LAC',
-    'MNA', 'OED', 'OSS', 'PSS', 'EMU', 'EUU', 'ARB', 'CEB', 'CSS',
-    'FCS', 'HPC', 'IBD', 'IBT', 'IDA', 'IDX', 'LDC', 'LTE', 'TEA',
-    'TEC', 'TLA', 'TMN', 'TSA', 'TSS', 'PRE', 'PST', 'INX',
+    "WLD",
+    "LIC",
+    "LMC",
+    "UMC",
+    "HIC",
+    "LMY",
+    "MIC",
+    "SSF",
+    "SSA",
+    "EAS",
+    "ECS",
+    "LCN",
+    "MEA",
+    "NAC",
+    "SAS",
+    "EAP",
+    "ECA",
+    "LAC",
+    "MNA",
+    "OED",
+    "OSS",
+    "PSS",
+    "EMU",
+    "EUU",
+    "ARB",
+    "CEB",
+    "CSS",
+    "FCS",
+    "HPC",
+    "IBD",
+    "IBT",
+    "IDA",
+    "IDX",
+    "LDC",
+    "LTE",
+    "TEA",
+    "TEC",
+    "TLA",
+    "TMN",
+    "TSA",
+    "TSS",
+    "PRE",
+    "PST",
+    "INX",
 }
 
 
@@ -672,9 +711,13 @@ if len(tax_rev) > 0:
             "Do High-Tax Countries Give More Aid?", fontsize=12, fontweight="bold"
         )
         ax.text(
-            0.05, 0.02,
+            0.05,
+            0.02,
             f"N={len(mdf)} OECD donors. Small sample; treat as suggestive, not conclusive.",
-            transform=ax.transAxes, fontsize=7, color="gray", style="italic",
+            transform=ax.transAxes,
+            fontsize=7,
+            color="gray",
+            style="italic",
         )
 
 plt.suptitle(

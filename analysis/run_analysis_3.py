@@ -152,7 +152,9 @@ for pct in ["P5", "P10", "P20", "P50", "P90"]:
     ax.plot(data["year"], data["gdppc"], "-", linewidth=2.5, label=pct)
 
 ax.set_yscale("log")
-ax.set_title("Population-Weighted Country Distribution of GDP/capita\n(country averages ranked by pop-share, not individual incomes)")
+ax.set_title(
+    "Population-Weighted Country Distribution of GDP/capita\n(country averages ranked by pop-share, not individual incomes)"
+)
 ax.set_ylabel("GDP per capita (2011 int'l $, log scale)")
 ax.set_xlabel("Year")
 ax.legend(fontsize=10)

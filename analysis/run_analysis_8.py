@@ -1068,7 +1068,16 @@ if len(valid) > 3:
         fontsize=12,
         fontweight="bold",
     )
-    ax.text(0.5, 0.02, "Note: CO\u2082 normalized by GDP; materials by population \u2014 different metrics", transform=ax.transAxes, fontsize=7, ha='center', color='gray', style='italic')
+    ax.text(
+        0.5,
+        0.02,
+        "Note: CO\u2082 normalized by GDP; materials by population \u2014 different metrics",
+        transform=ax.transAxes,
+        fontsize=7,
+        ha="center",
+        color="gray",
+        style="italic",
+    )
 
     # Count quadrants
     both_good = valid[(valid["co2_gdp_chg"] < 0) & (valid["dmc_pc_chg"] < 0)]
