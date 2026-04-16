@@ -263,7 +263,7 @@ This is not utopian fantasy — every component is on an observable S-curve or h
 
 The papers frame poverty as a stock problem: X billion people are below the line, the gap is $Y trillion, redistribute it. But poverty is a *flow* problem. Even if you transferred $3.1 trillion to lift every person above $6.85/day, you would need to do it again next year, and the year after — forever — unless those economies develop the productive capacity to sustain rising welfare independently. The question for durable prosperity is: what actually transforms a $4,000/capita economy into a $15,000 one?
 
-### Aid is the emergency room, not the cure
+### Aid saves lives but doesn't build economies
 
 The scale of resource flows to developing countries reveals the real story:
 
@@ -278,23 +278,20 @@ The scale of resource flows to developing countries reveals the real story:
 
 **ODA is ~10% of total resource flows to developing countries.** FDI is 4× ODA. Remittances are 3×. The growth-relevant flows dwarf the aid flows.
 
-The academic evidence (Banerjee, Duflo, Easterly, Deaton, Moyo) converges on a nuanced consensus: aid *is* effective for specific interventions (vaccines, bed nets, famine relief, primary education) but has *not* generated sustained economic growth at the country level. No country has grown its way out of poverty via aid alone. Every success story — Korea, China, Vietnam, Bangladesh, Botswana, Chile — relied on FDI, exports, domestic savings, and institutional reform. (To be clear: no serious redistribution advocate proposes aid alone. The real proposal is transfers *plus* public investment *plus* structural transformation — a combination that looks more like what successful developers actually did. The question is whether external funding can catalyze that combination or whether it must be primarily domestically driven.)
+The academic evidence (Banerjee, Duflo, Easterly, Deaton, Moyo) converges on a nuanced consensus: aid *is* effective for specific interventions (vaccines, bed nets, famine relief, primary education) but has *not* generated sustained economic growth at the country level. No country has grown its way out of poverty via aid alone. Every success story — Korea, China, Vietnam, Bangladesh, Botswana, Chile — relied on FDI, exports, domestic savings, and institutional reform.
 
-Most aid is not designed to generate growth, and this is not a failure — PEPFAR is designed to save HIV patients, not grow GDP, and it succeeds at what it is designed to do. But conflating humanitarian aid with development strategy leads to confused policy on both sides. The clean narrative ("aid doesn't work") is wrong for emergencies; the clean narrative ("just redistribute more") is wrong for growth.
+Most aid is not designed to generate growth, and this is not a failure — PEPFAR is designed to save HIV patients, not grow GDP, and it succeeds at what it is designed to do. The key distinction is between "aid" structured as *investment* (infrastructure loans, DFI equity, trade capacity, girls' education) and "aid" structured as *consumption* (food aid, cash transfers, emergency health). Both are valuable. Only the first generates growth. The clean narrative ("aid doesn't work") is wrong for emergencies; the clean narrative ("just redistribute more") is wrong for growth.
 
-### The 2025 aid cuts: a tragic natural experiment
+**The 2025 aid cuts made this distinction tragically concrete.** The US effectively dismantled USAID (~10,000 staff, 60–80% of bilateral programs frozen), and the UK cut ODA from 0.5% to 0.3% of GNI. The humanitarian impact has been **severe and immediate**: PEPFAR disruptions affecting 20M+ on antiretrovirals, WFP food shipments delayed, UNFPA family planning cut entirely. The growth impact is expected to be **small** — aid was 3–5% of GDP for the median SSA country while domestic revenue was 15–20% — but the cuts hit humanitarian programs (PEPFAR), investment programs (Power Africa), and growth-oriented aid (MCC compacts) indiscriminately. This is the sovereignty problem from our executive summary made concrete: international aid has no institutional guarantee, and one political pivot in a major donor can halve it overnight.
 
-In early 2025, the US effectively dismantled USAID (~10,000 staff, 60–80% of bilateral programs frozen), and the UK cut ODA from 0.5% to 0.3% of GNI. By December 2025, the Trump administration began replacing multilateral aid with bilateral health deals — 17 African countries signed as of March 2026.
+The elephant in the room is **remittances** ($656B/yr): 3× all government ODA, going directly to families with zero bureaucratic overhead, completely insulated from donor politics. Philippines ($37B vs $1.5B ODA), India ($125B), Kenya ($4.1B vs $3.2B). Private philanthropy (~$75B/yr) is more politically stable — Gates Foundation continued through the USAID shutdown — but cannot replace $224B in government ODA.
 
-The humanitarian impact has been **severe and immediate**: PEPFAR disruptions affecting 20M+ people on antiretrovirals, WFP food shipments delayed in Ethiopia/Somalia/Sudan, UNFPA family planning funding cut entirely. These are the programs where aid clearly saves lives, and the cuts cause measurable suffering.
+![Transfers vs development](charts/46_transfers_vs_development.png)
+*Transfers directly address 1–2 of the 7 components needed to reach $15k GDP/capita (human capital, partially demographics). Agricultural productivity, infrastructure, institutional capacity, structural transformation, and domestic savings require building productive economies.*
 
-The growth impact is expected to be **small** based on the aid-effectiveness literature, though it is too early (~15 months) for definitive empirical confirmation. Aid was 3–5% of GDP for the median SSA country; FDI was 2–3%, remittances 3–4%, domestic revenue 15–20%. The countries that *were* growing fast (Rwanda, Bangladesh, Vietnam) were not primarily aid-dependent. The countries most hurt — Somalia, South Sudan, DRC — were fragile states where aid was substituting for non-functioning governments, not driving growth trajectories.
+The evidence on transfers is real but limited: unconditional cash (GiveDirectly) provides excellent immediate relief but modest long-run productivity effects; graduation programs (BRAC) show 38% income gains sustained 7+ years; conditional transfers (Bolsa Família) work through children over 20–30 years. To be clear: no serious redistribution advocate proposes aid alone. The real proposal is transfers *plus* public investment *plus* structural transformation — a combination that looks more like what successful developers actually did. The question is whether external funding can catalyze that combination or whether it must be primarily domestically driven.
 
-The tragedy is that the cuts hit *both* categories indiscriminately: PEPFAR (humanitarian, saves lives), Power Africa (investment, builds growth), and MCC compacts (the gold standard of growth-oriented aid) all frozen together. This is the sovereignty problem from our executive summary made concrete: international aid has no institutional guarantee, and one political pivot in a major donor can halve it overnight.
-
-**Private philanthropy** (~$75B/yr internationally) is more politically stable — Gates Foundation operations continued through the USAID shutdown — but cannot replace $224B in ODA, particularly for large-scale humanitarian emergencies. And the elephant in the room remains **remittances** ($656B/yr): 3× all government ODA, going directly to families with zero bureaucratic overhead, completely insulated from donor politics. In many countries, remittances already dwarf aid: Philippines ($37B remittances vs $1.5B ODA), India ($125B), Kenya ($4.1B vs $3.2B).
-
-### The development recipe is clear — and it isn't about aid
+### The development recipe — and demographics as the leading indicator
 
 ![Divergent development paths](charts/60_divergent_paths.png)
 *East Asia pulled away from all other regions on income, savings, investment, trade openness, and education. The fertility panel is the leading indicator: East Asia began the demographic transition 20–30 years before Sub-Saharan Africa.*
@@ -309,26 +306,14 @@ The cross-country growth literature (Barro, Rodrik, Acemoglu, Hausmann, Pritchet
 
 This recipe is not "Asian." Bangladesh (+310% GDP/capita), Rwanda (+191%), Ethiopia (+231%), and Chile (+175%) all followed variations of the same pattern. Argentina (European, resource-rich) grew slower than Rwanda (African, landlocked, post-genocide). The relevant variable is institutional, not cultural or geographic.
 
-### What rich countries can actually do
+![Demographic dividend](charts/62_demographic_dividend.png)
+*Fertility decline since 1975 predicts GDP growth since 1990 — regardless of region. East Asia began the transition in the 1960s; SSA only in the 1990s. This 20–30 year head start is the single most important divergence driver.*
 
-The most powerful development levers available to rich countries are, paradoxically, not about money:
+The demographic transition deserves emphasis because it is both the leading indicator and the strongest reason for cautious optimism. When fertility falls, dependency ratios improve, women enter the labor force, families invest more per child, and savings rates rise. Bangladesh — a Muslim-majority South Asian country — achieved replacement-rate fertility through female education and family planning programs, all while growing 310%. SSA is now entering this transition (TFR falling from ~6 to ~4), which is the single strongest reason for cautious optimism about the region's next 30 years.
 
-**High impact (directly drive growth):**
-- **Trade access.** Allow developing-country exports into rich-world markets. Bangladesh's $47B/yr garment industry was enabled by EU preferential access. Vietnam's $370B in exports followed trade agreements. This is the single most effective development tool — and costs donor countries almost nothing in aggregate GDP, though the political costs are concentrated in specific industries. Rich-world agricultural subsidies (EU CAP, US Farm Bill) that undercut developing-country farmers do active harm.
-- **FDI facilitation.** Development Finance Institutions (US DFC, UK BII, Germany DEG) co-invest with private capital to de-risk pioneer investments. A $50M DFI investment in a solar project can unlock $500M in private follow-on. This is not aid — it is catalytic capital.
-- **Remittance cost reduction.** SSA remittance costs average 7.9% — the highest in the world, against a UN target of 3%. Halving them would transfer ~$3–4B/yr more to African families, more than many aid programs, at essentially zero fiscal cost to donor governments.
+### The debt trap: removing a brake on development
 
-**Moderate impact (build conditions for growth):**
-- **Infrastructure investment** structured as loans, not grants — World Bank/IDA, AfDB, MCC compacts. Africa's infrastructure gap is ~$100–170B/yr; ODA covers ~$15–20B. China's Belt and Road, whatever its terms, has provided more infrastructure to Africa in 20 years than all Western donors combined.
-- **Girls' education and family planning** — the highest-return investments in development, driving the demographic transition that unlocks everything else. Returns are real but generational (20–30 years).
-
-**What rich countries should *stop* doing** often matters as much: agricultural subsidies that undercut poor farmers, enabling capital flight and tax havens, arms sales to conflict zones, tied aid (where contractors must be from the donor country), and expensive remittance corridors.
-
-**The hardest truth:** the most important determinant of growth — institutional quality (Acemoglu & Robinson 2012) — is the variable outsiders have the *least* ability to change. Rwanda built institutions internally. So did Botswana. So did Korea. External "governance programs" have a poor track record. The things only developing countries can do — build institutions, maintain peace, invest domestically, complete the demographic transition, choose dense urbanization over sprawl — are the most important things.
-
-### The debt trap: a binding constraint hiding in plain sight
-
-The development literature focuses on investment, trade, and institutions. But for many developing countries, the binding constraint is simpler: debt service consumes the revenue that would fund investment.
+The development recipe requires investment — but for many developing countries, debt service consumes the revenue that would fund it.
 
 ![Debt burdens: success vs challenge](charts/67_success_vs_challenge_debt.png)
 *Development successes maintained consistently lower debt service (1–2% of GNI) compared to SSA challenges (2–5%) and Latin America (2–5%). The external debt stock panel is even starker: SSA peaked at 130% of GNI in the late 1990s while success countries stayed below 70%.*
@@ -338,80 +323,31 @@ The correlation is statistically significant: across 25 countries over 2000–20
 ![Debt service vs revenue](charts/69_debt_service_vs_revenue.png)
 *The real constraint is what share of government revenue goes to creditors rather than investment. SSA peaked at 50%+ in the early 1990s, fell to ~5% after HIPC/MDRI debt relief, and is now climbing back toward 15%. Development successes stayed at 5–15% throughout.*
 
-The history tells a story of vicious and virtuous cycles:
+The history tells a story of vicious and virtuous cycles. East Asian successes had low external debt because high domestic savings meant less foreign borrowing — low debt service left revenue for infrastructure, investment drove growth, growth expanded revenue. Latin America's "lost decade" (1982–1992) was a debt crisis that only ended with Brady Plan restructuring. SSA's HIPC (1996) and MDRI (2005) debt relief dropped external debt from ~100% to ~25% of GNI, creating fiscal space that accelerated growth — but new borrowing since 2010, increasingly from China and commercial creditors on less concessional terms, has rebuilt the debt to ~45% of GNI. Ghana, Zambia, and Ethiopia all defaulted or restructured in 2020–2024.
 
-- **East Asian successes** had low external debt because high domestic savings (30–45% of GDP) meant less foreign borrowing. Low debt service left revenue available for infrastructure investment. Investment drove growth, which expanded revenue. China's external debt never exceeded 20% of GNI.
-- **Latin America's "lost decade"** (1982–1992) was a debt crisis: external debt at 50–80% of GNI, debt service consuming 5–8% of GNI, growth stagnant. The Brady Plan (1989) restructured the debt; growth resumed only after.
-- **SSA's debt relief and re-accumulation**: HIPC (1996) and MDRI (2005) wrote off most multilateral debt, dropping SSA external debt from ~100% to ~25% of GNI. This created fiscal space — and growth accelerated. But new borrowing since 2010, increasingly from China and commercial creditors (Eurobonds) on less concessional terms, has rebuilt the debt to ~45% of GNI. Ghana, Zambia, and Ethiopia all defaulted or restructured in 2020–2024.
+**Debt is not the engine of development, but it can be a powerful brake.** Many SSA countries now pay *more* in debt service than they receive in ODA. Zambia, Ghana, and Kenya each spend 15–20% of government revenue on debt service — revenue that could fund the infrastructure, education, and health investment the development recipe requires. HIPC/MDRI demonstrated that debt relief creates fiscal space for investment; the subsequent re-accumulation demonstrates that without the underlying growth drivers (savings, exports, institutions), the debt rebuilds. **Debt relief may be a bigger lever than aid — but it only works alongside the broader recipe, not as a substitute for it.**
 
-The composition matters: SSA's new debt is 40–60% private/commercial (vs. mostly concessional multilateral pre-HIPC), with shorter maturities and higher interest rates. Latin America's is dominated by commercial creditors (67–93% private). This makes restructuring harder and rollover risk higher.
+### What rich countries can actually do
 
-**Debt relief may be a bigger lever than aid.** Many SSA countries now pay *more* in debt service than they receive in ODA. Zambia, Ghana, and Kenya each spend 15–20% of government revenue on debt service — revenue that could fund the infrastructure, education, and health investment the development recipe requires. The HIPC/MDRI model demonstrated that debt relief creates fiscal space for investment; the subsequent re-accumulation demonstrates that without the underlying growth drivers (savings, exports, institutions), the debt rebuilds. **Debt is both a cause and a symptom of the low-growth trap: it is a vicious cycle that requires breaking from multiple points simultaneously.**
+The most powerful development levers available to rich countries are, paradoxically, not about money:
 
-### The IMF and World Bank: help or harm?
+**High impact (directly drive growth):**
+- **Trade access.** Allow developing-country exports into rich-world markets. Bangladesh's $47B/yr garment industry was enabled by EU preferential access. Vietnam's $370B in exports followed trade agreements. This is the single most effective development tool — and costs donor countries almost nothing in aggregate GDP, though the political costs are concentrated in specific industries. Rich-world agricultural subsidies (EU CAP, US Farm Bill) that undercut developing-country farmers do active harm.
+- **FDI facilitation.** Development Finance Institutions (US DFC, UK BII, Germany DEG) co-invest with private capital to de-risk pioneer investments. A $50M DFI investment in a solar project can unlock $500M in private follow-on. This is not aid — it is catalytic capital.
+- **Remittance cost reduction.** SSA remittance costs average 7.9% — the highest in the world, against a UN target of 3%. Halving them would transfer ~$3–4B/yr more to African families, more than many aid programs, at essentially zero fiscal cost to donor governments.
+- **Debt restructuring.** Many SSA countries pay more to creditors than they receive in aid. Coordinated debt relief — as HIPC/MDRI demonstrated — can free fiscal space for the investment that drives growth. This is a concrete lever, not a handout.
 
-The IMF and World Bank play distinct roles: the IMF provides short-term liquidity to countries facing balance-of-payments crises, with conditions aimed at macroeconomic stabilization; the World Bank provides long-term development lending for infrastructure and poverty reduction. Both are controversial — particularly the IMF's structural adjustment programs (SAPs) of the 1980s–90s, which required austerity, privatization, trade liberalization, and fiscal discipline (the "Washington Consensus") as conditions for lending.
+**Moderate impact (build conditions for growth):**
+- **Infrastructure investment** structured as loans, not grants — World Bank/IDA, AfDB, MCC compacts. Africa's infrastructure gap is ~$100–170B/yr; ODA covers ~$15–20B. China's Belt and Road, whatever its terms, has provided more infrastructure to Africa in 20 years than all Western donors combined.
+- **Girls' education and family planning** — the highest-return investments in development, driving the demographic transition that unlocks everything else. Returns are real but generational (20–30 years).
 
-Your friend's negative view of the IMF has substantial empirical support. The academic literature shows "no consensus on the long-term effects of IMF programs on growth" (Stone 2002). Our data reveals a striking pattern, though with a critical caveat:
+**What rich countries should *stop* doing** often matters as much: agricultural subsidies that undercut poor farmers, enabling capital flight and tax havens, arms sales to conflict zones, tied aid (where contractors must be from the donor country), and expensive remittance corridors.
 
-![IMF-heavy vs IMF-light growth](charts/72_imf_heavy_vs_light_growth.png)
-*Countries that relied heavily on IMF programs (Argentina, Ghana, Jamaica, Pakistan, Kenya, Zambia, etc.) grew at +1.4%/yr from 1990–2023, while countries that largely avoided the IMF (China, Vietnam, India, Botswana, Bangladesh, etc.) grew at +4.0%/yr. The gap held across every decade. But this is the selection problem: countries seek IMF help because they're in crisis, not the other way around.*
+**The hardest truth:** the most important determinant of growth — institutional quality (Acemoglu & Robinson 2012) — is the variable outsiders have the *least* ability to change. Rwanda built institutions internally. So did Botswana. So did Korea. External "governance programs" have a poor track record. The things only developing countries can do — build institutions, maintain peace, invest domestically, complete the demographic transition, choose dense urbanization over sprawl — are the most important things.
 
-The selection problem is the central methodological challenge: **countries don't randomly enter IMF programs.** They enter because they're in economic distress, which makes it nearly impossible to disentangle whether the IMF caused the slow growth or merely treated patients who were already sick. The pattern — IMF-heavy countries investing 22% of GDP vs. 29% for IMF-light countries — could reflect either IMF-imposed austerity or the underlying fiscal weakness that drove countries to the IMF in the first place.
+### The Bretton Woods institutions
 
-**The strongest evidence of harm comes from Sub-Saharan Africa during the structural adjustment era:**
-
-![SSA structural adjustment eras](charts/74_ssa_structural_adjustment_eras.png)
-*Across 15 SSA countries, GDP per capita actually contracted during the SAP era (–0.2%/yr, 1980–1999) before rebounding to +2.5%/yr in the post-SAP period (2000–2014). Investment rates remained low during SAPs (~18% vs. the 25% threshold associated with sustained development). The crude before/after comparison is damning, even accounting for other factors (oil shocks, Cold War proxy conflicts, commodity price collapses).*
-
-The SAP critique is strongest on four points:
-- **Austerity during crises was often procyclical**, deepening recessions rather than stabilizing them. Cutting government spending during a contraction is textbook-wrong Keynesian economics, but it was standard IMF prescription through the 1990s.
-- **One-size-fits-all conditionality** imposed Washington Consensus policies regardless of local context. Privatizing state enterprises in countries without functioning capital markets, or liberalizing trade before domestic industries could compete, often destroyed productive capacity rather than creating it.
-- **Social spending cuts** in health and education undermined long-term human capital formation. A 2017 systematic review found SAPs had "detrimental effects on maternal and child health." TB deaths rose 16.6% across 21 countries with IMF programs.
-- **Forced export orientation** pushed dozens of countries to produce similar primary commodities simultaneously, causing oversupply and collapsing prices — developing countries lost 52% of export revenues between 1980 and 1992.
-
-**The 1997 Asian Financial Crisis provides the closest thing to a natural experiment:**
-
-Korea, Thailand, and Indonesia accepted IMF programs with severe conditions (fiscal austerity, financial sector restructuring, capital account liberalization). Malaysia's Mahathir rejected the IMF, imposed capital controls, and pegged the ringgit — the opposite of IMF orthodoxy. The results:
-
-| Country | IMF program? | 1998 trough | Recovery (1999–2005) |
-|---|---|---|---|
-| South Korea | Yes | –5.6% | +5.9%/yr |
-| Thailand | Yes | –8.8% | +4.1%/yr |
-| Indonesia | Yes | –14.5% | +2.8%/yr |
-| Malaysia | **No** | –9.6% | +3.1%/yr |
-
-The results are inconclusive. Korea recovered fastest (supporting IMF) but had the strongest pre-crisis institutions. Indonesia fared worst (indicting IMF) but also faced political collapse (Suharto's fall). Malaysia's no-IMF path produced outcomes roughly similar to Thailand's IMF path. Stiglitz, the World Bank's own former chief economist, argued in *Globalization and Its Discontents* that IMF-mandated capital account liberalization *caused* the crisis, then IMF-prescribed austerity *deepened* it. The IMF itself acknowledged problems: its 2016 paper "Neoliberalism: Oversold?" conceded that fiscal austerity and financial deregulation had been "oversold" and exacerbated both inequality and financial crises.
-
-**The claim that frequent IMF users grow more** (which you mentioned hearing) has a nuanced basis. Dreher (2006) found that countries that engage with the IMF quickly rather than delaying tend to have slightly better outcomes — but this likely reflects willingness to reform rather than IMF program quality. Countries that delay until crisis becomes catastrophic tend to need harsher medicine and recover more slowly. This is a point about crisis management discipline, not an endorsement of structural adjustment.
-
-**The bottom line on the IMF/World Bank:**
-
-The institutions have evolved substantially. The World Bank shifted from SAPs to Poverty Reduction Strategy Papers (PRSPs) in the late 1990s, increasing country ownership. The IMF's own research department now acknowledges the failures of 1980s–90s orthodoxy. Modern IMF programs are less rigidly conditioned than their predecessors, though critics (including Oxfam) argue austerity remains embedded in post-COVID lending.
-
-But two structural problems persist. First, **the governance problem**: the U.S. holds veto power (>16% of votes) and Western countries dominate decision-making. Borrowing countries — overwhelmingly from the Global South — have minimal voice in designing the programs they must implement. Second, **the creditor bias**: the IMF's dual role as both lender and macroeconomic advisor creates an inherent conflict — it has strong incentives to ensure loans are repaid, which can override the borrowing country's development interests.
-
-The honest assessment: the IMF probably prevents some crises from becoming worse (Korea 1997 is the strongest case), while its structural adjustment programs from the 1980s–90s caused genuine harm to African and Latin American development. The World Bank's infrastructure lending has been more clearly beneficial than the IMF's conditioned stabilization loans. China's rise entirely outside IMF tutelage — and the subsequent emergence of alternatives like the AIIB and BRICS New Development Bank — reveals that the Bretton Woods institutions are neither necessary nor sufficient for development. **What they are is a reflection of the post-WWII power structure, and whether they help or harm depends heavily on the era, the country, and how much reform pressure exists from within.**
-
-### The demographic transition is the leading indicator
-
-![Demographic dividend](charts/62_demographic_dividend.png)
-*Fertility decline since 1975 predicts GDP growth since 1990 — regardless of region. East Asia began the transition in the 1960s; SSA only in the 1990s. This 20–30 year head start is the single most important divergence driver.*
-
-When fertility falls, dependency ratios improve, women enter the labor force, families invest more per child, and savings rates rise. Bangladesh — a Muslim-majority South Asian country — achieved replacement-rate fertility through female education and family planning programs, all while growing 310%. SSA is now entering this transition (TFR falling from ~6 to ~4), which is the single strongest reason for cautious optimism about the region's next 30 years.
-
-### Transfers can relieve poverty but cannot build economies
-
-![Transfers vs development](charts/46_transfers_vs_development.png)
-*Transfers directly address 1–2 of the 7 components needed to reach $15k GDP/capita (human capital, partially demographics). Agricultural productivity, infrastructure, institutional capacity, structural transformation, and domestic savings require building productive economies.*
-
-The evidence on transfers is real but limited:
-
-- **Unconditional cash** (GiveDirectly): excellent immediate relief, $2.60 local multiplier, but modest long-run productivity effects
-- **Graduation programs** (BRAC): 38% income gains sustained 7+ years — the best evidence that designed programs can create self-sustaining livelihoods
-- **Conditional transfers** (Bolsa Família, Progresa): +0.7 years schooling, +8% next-generation earnings — works through children over 20–30 years
-
-The key distinction is between "aid" structured as *investment* (infrastructure loans, DFI equity, trade capacity, girls' education) and "aid" structured as *consumption* (food aid, cash transfers, emergency health). Both are valuable. Only the first generates growth. The tragedy of indiscriminate aid cuts — like 2025 — is that they destroy both categories simultaneously. And the real proposal from redistribution advocates is transfers *plus* public investment *plus* structural transformation — a combination that looks less like "just sending checks" and more like what successful developers actually did, funded partly from external sources.
+The IMF and World Bank are central to the debt and development story, and the critique of their structural adjustment programs in the 1980s–90s has substantial empirical support. Our data shows IMF-heavy countries grew at +1.4%/yr vs. +4.0% for countries that largely avoided the Fund — though the selection problem (countries enter IMF programs *because* they're in crisis) makes causal inference genuinely difficult. The strongest evidence of harm comes from Sub-Saharan Africa, where GDP per capita actually contracted during the structural adjustment era (–0.2%/yr, 1980–1999) before rebounding to +2.5%/yr after 2000. The institutions have evolved, but structural problems persist: Western governance dominance and an inherent creditor bias. → [Full analysis: The IMF and World Bank](IMF_WORLD_BANK.md)
 
 ---
 
@@ -453,7 +389,7 @@ Two claims should be distinguished. First: **the evidence rejects mathematical i
 
 - **The provisioning argument.** Paper 1's strongest version is not "175× GDP." It is that decent lives require specific material throughputs with real ecological costs, and the world already produces enough to meet those needs through reallocation rather than further growth. Our $15k life-expectancy proxy is a useful heuristic, but it is not a direct rebuttal to provisioning frameworks that measure material sufficiency rather than GDP correlation.
 
-- **The exploitation critique.** Our emissions-offshoring analysis is too narrow. It addresses carbon geography but not terms of trade, debt discipline, intellectual property regimes, supply chain ownership, currency hierarchy, or the structural orientation of Global South production toward exports rather than domestic provisioning. The IMF/World Bank analysis partially addresses the debt discipline question — structural adjustment programs genuinely damaged African development in the 1980s–90s — but the deeper structural critique about who designs global economic rules remains.
+- **The exploitation critique.** Our emissions-offshoring analysis is too narrow. It addresses carbon geography but not terms of trade, debt discipline, intellectual property regimes, supply chain ownership, currency hierarchy, or the structural orientation of Global South production toward exports rather than domestic provisioning. The [IMF/World Bank analysis](IMF_WORLD_BANK.md) partially addresses the debt discipline question — structural adjustment programs genuinely damaged African development in the 1980s–90s — but the deeper structural critique about who designs global economic rules remains.
 
 - **East Asian replicability.** Asian development success depended partly on Cold War geopolitics, cheap fossil energy, export absorption by rich-country markets, and ecological slack that may not exist for today's poorest countries. The development recipe is clear in retrospect; whether it can be followed under 2020s constraints is genuinely uncertain.
 
@@ -513,7 +449,7 @@ Fifteen scripts in `analysis/` produce 77 charts. Run sequentially after `downlo
 
 ### Full Chart Atlas
 
-The complete chart index is in [README_v2_archive.md](README_v2_archive.md). Charts featured in this document: 01, 02, 14, 21, 22, 24b, 28, 31, 32, 46, 60, 62, 67, 69, 72, 74.
+The complete chart index is in [README_v2_archive.md](README_v2_archive.md). Charts featured in this document: 01, 02, 14, 21, 22, 24b, 28, 31, 32, 46, 60, 62, 67, 69. Charts 72–77 are featured in [IMF_WORLD_BANK.md](IMF_WORLD_BANK.md).
 
 ### Tools & Environment
 
