@@ -106,15 +106,15 @@ The papers frame growth and redistribution as alternatives. Our central finding 
 ![Poverty gap as share of GDP](charts/01_poverty_gap_pct_gdp.png)
 *The poverty gap at every threshold has fallen as a share of global GDP. At $2.15/day: from 1.4% to 0.06%. At $6.85/day: from ~18% to ~1.6%. Growth created the surplus from which redistribution can draw — though at $2.15, even the 1990 gap was within fiscal reach.*
 
-| Poverty Line | People Below | Gap (Perfect) | Realistic Cost (3×) | % of World GDP |
-|---|---|---|---|---|
-| $2.15/day | 0.45B | $118B | $354B | 0.18% |
-| $3.65/day | 1.21B | $560B | $1,680B | 0.84% |
-| $6.85/day | 3.14B | $3,132B | $9,396B | 4.71% |
+| Poverty Line | People Below | Gap (2017 PPP) | Nominal Cost | ×3 Overhead | % World GDP |
+|---|---|---|---|---|---|
+| $2.15/day | 0.45B | $118B | ~$41B | ~$122B | 0.12% |
+| $3.65/day | 1.21B | $560B | ~$179B | ~$538B | 0.51% |
+| $6.85/day | 3.14B | $3,132B | ~$965B | ~$2,895B | 2.76% |
 
-The trajectory tells the story: at $6.85/day, the gap fell from 18.1% of world GDP in 1990 to 1.6% today — still enormous in absolute terms ($3.1 trillion), but a 91% decline relative to global capacity. At $2.15/day, total ODA ($203B) now exceeds the theoretical poverty gap ($118B) — though even the 1990 gap of 1.4% of GDP was never a true resource constraint. For intuition: France collects 45% of GDP in taxes within its borders — 1.4% was never an arithmetically impossible ask, even if cross-border redistribution faces fundamentally different political obstacles. Growth made an already-solvable problem even cheaper, but the deeper shift is at higher thresholds where the gap was once genuinely crushing.
+The trajectory tells the story: at $6.85/day, the gap fell from 18.1% of world GDP in 1990 to 1.6% today — still enormous in absolute terms, but a 91% decline relative to global capacity. At $2.15/day, total ODA ($203B nominal) exceeds the nominal delivery cost (~$41B) by roughly 5:1 — though even the 1990 gap of 1.4% of GDP was never a true resource constraint. For intuition: France collects 45% of GDP in taxes within its borders — 1.4% was never an arithmetically impossible ask, even if cross-border redistribution faces fundamentally different political obstacles. Growth made an already-solvable problem even cheaper, but the deeper shift is at higher thresholds where the gap was once genuinely crushing.
 
-**Note on units:** Poverty gaps are in PPP dollars (the poverty line unit). ODA is in nominal USD. These ratios are approximate heuristics, not exact financial equivalences.
+**Note on units:** Poverty gaps are in 2017 PPP dollars (the poverty line's unit). "Nominal cost" converts each country's gap to market-rate USD using its implicit price level (GDP nominal ÷ GDP PPP), weighted by poverty share. Goods cost less in poor countries: $1 PPP requires only ~$0.31–0.34 nominal to deliver where poverty is concentrated. This conversion *strengthens* the affordability finding — ODA buys more local purchasing power than its face value suggests. See [methodology](analysis/ppp_nominal_conversion.py).
 
 ### The target is basic welfare, not American consumption — but that raises hard questions
 
@@ -131,7 +131,7 @@ Paper 1's strongest version is not "175× GDP." It is that decent lives require 
 This framework can be tested against our own data:
 
 **Where provisioning is right:**
-- At $2.15/day, the poverty gap ($118B) is 0.06% of world GDP. The resources exist. The gap is a distribution failure, not a production failure. This is unambiguously true.
+- At $2.15/day, the poverty gap ($118B PPP, ~$41B nominal) is 0.06% of world GDP. The resources exist. The gap is a distribution failure, not a production failure. This is unambiguously true.
 - Global food production is sufficient to feed ~10 billion people. Roughly one-third is wasted. Hunger is a distribution and poverty problem, not a supply problem (FAO 2023).
 - The Decent Living Standards (DLS) framework (Rao & Min 2018) [[33]](#references-and-sources) estimates basic material needs at 15–28 GJ/cap energy, ~3–5 t/cap material footprint. Global extraction could provide this for everyone within the sustainable boundary — if it were allocated differently.
 
@@ -152,7 +152,7 @@ Our $15k proxy is a GDP correlation (our analysis — see [[37]](#references-and
 ### ODA and the extreme poverty gap converged
 
 ![ODA vs poverty gap convergence](charts/24b_oda_poverty_gap_convergence.png)
-*The $2.15/day poverty gap fell from $420B to $118B while ODA rose to $203B — they crossed around 2018. At higher thresholds, ODA covers only 6% of the gap. Growth brought the extreme-poverty mountain down to where aid could reach it.*
+*The $2.15/day poverty gap fell from ~$420B to $118B (2017 PPP) while ODA rose to $203B (nominal USD). In comparable nominal terms, ODA exceeds the extreme-poverty delivery cost by roughly 5:1. At higher thresholds, ODA covers only a fraction of the gap. Growth brought the extreme-poverty mountain down to where aid could reach it.*
 
 ### But the scale problem at higher thresholds is genuine — and the strongest proposals go beyond ODA
 
