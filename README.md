@@ -82,14 +82,14 @@ This is arguably the papers' strongest claim. According to the Richardson et al.
 |---|---|---|---|
 | Climate change (CO₂) | 350 ppm | 424 ppm | **Exceeded** |
 | Biosphere integrity (LPI) | 90 (index) | 27 (index) | **Exceeded** |
-| Nitrogen fixation | ~44 Tg/yr¹ | ~150 Tg/yr | **Exceeded (1.9–3.4×)** |
+| Nitrogen fixation | 35–62 Tg/yr¹ | ~150 Tg/yr | **Exceeded (1.9–3.4×)** |
 | Land-system change | 75% forests | 68% forests | **Exceeded** |
 | Freshwater use | 4,000 km³/yr | ~3,949 km³/yr | At limit |
 | Phosphorus flow | 11 Tg/yr | ~9 Tg/yr | Near limit |
 | Ocean acidification | 2.75 Ω | 2.8 Ω | Near limit |
 | Ozone depletion | 276 DU | 284 DU | Safe (recovering) |
 
-*¹Nitrogen: Rockström 2009 set 35 Tg/yr (→3.4× overshoot); Richardson 2023 revised to 62 Tg/yr (→1.9×). We report the range to acknowledge the uncertainty.*
+*¹The safe boundary for human nitrogen fixation (the maximum annual rate the biosphere can absorb without ecosystem damage) is contested: Rockström 2009 set it at 35 Tg/yr, which puts current fixation (~150 Tg/yr) at 3.4× over. Richardson 2023 revised the boundary upward to 62 Tg/yr, reducing the overshoot to 1.9×. We report the range to acknowledge this uncertainty; either way, nitrogen is significantly exceeded.*
 
 ### Progress depends on which poverty line you use
 
