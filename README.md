@@ -18,11 +18,11 @@ Thirteen analyses and 65 charts later, here is what the data shows:
 
 3. **The ecological constraint is real and differentiated.** Carbon has a clear technological pathway (renewables) that requires deployment at unprecedented speed. Nitrogen (3.4× over) is addressable through a stack of agricultural bioengineering, food technology, and precision farming — but requires breakthroughs (especially nitrogen-fixing cereals) not yet deployed. The aggregate "material footprint" metric overstates the constraint by treating all tonnes as equal; the boundary-specific problems (nitrogen, biodiversity, land use) are genuinely severe while the mass-based metric is weaker than the carbon budget. Six of nine planetary boundaries are breached.
 
-4. **Poverty is a flow problem, not a stock problem.** The papers frame poverty as a gap to be filled with transfers. But even if you lifted everyone above $6.85/day tomorrow, you'd need to do it again next year — forever — unless the underlying economies develop the productive capacity to sustain welfare. Aid is humanitarian insurance (~10% of total resource flows to the developing world); investment is the growth driver (FDI alone is 4× all ODA). The 2025 USAID cuts are a tragic natural experiment: humanitarian catastrophe, but probably minimal growth impact — because aid was never the growth engine.
+4. **Poverty is a flow problem, not a stock problem.** The papers frame poverty as a gap to be filled with transfers. But even if you lifted everyone above $6.85/day tomorrow, you'd need to do it again next year — forever — unless the underlying economies develop the productive capacity to sustain welfare. Aid is humanitarian insurance (~10% of total resource flows to the developing world); investment is the growth driver (FDI alone is 4× all ODA).
 
 5. **The development recipe is clear and not region-specific.** Peace, macroeconomic stability, high investment rates (25–40% of GDP), early fertility decline, trade openness, and capable states predict success. Bangladesh, Rwanda, and Vietnam demonstrate this is not an "Asian" formula. The most powerful rich-country levers are not aid but trade access, FDI facilitation, and cheaper remittance corridors.
 
-6. **Sustainable consumption is about composition, not deprivation.** The ecological constraint is real but the aggregate "material footprint" conflates sand with burned coal. The ecologically destructive components of consumption — fossil fuels, nitrogen-intensive agriculture, land clearing — are artifacts of current technology, not inherent to high welfare. A post-transition economy at ~9 t/cap (mostly construction maintenance and recycled metals) has *less* ecological impact than today's 5 t/cap economy that includes fossil fuels and deforestation. The remaining barriers are political-economic — but those may not be separable from the system itself.
+6. **Sustainable consumption is about composition, not deprivation.** The ecological constraint is real but the aggregate "material footprint" conflates sand with burned coal. The ecologically destructive components of consumption — fossil fuels, nitrogen-intensive agriculture, land clearing — are artifacts of current technology, not inherent to high welfare. A post-transition economy at ~9 t/cap (mostly construction maintenance and recycled metals) has *less* ecological impact than today's 5 t/cap economy that includes fossil fuels and deforestation. The target is not less stuff but different stuff — and the technology pathways to get there are on observable S-curves.
 
 ---
 
@@ -129,7 +129,7 @@ So the honest position is: yes, the poor world needs growth to reach basic welfa
 
 ### But the scale problem at higher thresholds is genuine
 
-The papers propose redistribution of $1.3–6 trillion per year. Total global ODA is ~$203 billion, stagnant and trending downward in several major donors. The proposals require 6–30× the entire current international aid system. In 50+ years, the world has never come close to the 0.7% GNI target (the DAC average is 0.36%). Redistribution at the scale needed for $6.85/day is not in any plausible political pipeline. Historically, every development success story — China, South Korea, Vietnam, Bangladesh, Botswana, Chile — was driven by FDI, export manufacturing, domestic savings, and state-directed industrial policy, not by international transfers. Higher-threshold gaps have only ever been closed by sustained domestic growth.
+The papers propose redistribution of $1.3–6 trillion per year. Total global ODA is ~$224 billion (2024 OECD preliminary), stagnant and trending downward in several major donors. The proposals require 6–30× the entire current international aid system. In 50+ years, the world has never come close to the 0.7% GNI target (the DAC average is 0.36%). Redistribution at the scale needed for $6.85/day is not in any plausible political pipeline. Historically, every development success story — China, South Korea, Vietnam, Bangladesh, Botswana, Chile — was driven by FDI, export manufacturing, domestic savings, and state-directed industrial policy, not by international transfers. Higher-threshold gaps have only ever been closed by sustained domestic growth.
 
 ---
 
@@ -278,7 +278,7 @@ The scale of resource flows to developing countries reveals the real story:
 
 **ODA is ~10% of total resource flows to developing countries.** FDI is 4× ODA. Remittances are 3×. The growth-relevant flows dwarf the aid flows.
 
-The academic evidence (Banerjee, Duflo, Easterly, Deaton, Moyo) converges on a nuanced consensus: aid *is* effective for specific interventions (vaccines, bed nets, famine relief, primary education) but has *not* generated sustained economic growth at the country level. No country has grown its way out of poverty via aid alone. Every success story — Korea, China, Vietnam, Bangladesh, Botswana, Chile — relied on FDI, exports, domestic savings, and institutional reform.
+The academic evidence (Banerjee, Duflo, Easterly, Deaton, Moyo) converges on a nuanced consensus: aid *is* effective for specific interventions (vaccines, bed nets, famine relief, primary education) but has *not* generated sustained economic growth at the country level. No country has grown its way out of poverty via aid alone. Every success story — Korea, China, Vietnam, Bangladesh, Botswana, Chile — relied on FDI, exports, domestic savings, and institutional reform. (To be clear: no serious redistribution advocate proposes aid alone. The real proposal is transfers *plus* public investment *plus* structural transformation — a combination that looks more like what successful developers actually did. The question is whether external funding can catalyze that combination or whether it must be primarily domestically driven.)
 
 Most aid is not designed to generate growth, and this is not a failure — PEPFAR is designed to save HIV patients, not grow GDP, and it succeeds at what it is designed to do. But conflating humanitarian aid with development strategy leads to confused policy on both sides. The clean narrative ("aid doesn't work") is wrong for emergencies; the clean narrative ("just redistribute more") is wrong for growth.
 
@@ -288,7 +288,7 @@ In early 2025, the US effectively dismantled USAID (~10,000 staff, 60–80% of b
 
 The humanitarian impact has been **severe and immediate**: PEPFAR disruptions affecting 20M+ people on antiretrovirals, WFP food shipments delayed in Ethiopia/Somalia/Sudan, UNFPA family planning funding cut entirely. These are the programs where aid clearly saves lives, and the cuts cause measurable suffering.
 
-The growth impact, ~15 months in, appears **small** — as the aid-effectiveness literature would predict. Aid was 3–5% of GDP for the median SSA country; FDI was 2–3%, remittances 3–4%, domestic revenue 15–20%. The countries that *were* growing fast (Rwanda, Bangladesh, Vietnam) were not primarily aid-dependent. The countries most hurt — Somalia, South Sudan, DRC — were fragile states where aid was substituting for non-functioning governments, not driving growth trajectories.
+The growth impact is expected to be **small** based on the aid-effectiveness literature, though it is too early (~15 months) for definitive empirical confirmation. Aid was 3–5% of GDP for the median SSA country; FDI was 2–3%, remittances 3–4%, domestic revenue 15–20%. The countries that *were* growing fast (Rwanda, Bangladesh, Vietnam) were not primarily aid-dependent. The countries most hurt — Somalia, South Sudan, DRC — were fragile states where aid was substituting for non-functioning governments, not driving growth trajectories.
 
 The tragedy is that the cuts hit *both* categories indiscriminately: PEPFAR (humanitarian, saves lives), Power Africa (investment, builds growth), and MCC compacts (the gold standard of growth-oriented aid) all frozen together. This is the sovereignty problem from our executive summary made concrete: international aid has no institutional guarantee, and one political pivot in a major donor can halve it overnight.
 
@@ -325,6 +325,28 @@ The most powerful development levers available to rich countries are, paradoxica
 **What rich countries should *stop* doing** often matters as much: agricultural subsidies that undercut poor farmers, enabling capital flight and tax havens, arms sales to conflict zones, tied aid (where contractors must be from the donor country), and expensive remittance corridors.
 
 **The hardest truth:** the most important determinant of growth — institutional quality (Acemoglu & Robinson 2012) — is the variable outsiders have the *least* ability to change. Rwanda built institutions internally. So did Botswana. So did Korea. External "governance programs" have a poor track record. The things only developing countries can do — build institutions, maintain peace, invest domestically, complete the demographic transition, choose dense urbanization over sprawl — are the most important things.
+
+### The debt trap: a binding constraint hiding in plain sight
+
+The development literature focuses on investment, trade, and institutions. But for many developing countries, the binding constraint is simpler: debt service consumes the revenue that would fund investment.
+
+![Debt burdens: success vs challenge](charts/67_success_vs_challenge_debt.png)
+*Development successes maintained consistently lower debt service (1–2% of GNI) compared to SSA challenges (2–5%) and Latin America (2–5%). The external debt stock panel is even starker: SSA peaked at 130% of GNI in the late 1990s while success countries stayed below 70%.*
+
+The correlation is statistically significant: across 25 countries over 2000–2023, average debt service and GDP growth show r = –0.48 (p = 0.024). China, Vietnam, Bangladesh, and India cluster in the low-debt/high-growth quadrant; SSA and Latin American countries in the high-debt/lower-growth zone.
+
+![Debt service vs revenue](charts/69_debt_service_vs_revenue.png)
+*The real constraint is what share of government revenue goes to creditors rather than investment. SSA peaked at 50%+ in the early 1990s, fell to ~5% after HIPC/MDRI debt relief, and is now climbing back toward 15%. Development successes stayed at 5–15% throughout.*
+
+The history tells a story of vicious and virtuous cycles:
+
+- **East Asian successes** had low external debt because high domestic savings (30–45% of GDP) meant less foreign borrowing. Low debt service left revenue available for infrastructure investment. Investment drove growth, which expanded revenue. China's external debt never exceeded 20% of GNI.
+- **Latin America's "lost decade"** (1982–1992) was a debt crisis: external debt at 50–80% of GNI, debt service consuming 5–8% of GNI, growth stagnant. The Brady Plan (1989) restructured the debt; growth resumed only after.
+- **SSA's debt relief and re-accumulation**: HIPC (1996) and MDRI (2005) wrote off most multilateral debt, dropping SSA external debt from ~100% to ~25% of GNI. This created fiscal space — and growth accelerated. But new borrowing since 2010, increasingly from China and commercial creditors (Eurobonds) on less concessional terms, has rebuilt the debt to ~45% of GNI. Ghana, Zambia, and Ethiopia all defaulted or restructured in 2020–2024.
+
+The composition matters: SSA's new debt is 40–60% private/commercial (vs. mostly concessional multilateral pre-HIPC), with shorter maturities and higher interest rates. Latin America's is dominated by commercial creditors (67–93% private). This makes restructuring harder and rollover risk higher.
+
+**Debt relief may be a bigger lever than aid.** Many SSA countries now pay *more* in debt service than they receive in ODA. Zambia, Ghana, and Kenya each spend 15–20% of government revenue on debt service — revenue that could fund the infrastructure, education, and health investment the development recipe requires. The HIPC/MDRI model demonstrated that debt relief creates fiscal space for investment; the subsequent re-accumulation demonstrates that without the underlying growth drivers (savings, exports, institutions), the debt rebuilds. **Debt is both a cause and a symptom of the low-growth trap: it is a vicious cycle that requires breaking from multiple points simultaneously.**
 
 ### The demographic transition is the leading indicator
 
@@ -370,9 +392,7 @@ The world has enough productive capacity to end extreme poverty. It has enough h
 
 **Growth shrank the poverty gap from 18% to 1.6% of world GDP at meaningful thresholds. The remaining barriers are political-economic and ecological — but those may not be separable from the system itself.**
 
-Poverty is a *flow problem*, not a stock problem. Even if global redistribution closed the gap at $6.85/day — costing perhaps $1.1 trillion annually — every dollar would need to flow again next year unless the recipient economies had developed the productive capacity to sustain that welfare independently. The papers' redistribution arithmetic treats poverty as a reservoir to be filled; the development evidence says it is a leak to be fixed. Both the filling and the fixing are needed, but confusing one for the other leads to policy failure.
-
-The good news is that the growth drivers are not mysterious: peace, investment, demographic transition, trade, institutions. The most powerful rich-country levers — trade access, FDI facilitation, cheaper remittance corridors — cost almost nothing in fiscal terms and dwarf the impact of ODA on growth trajectories. The most important things — institutional quality, domestic savings, security — are things only developing countries can do for themselves.
+As the Building Prosperity section demonstrates, poverty is a *flow problem*: the papers' redistribution arithmetic treats it as a reservoir to be filled, but the development evidence says it is a leak to be fixed. Both the filling and the fixing are needed, but confusing one for the other leads to policy failure. The growth drivers are not mysterious, the most powerful rich-country levers cost almost nothing in fiscal terms, and the most important determinants — institutional quality, domestic savings, security — are things only developing countries can do for themselves.
 
 Capitalism is a powerful energy source that has generated unprecedented material progress and made redistribution cheaper than at any point in history. The question is whether we can build the containment structures — redistribution, climate policy, ecological governance, development strategy — fast enough. The papers make a compelling case that the containment is currently insufficient. They do not make a compelling case that the reactor should be shut down.
 
@@ -418,7 +438,7 @@ Two claims should be distinguished. First: **the evidence rejects mathematical i
 
 ### Analysis Pipeline
 
-Thirteen scripts in `analysis/` produce 65 charts. Run sequentially after `download_data.py`:
+Fourteen scripts in `analysis/` produce 71 charts. Run sequentially after `download_data.py`:
 
 | Script | Topic | Charts |
 |---|---|---|
@@ -435,6 +455,7 @@ Thirteen scripts in `analysis/` produce 65 charts. Run sequentially after `downl
 | `run_analysis_11.py` | Rich-world quintile incomes | 47–51 |
 | `run_analysis_12.py` | Welfare-weighted growth (27 countries) | 52–57 |
 | `run_analysis_13.py` | Why some countries develop | 58–65 |
+| `run_analysis_14.py` | Debt burdens: success vs challenge | 66–71 |
 
 ### Methodology Notes
 
@@ -446,7 +467,7 @@ Thirteen scripts in `analysis/` produce 65 charts. Run sequentially after `downl
 
 ### Full Chart Atlas
 
-The complete 65-chart index is in [README_v2_archive.md](README_v2_archive.md). Charts featured in this document: 01, 02, 14, 21, 22, 24b, 28, 31, 32, 46, 60, 62.
+The complete chart index is in [README_v2_archive.md](README_v2_archive.md). Charts featured in this document: 01, 02, 14, 21, 22, 24b, 28, 31, 32, 46, 60, 62, 67, 69.
 
 ### Tools & Environment
 
