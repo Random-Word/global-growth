@@ -154,17 +154,31 @@ if not world.empty and "solar_electricity" in world.columns:
         color="#009e73",
     )
 
-    # NZE waypoints: 2024 actual ≈ 4,400 TWh (combined), 2030 target ≈ 16,400 TWh
+    # NZE waypoints: 2024 actual ≈ 4,600 TWh (combined), 2030 NZE ≈ 16,400 TWh.
+    # 2 °C-aligned waypoint: IEA Announced Pledges Scenario (APS, ~1.7 °C) and
+    # IPCC AR6 2 °C-consistent pathways put solar+wind at ~12,000 TWh by 2030.
+    current = sw["combined"].iloc[-1] if len(sw) else 4600
     nze_years = [2024, 2030]
-    nze_values = [sw["combined"].iloc[-1] if len(sw) else 4400, 16400]
-    ax.plot(nze_years, nze_values, "r--", lw=2, label="IEA NZE 2030 target (combined)")
+    nze_values = [current, 16400]
+    aps_values = [current, 12000]
+    ax.plot(nze_years, nze_values, "r--", lw=2, label="IEA NZE 2030 (1.5 °C): ~16,400 TWh")
+    ax.plot(nze_years, aps_values, "--", color="#cc6600", lw=2, label="IEA APS / 2 °C-aligned: ~12,000 TWh")
     ax.scatter([2030], [16400], color="red", s=80, zorder=5)
+    ax.scatter([2030], [12000], color="#cc6600", s=80, zorder=5)
     ax.annotate(
-        "NZE 2030\n~16,400 TWh",
+        "NZE 2030 (1.5 °C)\n~16,400 TWh",
         xy=(2030, 16400),
-        xytext=(2027, 13500),
-        fontsize=10,
+        xytext=(2027, 17500),
+        fontsize=9,
         color="red",
+        ha="center",
+    )
+    ax.annotate(
+        "APS / 2 °C\n~12,000 TWh",
+        xy=(2030, 12000),
+        xytext=(2026.5, 10200),
+        fontsize=9,
+        color="#cc6600",
         ha="center",
     )
 
@@ -189,8 +203,8 @@ if not world.empty and "solar_electricity" in world.columns:
     ax.set_xlabel("Year")
     ax.set_ylabel("Electricity generation (TWh)")
     ax.set_title(
-        "Solar + wind deployment vs IEA Net Zero 2030 waypoint\n"
-        "The S-curve is real — but still 3–4× below the 1.5 °C trajectory",
+        "Solar + wind deployment vs 1.5 °C and 2 °C waypoints\n"
+        "Current CAGR is on track for ~2 °C (IEA APS), ~25–30% short of 1.5 °C (NZE)",
         fontsize=12,
     )
     ax.legend(loc="upper left", fontsize=10)
