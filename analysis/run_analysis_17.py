@@ -386,7 +386,11 @@ bars = ax.bar(
 )
 
 # Annotate bars (label matches assigned tier)
-tier_label = {1: "✓ proven at GW scale", 2: "commercial, scaling", 3: "pilot / target only"}
+tier_label = {
+    1: "✓ proven at GW scale",
+    2: "commercial, scaling",
+    3: "pilot / target only",
+}
 for i, bar in enumerate(bars):
     h = bar.get_height()
     marker = tier_label[lcos["tier"].iloc[i]]
@@ -697,7 +701,18 @@ sector = pd.DataFrame(
             "Agriculture",
             "Other (rail, pipelines,\ncommercial, unspecified)",
         ],
-        "share_final": [30, 20, 8, 15, 7, 3, 3, 3, 2, 9],  # % of global final energy (sums to 100)
+        "share_final": [
+            30,
+            20,
+            8,
+            15,
+            7,
+            3,
+            3,
+            3,
+            2,
+            9,
+        ],  # % of global final energy (sums to 100)
         "tier": [1, 1, 2, 2, 3, 3, 3, 3, 2, 2],
         "pathway": [
             "Heat pumps + elec + insulation",
