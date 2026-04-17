@@ -161,8 +161,17 @@ if not world.empty and "solar_electricity" in world.columns:
     nze_years = [2024, 2030]
     nze_values = [current, 16400]
     aps_values = [current, 12000]
-    ax.plot(nze_years, nze_values, "r--", lw=2, label="IEA NZE 2030 (1.5 °C): ~16,400 TWh")
-    ax.plot(nze_years, aps_values, "--", color="#cc6600", lw=2, label="IEA APS / 2 °C-aligned: ~12,000 TWh")
+    ax.plot(
+        nze_years, nze_values, "r--", lw=2, label="IEA NZE 2030 (1.5 °C): ~16,400 TWh"
+    )
+    ax.plot(
+        nze_years,
+        aps_values,
+        "--",
+        color="#cc6600",
+        lw=2,
+        label="IEA APS / 2 °C-aligned: ~12,000 TWh",
+    )
     ax.scatter([2030], [16400], color="red", s=80, zorder=5)
     ax.scatter([2030], [12000], color="#cc6600", s=80, zorder=5)
     ax.annotate(
