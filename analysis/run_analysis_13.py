@@ -57,6 +57,7 @@ REGIONS = {
         "MOZ",
         "SEN",
         "CIV",
+        "MWI",
     ],
     "Latin America": ["BRA", "MEX", "CHL", "COL", "ARG", "PER", "CRI"],
     "Rich": ["USA", "GBR", "FRA", "DEU", "NOR", "SWE", "JPN"],
@@ -93,6 +94,7 @@ NAMES = {
     "MOZ": "Mozambique",
     "SEN": "Senegal",
     "CIV": "Cote d'Iv.",
+    "MWI": "Malawi",
     "BRA": "Brazil",
     "MEX": "Mexico",
     "CHL": "Chile",
@@ -1372,8 +1374,7 @@ for cc in ["KOR", "CHN", "VNM", "ETH", "RWA", "BGD", "IDN", "GHA"]:
 print("\n" + "═" * 80)
 print("SUMMARY: WHY SOME COUNTRIES DEVELOP AND OTHERS DON'T")
 print("═" * 80)
-print(
-    """
+print("""
 KEY FINDINGS:
 
 1. THE "GREED" NARRATIVE IS PARTIALLY RIGHT, PARTIALLY WRONG:
@@ -1454,5 +1455,4 @@ KEY FINDINGS:
       humanitarian relief (necessary but not growth-generating).
 
 Done!
-"""
-)
+""")
