@@ -30,11 +30,20 @@ import seaborn as sns
 from scipy import stats
 import requests, io, time
 import warnings
+import sys
+from pathlib import Path
+
+from ecological_safeguards import planetary_scorecard
 
 warnings.filterwarnings("ignore")
 
 sns.set_theme(style="whitegrid", palette="colorblind")
 CHART_DIR = "charts"
+
+# Regenerate only the corrected literature summary, without live OWID downloads.
+if __name__ == "__main__" and "--scorecard-only" in sys.argv:
+    planetary_scorecard(Path(CHART_DIR))
+    raise SystemExit(0)
 
 # ── Download planetary boundary datasets from OWID ────────────────────────────
 
@@ -586,10 +595,7 @@ if len(n_fert) > 0:
     ax.set_ylabel("kg N / hectare")
     ax.legend(fontsize=8, ncol=2)
 
-    # Planetary boundary context
-    # Rockström et al. proposed N fixation limit of 35 Tg N/yr (industrial + biological)
-    # Current: ~150 Tg N/yr (industrial alone ~120 Tg/yr)
-    # That's about 4x the safe boundary
+    # Fertilizer application is not the total-fixation PB control variable.
 
     world_n = n_fert[n_fert["Entity"] == "World"].sort_values("Year")
     if len(world_n) > 0:
@@ -601,7 +607,7 @@ if len(n_fert) > 0:
         )
         print(f"  Change: +{(last[vcol]/first[vcol] - 1)*100:.0f}%")
         print(
-            f"  NOTE: Industrial N fixation (~120 Tg/yr) is ~3.5x the Rockström safe boundary (35 Tg/yr)"
+            "  NOTE: Richardson 2023 reports ~190 Tg/yr total industrial + intentional biological fixation vs 62 Tg/yr; fertilizer application alone is not comparable."
         )
 
 # 30b: Phosphorus fertilizer use per hectare
@@ -627,11 +633,10 @@ if len(p_fert) > 0:
     ax.set_title(
         "Phosphate Fertilizer Use (kg/hectare cropland)", fontsize=12, fontweight="bold"
     )
-    ax.set_ylabel("kg P₂O₅ / hectare")
+    ax.set_ylabel("kg P2O5 / hectare")
     ax.legend(fontsize=8, ncol=2)
 
-    # Planetary boundary: P flow into oceans should not exceed 11 Tg P/yr
-    # Current: ~22 Tg P/yr mined, ~8-10 Tg/yr enters oceans → close to boundary
+    # Fertilizer P2O5 application is not elemental-P flow to oceans.
 
     world_p = p_fert[p_fert["Entity"] == "World"].sort_values("Year")
     if len(world_p) > 0:
@@ -642,7 +647,7 @@ if len(p_fert) > 0:
             f"{last[vcol]:.1f} ({last['Year']:.0f})"
         )
         print(
-            f"  NOTE: P flow to oceans (~8-10 Tg/yr) is near the Rockström boundary (11 Tg/yr)"
+            "  NOTE: Fertilizer P2O5 is not the ocean-P control variable; no boundary test is made here."
         )
 
 # 30c: Water stress (freshwater withdrawals as % of internal resources)
@@ -722,21 +727,14 @@ if len(water_total) > 0:
         )
         ax.set_ylabel("Billion m³")
 
-        # Planetary boundary: global freshwater use should stay below ~4,000 km³/yr
-        # Current: ~4,000 km³/yr — right at the boundary
-        ax.axhline(y=4000, color="red", linewidth=1.5, linestyle="--", alpha=0.7)
-        ax.annotate(
-            "Rockström boundary: 4,000 km³/yr",
-            xy=(world_w["Year"].min(), 4100),
-            fontsize=9,
-            color="red",
-        )
+        # Withdrawals are not consumptive use, nor the 2023 blue/green-water
+        # control variables. Do not overlay an incompatible boundary.
 
         latest_w = world_w.iloc[-1]
         print(
             f"\n  Global freshwater withdrawals: {latest_w[vcol]/1e9:.0f} km³/yr ({latest_w['Year']:.0f})"
         )
-        print(f"  Rockström boundary: ~4,000 km³/yr")
+        print("  Withdrawals shown as a pressure indicator, not a PB compliance test.")
     else:
         # Try summing countries
         yearly = water_total.dropna(subset=[vcol])
@@ -757,8 +755,22 @@ if len(water_total) > 0:
             )
             ax.set_ylabel("Billion m³")
 
+else:
+    ax.set_axis_off()
+    ax.text(
+        0.5,
+        0.5,
+        "Global withdrawal series not available in this refresh.\n"
+        "Withdrawals are not the 2023 blue/green-water control variables.\n"
+        "No planetary-boundary comparison is made.",
+        ha="center",
+        va="center",
+        transform=ax.transAxes,
+        fontsize=10,
+    )
+
 plt.suptitle(
-    "Chart 30: Nitrogen, Phosphorus & Water — The Invisible Boundaries",
+    "Chart 30: Fertilizer and Water Pressure Indicators — Not Boundary Tests",
     fontsize=15,
     fontweight="bold",
     y=1.01,
@@ -776,184 +788,8 @@ print("\n" + "─" * 80)
 print("CHART 31: PLANETARY BOUNDARIES SCORECARD")
 print("─" * 80)
 
-# Build a summary scorecard showing status of each boundary
-# NOTE: Reference values below are from published planetary boundaries literature
-# (Rockström et al. 2009, Steffen et al. 2015, Richardson et al. 2023),
-# not computed from this dataset.
-boundaries = []
-
-# 1. Climate change — from our earlier analysis
-boundaries.append(
-    {
-        "Boundary": "Climate Change\n(CO₂ concentration)",
-        "Safe Limit": 350,
-        "Current": 424,
-        "Unit": "ppm CO₂",
-        "Status": "Exceeded",
-        "Ratio": 424 / 350,
-    }
-)
-
-# 2. Biodiversity — Living Planet Index
-if len(lpi) > 0:
-    vcol = get_value_col(lpi)
-    assert vcol is not None
-    world_lpi = lpi[
-        lpi["Entity"].isin(["World", "Global", "Living Planet Index"])
-    ].sort_values("Year")
-    if len(world_lpi) > 0:
-        last_lpi = world_lpi.iloc[-1][vcol]
-        # Boundary: no ongoing decline from baseline (1970 = 1.0 or 100)
-        boundaries.append(
-            {
-                "Boundary": "Biosphere Integrity\n(Living Planet Index)",
-                "Safe Limit": 90 if last_lpi > 2 else 0.9,
-                "Current": last_lpi,
-                "Unit": "Index (1970=100)",
-                "Status": (
-                    "Exceeded" if last_lpi < (0.9 if last_lpi < 2 else 90) else "OK"
-                ),
-                "Ratio": (0.9 if last_lpi < 2 else 90) / max(last_lpi, 0.01),
-            }
-        )
-
-# 3. Nitrogen
-boundaries.append(
-    {
-        "Boundary": "Biogeochemical\n(Nitrogen fixation)",
-        "Safe Limit": 35,
-        "Current": 120,
-        "Unit": "Tg N/yr",
-        "Status": "Exceeded",
-        "Ratio": 120 / 35,
-    }
-)
-
-# 4. Phosphorus
-boundaries.append(
-    {
-        "Boundary": "Biogeochemical\n(P flow to oceans)",
-        "Safe Limit": 11,
-        "Current": 9,
-        "Unit": "Tg P/yr",
-        "Status": "Near limit",
-        "Ratio": 9 / 11,
-    }
-)
-
-# 5. Land-system change
-# Boundary: at least 75% of original forest cover maintained
-# Current: ~68% of original forest still standing
-boundaries.append(
-    {
-        "Boundary": "Land-System Change\n(forests remaining)",
-        "Safe Limit": 75,
-        "Current": 68,
-        "Unit": "% of original forest",
-        "Status": "Exceeded",
-        "Ratio": 75 / 68,
-    }
-)
-
-# 6. Freshwater use
-boundaries.append(
-    {
-        "Boundary": "Freshwater Use\n(global withdrawals)",
-        "Safe Limit": 4000,
-        "Current": 4000,
-        "Unit": "km³/yr",
-        "Status": "At limit",
-        "Ratio": 4000 / 4000,
-    }
-)
-
-# 7. Ocean acidification
-boundaries.append(
-    {
-        "Boundary": "Ocean Acidification\n(aragonite saturation)",
-        "Safe Limit": 2.75,
-        "Current": 2.8,
-        "Unit": "Ω aragonite",
-        "Status": "Near limit",
-        "Ratio": 2.75 / 2.8,
-    }
-)
-
-# 8. Ozone
-boundaries.append(
-    {
-        "Boundary": "Ozone Depletion\n(stratospheric O₃)",
-        "Safe Limit": 276,
-        "Current": 284,
-        "Unit": "Dobson units",
-        "Status": "Safe (recovering)",
-        "Ratio": 276 / 284,
-    }
-)
-
-bdf = pd.DataFrame(boundaries)
-
-fig, ax = plt.subplots(figsize=(14, 8))
-
-# Color-coded horizontal bar chart
-colors = []
-for _, row in bdf.iterrows():
-    if row["Status"] == "Exceeded":
-        colors.append("#d62728")
-    elif row["Status"].startswith("Near") or row["Status"].startswith("At"):
-        colors.append("#ff7f0e")
-    elif row["Status"].startswith("Safe"):
-        colors.append("#2ca02c")
-    else:
-        colors.append("#7f7f7f")
-
-y_pos = range(len(bdf))
-bars = ax.barh(y_pos, bdf["Ratio"], color=colors, alpha=0.7, height=0.6)
-ax.set_yticks(y_pos)
-ax.set_yticklabels(bdf["Boundary"], fontsize=10)
-ax.axvline(x=1.0, color="red", linewidth=2, linestyle="--", label="Planetary boundary")
-ax.set_xlabel("Current / Safe Boundary (ratio)", fontsize=12)
-ax.set_title("Planetary Boundaries Scorecard", fontsize=14, fontweight="bold")
-
-# Annotate with status
-for i, (_, row) in enumerate(bdf.iterrows()):
-    label = f"{row['Status']} ({row['Current']}/{row['Safe Limit']} {row['Unit']})"
-    x_pos = row["Ratio"] + 0.05
-    ax.text(x_pos, i, label, va="center", fontsize=8)
-
-ax.set_xlim(0, max(bdf["Ratio"]) * 1.6)
-ax.invert_yaxis()
-ax.legend(fontsize=10)
-
-plt.suptitle(
-    "Chart 31: Planetary Boundaries — Where Do We Stand?",
-    fontsize=15,
-    fontweight="bold",
-    y=1.01,
-)
-plt.tight_layout()
-plt.savefig(f"{CHART_DIR}/31_planetary_scorecard.png", dpi=150, bbox_inches="tight")
-plt.close()
-print("  → Chart 31 saved: planetary_scorecard.png")
-
-# Print scorecard
-print("\n  PLANETARY BOUNDARIES SCORECARD:")
-print(f"  {'Boundary':<35s} {'Safe Limit':>12s} {'Current':>12s} {'Status':<20s}")
-print("  " + "─" * 85)
-for _, row in bdf.iterrows():
-    name = row["Boundary"].replace("\n", " ")
-    print(
-        f"  {name:<35s} {str(row['Safe Limit']):>12s} {str(row['Current']):>12s} {row['Status']:<20s}"
-    )
-
-exceeded = bdf[bdf["Status"] == "Exceeded"].shape[0]
-near = bdf[
-    bdf["Status"].str.startswith("Near") | bdf["Status"].str.startswith("At")
-].shape[0]
-safe = bdf[bdf["Status"].str.startswith("Safe")].shape[0]
-print(f"\n  Summary: {exceeded} EXCEEDED, {near} at/near limit, {safe} safe")
-print(f"  This is consistent with the 2023 Rockström/Richardson update which found")
-print(f"  6 of 9 boundaries exceeded.")
+# A dated literature summary avoids mixing indicators, vintages and denominators.
+planetary_scorecard(Path(CHART_DIR))
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1099,8 +935,7 @@ print("  → Chart 32 saved: material_vs_carbon.png")
 print("\n" + "=" * 80)
 print("SUMMARY: NON-CARBON PLANETARY BOUNDARIES")
 print("=" * 80)
-print(
-    """
+print("""
 THE PAPERS' ECOLOGICAL CASE IS STRONGER THAN JUST CARBON
 
 1. MATERIAL FOOTPRINT IS NOT DECOUPLING (ABSOLUTELY)
@@ -1118,29 +953,29 @@ THE PAPERS' ECOLOGICAL CASE IS STRONGER THAN JUST CARBON
    - Tree cover loss: ~5+ Mha/yr (includes fire, logging, and deforestation)
    - This is largely irreversible — you can't bring back extinct species
 
-3. NITROGEN CYCLE IS SEVERELY BREACHED
-   - Industrial N fixation (~120 Tg/yr) is 3.5x the safe boundary
-     (35 Tg/yr per Rockström 2009; Richardson 2023 revised to 62 Tg/yr)
-   - This is the MOST breached boundary after biodiversity
+3. NITROGEN: USE A COMPATIBLE CONTROL VARIABLE
+     - Richardson 2023: total industrial + intentional biological fixation
+         is about 190 Tg N/yr versus a 62 Tg N/yr boundary.
+     - Synthetic fertilizer application alone cannot test this boundary.
    - Causes: dead zones, algal blooms, groundwater contamination, N₂O (GHG)
    - Difficult but not impossible — options include precision ag,
-     N-fixing cereals, food system transformation
+    food system transformation; biological substitution needs total-N accounting
 
-4. PHOSPHORUS IS APPROACHING ITS BOUNDARY  
-   - P flow to oceans (~8-10 Tg/yr) approaching 11 Tg/yr boundary
+4. PHOSPHORUS: APPLICATION IS NOT OCEAN FLOW
+    - Fertilizer P2O5 shown here does not measure the PB control variable.
    - Mining-dependent (phosphate rock) — finite resource with no substitute
    - Critical for food security — no alternative to phosphorus in agriculture
 
-5. FRESHWATER USE AT THE BOUNDARY
-   - Global withdrawals ~4,000 km³/yr, right at the Rockström boundary
+5. FRESHWATER PRESSURES
+    - Withdrawals are not the 2023 blue/green freshwater control variables.
    - Severe water stress in ~30+ countries (>100% of renewable resources)
    - Climate change will make this worse (shifting precipitation patterns)
 
 6. PLANETARY BOUNDARIES SCORECARD
-   - 4 boundaries clearly EXCEEDED: climate, biosphere, nitrogen, land-system
-   - 2 at/near boundary: freshwater, phosphorus, ocean acidification
-   - 1 recovering: ozone (the one success story — Montreal Protocol)
-   - Consistent with Richardson et al. 2023: 6 of 9 boundaries transgressed
+    - Published Richardson 2023 assessment: 6 of 9 processes transgressed.
+    - N and P count together; aerosols and novel entities are included.
+    - LPI is complementary evidence, not a planetary-boundary control variable.
+    - This is a dated literature summary, not a current-year reassessment.
 
 IMPLICATIONS FOR THE DEBATE:
 
@@ -1150,8 +985,8 @@ They focus on carbon, but the material/biodiversity/nitrogen picture is worse:
 - Material footprint reduction requires multiple parallel strategies
   (circular economy, food tech, dense urbanization)
 - Biodiversity loss is irreversible
-- Nitrogen boundary is 1.9–3.4x exceeded (depending on boundary definition)
-  with solutions at varying stages of deployment
+- Nitrogen interventions need compatible gross-fixation accounting;
+    synthetic substitution and runoff treatment do not establish compliance.
 
 This DOES NOT prove "capitalism is unworkable" — these problems existed under
 Soviet economies too (Aral Sea, Chernobyl, massive pollution). But it DOES
@@ -1159,5 +994,4 @@ prove that growth-as-usual, even with decarbonization, is insufficient.
 The growth model needs to internalize material and ecological costs, not just
 carbon costs. This is a stronger version of the ecological critique than the
 papers present.
-"""
-)
+""")

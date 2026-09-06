@@ -28,7 +28,6 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-
 BASE = Path(__file__).resolve().parents[1]
 RAW = BASE / "data" / "raw"
 PROC = BASE / "data" / "processed"
@@ -265,6 +264,33 @@ def latest_covered_per_country(
     return covered.sort_values("year").drop_duplicates("country_code", keep="last")
 
 
+def coalesce_extended_wdi(extended: pd.DataFrame) -> pd.DataFrame:
+    """Collapse label aliases, never conflicting measurements, before scoring.
+
+    The upstream pivot includes country labels, so renamed countries can have
+    complementary rows for one ISO code/year. Labels are not join keys; retain
+    the base WDI label and require each extended measurement to be unambiguous.
+    This operation is not suitable for combining distinct survey concepts.
+    """
+    keys = ["country_code", "year"]
+    values = extended.drop(columns=["country"], errors="ignore")
+    if values[keys].isna().any().any():
+        raise ValueError("Extended WDI contains missing country_code/year keys")
+    duplicates = values[values.duplicated(keys, keep=False)]
+    if duplicates.empty:
+        return values.copy()
+    distinct = duplicates.groupby(keys, sort=False).nunique(dropna=True)
+    conflicts = distinct.gt(1)
+    if conflicts.any().any():
+        details = {
+            key: row.index[row].tolist()
+            for key, row in conflicts.loc[conflicts.any(axis=1)].iterrows()
+        }
+        raise ValueError(f"Conflicting extended WDI values by country/year: {details}")
+    # first() selects the sole nonmissing value, after the conflict check above.
+    return values.groupby(keys, sort=False, as_index=False).first()[values.columns]
+
+
 def read_pip_country(poverty_line: float) -> pd.DataFrame | None:
     path = RAW / f"pip_country_{poverty_line}.csv"
     if not path.exists():
@@ -272,8 +298,18 @@ def read_pip_country(poverty_line: float) -> pd.DataFrame | None:
     pip = pd.read_csv(path)
     pip = pip[pip["country_code"].notna()].copy()
     pip = pip[pip["reporting_level"].eq("national") | pip["reporting_level"].isna()]
+    # Exact repeats are harmless; distinct surveys/concepts must not be selected
+    # arbitrarily with keep="last", coalesced, or averaged into one observation.
+    pip = pip.drop_duplicates()
+    keys = ["country_code", "reporting_year"]
+    if pip[keys].isna().any().any():
+        raise ValueError(f"{path.name}: missing country/year keys")
+    duplicates = pip.loc[pip.duplicated(keys, keep=False), keys].drop_duplicates()
+    if not duplicates.empty:
+        raise ValueError(
+            f"{path.name}: conflicting PIP rows/concepts for {duplicates.to_dict('records')}"
+        )
     pip = pip.sort_values(["country_code", "reporting_year"])
-    pip = pip.drop_duplicates(["country_code", "reporting_year"], keep="last")
     return pip
 
 
@@ -283,9 +319,10 @@ def load_panel() -> tuple[pd.DataFrame, list[float]]:
     if extended_path.exists():
         extended = pd.read_csv(extended_path)
         wdi = wdi.merge(
-            extended.drop(columns=["country"], errors="ignore"),
+            coalesce_extended_wdi(extended),
             on=["country_code", "year"],
             how="left",
+            validate="one_to_one",
         )
     else:
         print(
@@ -326,7 +363,9 @@ def load_panel() -> tuple[pd.DataFrame, list[float]]:
     pip_base["pip_mean_annual"] = pip_base["pip_mean_daily"] * 365
     pip_base["pip_median_annual"] = pip_base["pip_median_daily"] * 365
 
-    panel = wdi.merge(pip_base, on=["country_code", "year"], how="left")
+    panel = wdi.merge(
+        pip_base, on=["country_code", "year"], how="left", validate="one_to_one"
+    )
     available_lines: list[float] = []
     for poverty_line in [2.15, 3.65, 6.85, 10.0, 15.0, 20.0, 25.0]:
         pip_line = read_pip_country(poverty_line)
@@ -343,7 +382,9 @@ def load_panel() -> tuple[pd.DataFrame, list[float]]:
                 "poverty_gap": f"pip_gap_{poverty_line:g}",
             }
         )
-        panel = panel.merge(keep, on=["country_code", "year"], how="left")
+        panel = panel.merge(
+            keep, on=["country_code", "year"], how="left", validate="one_to_one"
+        )
 
     if "household_consumption_ppp_current" in panel.columns:
         panel["household_consumption_ppp_pc_current"] = (

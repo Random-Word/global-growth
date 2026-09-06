@@ -11,12 +11,12 @@ discipline the rest of the README applies, with deployment-reality data:
 2. Global primary-energy fossil share, 1990–2024 (has the S-curve *displaced*
    fossils, or only supplemented them?)
 3. US grid interconnection queue (LBNL "Queued Up" 2014–2024)
-4. Levelized cost of storage (LCOS) by duration and chemistry
+4. Withdrawn LCOS comparison (sources/units not auditable on a common basis)
 5. Critical mineral supply gap: copper demand (IEA NZE) vs announced supply
 6. Global fossil-fuel subsidies, explicit + implicit (IMF Parry et al.)
 7. China vs. US vs. EU leading-edge electrification: EV share of new car
    sales and electricity share of industrial final energy
-8. Global final-energy consumption by sector with tractability tier overlay
+8. Withdrawn final-energy shares (incompatible energy and emissions categories)
 
 Data sources:
 - OWID energy dataset (charts 83, 84) — Ember + BP + EIA aggregated
@@ -39,8 +39,16 @@ from __future__ import annotations
 
 import io
 import subprocess
+import sys
 import warnings
 from pathlib import Path
+
+from ecological_safeguards import (
+    FINAL_ENERGY_REASON,
+    LCOS_REASON,
+    energy_withdrawals,
+    withdrawal_chart,
+)
 
 import numpy as np
 import pandas as pd
@@ -58,6 +66,11 @@ CHART_DIR = Path("charts")
 CHART_DIR.mkdir(exist_ok=True)
 CACHE_DIR = Path("data/raw/energy_transition")
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+if __name__ == "__main__" and "--corrections-only" in sys.argv:
+    energy_withdrawals(CHART_DIR)
+    print("Charts 86 and 90 replaced by withdrawal notices; no replacement estimates.")
+    raise SystemExit(0)
 
 
 def fetch(url: str, cache_name: str) -> str:
@@ -382,84 +395,11 @@ plt.close()
 # Chart 86: LCOS by duration and chemistry
 # ─────────────────────────────────────────────────────────────────────────────
 print("\n[86] Levelized cost of storage by duration…")
-# Sources: NREL ATB 2023 (Li-ion 4h: $190/MWh), BNEF LCOS 2H 2023 (Li-ion 2h,
-# flow batteries, pumped hydro), Form Energy public targets (iron-air 100h).
-# Numbers are approximate central estimates for US, 2024$.
-lcos = pd.DataFrame(
-    {
-        "tech": [
-            "Li-ion\n(2h)",
-            "Li-ion\n(4h)",
-            "Li-ion\n(8h)",
-            "Flow\n(10h)",
-            "Pumped hydro\n(12h)",
-            "Iron-air\n(100h target)",
-            "Iron-air\n(100h pilot est.)",
-        ],
-        "lcos": [180, 210, 320, 180, 150, 25, 80],  # $/MWh discharged
-        "tier": [1, 1, 2, 2, 1, 3, 3],
-    }
+withdrawal_chart(
+    CHART_DIR / "86_lcos_by_duration.png",
+    "Chart 86: LCOS comparison withdrawn",
+    LCOS_REASON,
 )
-
-fig, ax = plt.subplots(figsize=(12, 6))
-colors = {1: "#009e73", 2: "#e69f00", 3: "#d55e00"}
-bar_colors = [colors[t] for t in lcos["tier"]]
-bars = ax.bar(
-    range(len(lcos)), lcos["lcos"], color=bar_colors, edgecolor="black", linewidth=1
-)
-
-# Annotate bars (label matches assigned tier)
-tier_label = {
-    1: "✓ proven at GW scale",
-    2: "commercial, scaling",
-    3: "pilot / target only",
-}
-for i, bar in enumerate(bars):
-    h = bar.get_height()
-    marker = tier_label[lcos["tier"].iloc[i]]
-    ax.text(
-        bar.get_x() + bar.get_width() / 2,
-        h + 8,
-        f"${h:.0f}/MWh\n{marker}",
-        ha="center",
-        va="bottom",
-        fontsize=9,
-    )
-
-ax.set_xticks(range(len(lcos)))
-ax.set_xticklabels(lcos["tech"], fontsize=10)
-ax.set_ylabel("Levelized Cost of Storage ($/MWh discharged, 2024$)")
-ax.set_title(
-    "Storage cost vs duration: Tier 1 proven, Tier 3 aspirational\n"
-    "Short-duration Li-ion is cheap and deployed; 100h iron-air cost claim\n"
-    "is a target, not a demonstrated figure.",
-    fontsize=11,
-)
-ax.set_ylim(0, max(lcos["lcos"]) + 80)
-
-# Legend for tiers
-from matplotlib.patches import Patch
-
-tier_legend = [
-    Patch(facecolor=colors[1], label="Tier 1: Deployed at GW scale"),
-    Patch(facecolor=colors[2], label="Tier 2: Commercial, scaling"),
-    Patch(facecolor=colors[3], label="Tier 3: Target / pilot only"),
-]
-ax.legend(handles=tier_legend, loc="upper left")
-ax.grid(True, alpha=0.3, axis="y")
-plt.figtext(
-    0.5,
-    -0.02,
-    "Sources: NREL ATB 2023; BloombergNEF LCOS 2H 2023; Form Energy published targets (2023). "
-    "Iron-air LCOS is manufacturer target (~$20–30/MWh); pilot cost estimates are higher.",
-    ha="center",
-    fontsize=8,
-    style="italic",
-    wrap=True,
-)
-plt.tight_layout()
-plt.savefig(CHART_DIR / "86_lcos_by_duration.png", dpi=150, bbox_inches="tight")
-plt.close()
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -596,8 +536,8 @@ ax.set_xticklabels(subs["year"])
 ax.set_ylabel("Global fossil-fuel subsidies ($ trillion)")
 ax.set_title(
     "Global fossil-fuel subsidies: $7T in 2022 — 7% of world GDP\n"
-    "This is the size of the incumbent-resistance margin.\n"
-    "For reference: total clean-energy investment was ~$1.8T (2023).",
+    "Includes imputed external costs, not a $7T cash budget.\n"
+    "Clean-energy investment (~$1.8T in 2023) is a different accounting concept.",
     fontsize=11,
 )
 ax.legend(loc="upper left")
@@ -703,106 +643,10 @@ plt.close()
 # Chart 90: Final-energy sector with tractability tier
 # ─────────────────────────────────────────────────────────────────────────────
 print("\n[90] Final-energy by sector with tractability scorecard…")
-# Source: IEA World Energy Balances 2023 (global 2022 final consumption, ~440 EJ).
-# Shares are approximate; "electricity" share of each sector from IEA sectoral breakdown.
-# Tier scoring reflects maturity of a deployed, commercially-competitive
-# low-carbon pathway:
-#   Tier 1 = proven at scale, cost-competitive today
-#   Tier 2 = demonstrated, scaling, partial cost parity
-#   Tier 3 = requires breakthrough, pilot-only
-sector = pd.DataFrame(
-    {
-        "sector": [
-            "Buildings\n(heat + elec)",
-            "Road transport",
-            "Industry: low-temp\nheat (<200°C)",
-            "Industry: high-temp\nheat (>400°C)",
-            "Industry: process\nfeedstocks (petchem, H2-DRI)",
-            "Cement\n(process CO2)",
-            "Aviation",
-            "Shipping",
-            "Agriculture",
-            "Other (rail, pipelines,\ncommercial, unspecified)",
-        ],
-        "share_final": [
-            30,
-            20,
-            8,
-            15,
-            7,
-            3,
-            3,
-            3,
-            2,
-            9,
-        ],  # % of global final energy (sums to 100)
-        "tier": [1, 1, 2, 2, 3, 3, 3, 3, 2, 2],
-        "pathway": [
-            "Heat pumps + elec + insulation",
-            "EVs (cars), e-trucks emerging",
-            "Industrial heat pumps, electric boilers",
-            "Green H2, electric arc, CCS — scaling",
-            "H2-DRI steel, biogenic petchem — pre-commercial at scale",
-            "CCS or novel chemistries (CSA, geopolymer) — calcination CO2",
-            "SAF (bio/synthetic) — 0.2% share, expensive",
-            "Ammonia/methanol, battery-electric short-haul — early pilots",
-            "Electric tractors, low-C fertilizers, precision ag",
-            "Mostly already electrified or efficiency-driven",
-        ],
-    }
+withdrawal_chart(
+    CHART_DIR / "90_final_energy_tractability.png",
+    "Chart 90: Final-energy shares withdrawn",
+    FINAL_ENERGY_REASON,
 )
-
-fig, ax = plt.subplots(figsize=(13, 7))
-colors = {1: "#009e73", 2: "#e69f00", 3: "#d55e00"}
-bar_colors = [colors[t] for t in sector["tier"]]
-bars = ax.barh(
-    range(len(sector)), sector["share_final"], color=bar_colors, edgecolor="black"
-)
-
-for i, (bar, row) in enumerate(zip(bars, sector.iterrows())):
-    _, r = row
-    ax.text(
-        r["share_final"] + 0.3,
-        i,
-        f"{r['share_final']}%  —  {r['pathway']}",
-        va="center",
-        fontsize=9,
-    )
-
-ax.set_yticks(range(len(sector)))
-ax.set_yticklabels(sector["sector"], fontsize=10)
-ax.set_xlabel("Share of global final energy consumption (%)")
-ax.set_title(
-    "Global final energy by sector: the hard 80%\n"
-    "Electricity is ~20% of final energy. The other 80% — industrial heat,\n"
-    "aviation, shipping, feedstocks — is where decarbonization is hardest.",
-    fontsize=12,
-)
-ax.set_xlim(0, 48)
-
-from matplotlib.patches import Patch
-
-tier_legend = [
-    Patch(facecolor=colors[1], label="Tier 1: Proven, cost-competitive"),
-    Patch(facecolor=colors[2], label="Tier 2: Demonstrated, scaling"),
-    Patch(facecolor=colors[3], label="Tier 3: Requires breakthrough"),
-]
-ax.legend(handles=tier_legend, loc="lower right")
-ax.grid(True, alpha=0.3, axis="x")
-ax.invert_yaxis()
-plt.figtext(
-    0.5,
-    -0.02,
-    "Source: IEA World Energy Balances 2023 (global final consumption, ~440 EJ, 2022). "
-    "Tier assignment reflects technical maturity and cost-parity status as of 2024.",
-    ha="center",
-    fontsize=9,
-    style="italic",
-)
-plt.tight_layout()
-plt.savefig(
-    CHART_DIR / "90_final_energy_tractability.png", dpi=150, bbox_inches="tight"
-)
-plt.close()
 
 print("\n✓ Analysis 17 complete. Charts 83–90 written to charts/.")

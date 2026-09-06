@@ -1,3 +1,15 @@
+> [!WARNING]
+> **HISTORICAL ARCHIVE — NOT CURRENT VALIDATED EVIDENCE (2026-09-05).**
+> The body below is preserved as a historical record, not endorsed as current
+> findings. It contains superseded or withdrawn claims, including nitrogen
+> planetary-boundary comparisons and joint/partial-success probabilities built
+> from incompatible nitrogen marginals. Those probabilities are **withdrawn**,
+> not empirical estimates or valid probability sensitivities. Charts 114, 115,
+> and 121 now display withdrawal notices; this does not validate the other
+> historical claims or figures. Consult the [current report](README.md) and
+> [claims/evidence appendix](CLAIMS_EVIDENCE_APPENDIX.md) for current status and
+> limitations. Do not cite this archive as current validated evidence.
+
 # Growth, Poverty, and Planetary Boundaries: A Data-Driven Response
 
 **A quantitative examination of whether capitalism is "mathematically unworkable" for ending global poverty within ecological limits.**

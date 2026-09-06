@@ -23,7 +23,10 @@ from __future__ import annotations
 
 import itertools
 import math
+import sys
 from pathlib import Path
+
+from ecological_safeguards import LEGACY_N_REASON, withdrawal_chart, withdrawn_table
 
 import numpy as np
 import pandas as pd
@@ -73,6 +76,37 @@ def latest_per_country(dataframe: pd.DataFrame, min_year: int = 2018) -> pd.Data
     )
 
 
+NITROGEN_CLAIM = {
+    "claim": "Legacy nitrogen stack cannot establish planetary-boundary compliance",
+    "evidence_type": "Withdrawn mixed-flow exploratory arithmetic",
+    "status": "Unresolved; invalid compliance test",
+    "what_data_can_resolve": "A compatible total industrial + intentional biological fixation balance is required.",
+    "what_remains_unresolved": LEGACY_N_REASON,
+}
+
+
+def nitrogen_withdrawal() -> None:
+    """Replace invalid results rather than silently assign a new total-N model."""
+    save_table(withdrawn_table(LEGACY_N_REASON), "robustness_nitrogen_uncertainty.csv")
+    withdrawal_chart(
+        CHARTS / "94_nitrogen_uncertainty.png",
+        "Chart 94: Legacy nitrogen compliance model withdrawn",
+        LEGACY_N_REASON,
+    )
+
+
+def refresh_nitrogen_only() -> None:
+    nitrogen_withdrawal()
+    # Preserve other agents' welfare/development rows and outputs.
+    path = PROC / "robustness_claim_confidence.csv"
+    if path.exists():
+        claims = pd.read_csv(path)
+        mask = claims["claim"].str.contains("nitrogen", case=False, na=False)
+        for column, value in NITROGEN_CLAIM.items():
+            claims.loc[mask, column] = value
+        save_table(claims, path.name)
+
+
 def main() -> None:
     print("=" * 80)
     print("ANALYSIS 18: ROBUSTNESS CHECKS AND UNRESOLVED QUESTIONS")
@@ -113,13 +147,7 @@ def main() -> None:
                 "what_data_can_resolve": "Mass-budget plausibility can be bounded; the 5.9 t/cap naive mass target is hard to hit, and 9 t/cap requires optimistic category assumptions.",
                 "what_remains_unresolved": "Damage-weighted ecological impact requires a formal LCA or boundary-specific model.",
             },
-            {
-                "claim": "Nitrogen can be brought near the boundary through a technology stack",
-                "evidence_type": "Scenario uncertainty model",
-                "status": "Low-to-medium confidence scenario",
-                "what_data_can_resolve": "Partial measures are insufficient; meeting even the relaxed boundary depends heavily on Tier 3 interventions.",
-                "what_remains_unresolved": "Breakthrough probability, adoption speed, governance, and regional runoff dynamics.",
-            },
+            NITROGEN_CLAIM,
             {
                 "claim": "Development successes share common ingredients",
                 "evidence_type": "Panel correlations and historical case evidence",
@@ -395,77 +423,14 @@ def main() -> None:
     plt.close()
 
     # ---------------------------------------------------------------------
-    # 4. Nitrogen uncertainty: partial vs full intervention stack
+    # 4. Withdraw mixed-flow nitrogen arithmetic; no replacement model implied.
     # ---------------------------------------------------------------------
-    print("\n[94] Nitrogen pathway uncertainty")
+    nitrogen_withdrawal()
+    # Keep the material model's historical random stream unchanged: the former
+    # nitrogen block consumed six draw_count-length triangular samples.
     rng = np.random.default_rng(42)
-    nitrogen_current = 150.0
-    safe_bounds = {"Rockstrom_35": 35.0, "intermediate_44": 44.0, "Richardson_62": 62.0}
-    interventions = {
-        "combustion_nox": (5.0, 10.0, 15.0, "Tier 1/2"),
-        "precision_ag": (15.0, 25.0, 40.0, "Tier 2"),
-        "nitrification_inhibitors": (5.0, 12.0, 20.0, "Tier 2"),
-        "cultivated_meat_feed": (0.0, 10.0, 20.0, "Tier 3"),
-        "n_fixing_cereals": (0.0, 20.0, 40.0, "Tier 3"),
-        "runoff_denitrification": (2.0, 8.0, 15.0, "Tier 3"),
-    }
     draw_count = 50_000
-    intervention_draws: dict[str, np.ndarray] = {}
-    for intervention_name, (low, mode, high, _tier) in interventions.items():
-        intervention_draws[intervention_name] = rng.triangular(
-            low, mode, high, draw_count
-        )
-
-    tier2_reductions = (
-        intervention_draws["combustion_nox"]
-        + intervention_draws["precision_ag"]
-        + intervention_draws["nitrification_inhibitors"]
-    )
-    full_reductions = tier2_reductions + sum(
-        intervention_draws[name]
-        for name in [
-            "cultivated_meat_feed",
-            "n_fixing_cereals",
-            "runoff_denitrification",
-        ]
-    )
-    tier2_final = np.maximum(nitrogen_current - tier2_reductions, 0)
-    full_final = np.maximum(nitrogen_current - full_reductions, 0)
-    nitrogen_rows: list[dict[str, float | str]] = []
-    for scenario_name, final_values in [
-        ("Tier 1-2 only", tier2_final),
-        ("Full stack including Tier 3", full_final),
-    ]:
-        row: dict[str, float | str] = {
-            "scenario": scenario_name,
-            "median_final_tg_n": float(np.median(final_values)),
-            "p10_final_tg_n": float(np.percentile(final_values, 10)),
-            "p90_final_tg_n": float(np.percentile(final_values, 90)),
-        }
-        for bound_name, safe_value in safe_bounds.items():
-            row[f"prob_at_or_below_{bound_name}"] = float(
-                (final_values <= safe_value).mean()
-            )
-        nitrogen_rows.append(row)
-    nitrogen_summary = pd.DataFrame(nitrogen_rows)
-    save_table(nitrogen_summary, "robustness_nitrogen_uncertainty.csv")
-
-    fig, axis = plt.subplots(figsize=(12, 6))
-    axis.hist(tier2_final, bins=60, alpha=0.55, label="Tier 1-2 only")
-    axis.hist(full_final, bins=60, alpha=0.55, label="Full stack including Tier 3")
-    for label, safe_value in safe_bounds.items():
-        axis.axvline(
-            safe_value, linestyle="--", linewidth=1.5, label=label.replace("_", " ")
-        )
-    axis.set_xlabel("Final human nitrogen fixation after interventions (Tg N/yr)")
-    axis.set_ylabel("Monte Carlo draws")
-    axis.set_title(
-        "Chart 94: Nitrogen closure depends on speculative Tier 3 interventions"
-    )
-    axis.legend(fontsize=9)
-    plt.tight_layout()
-    plt.savefig(CHARTS / "94_nitrogen_uncertainty.png")
-    plt.close()
+    rng.random(6 * draw_count)
 
     # ---------------------------------------------------------------------
     # 5. Material footprint uncertainty for the 9 t/cap scenario
@@ -528,44 +493,13 @@ def main() -> None:
     # 6. Development correlates: simple growth-spell panel
     # ---------------------------------------------------------------------
     print("\n[96] Development correlates panel")
-    countries = wdi[
-        (wdi["country_code"].str.len() == 3)
-        & ~wdi["country_code"].isin(
-            [
-                "WLD",
-                "LIC",
-                "MIC",
-                "HIC",
-                "LMC",
-                "UMC",
-                "LMY",
-                "UMY",
-                "EAS",
-                "ECS",
-                "LCN",
-                "MEA",
-                "SAS",
-                "SSA",
-                "NAC",
-                "ARB",
-                "CSS",
-                "EMU",
-                "FCS",
-                "HPC",
-                "IBD",
-                "IBT",
-                "IDA",
-                "IDB",
-                "IDX",
-                "LDC",
-                "OED",
-                "PRE",
-                "PST",
-                "SSF",
-                "SST",
-            ]
-        )
-    ].copy()
+    # ISO-like three-character codes are not enough to identify countries:
+    # WDI also uses codes such as AFE/AFW for aggregates. Use the World Bank's
+    # country-region lookup as the authoritative country universe instead of a
+    # hand-maintained aggregate exclusion list.
+    country_regions = pd.read_csv(RAW / "wb_country_regions.csv")
+    actual_country_codes = set(country_regions["country_code"].dropna())
+    countries = wdi[wdi["country_code"].isin(actual_country_codes)].copy()
     spell_rows: list[dict[str, float | int | str]] = []
     predictor_columns = [
         "gross_capital_formation_pct",
@@ -577,7 +511,9 @@ def main() -> None:
     ]
     for country_code, group in countries.groupby("country_code"):
         group = group.sort_values("year").drop_duplicates("year").set_index("year")
-        for start_year in [1990, 1995, 2000, 2005, 2010]:
+        # Non-overlapping outcome windows avoid treating 1990-2000 and
+        # 1995-2005 from the same country as independent spells.
+        for start_year in [1990, 2000, 2010]:
             end_year = start_year + 10
             if start_year not in group.index or end_year not in group.index:
                 continue
@@ -627,7 +563,12 @@ def main() -> None:
             "z_trade_pct_gdp + z_fdi_pct_gdp + z_primary_completion_pct + "
             "z_tax_revenue_pct_gdp + C(start_year)"
         )
-        model = smf.ols(formula, data=model_data).fit(cov_type="HC3")
+        # Repeated spells from a country share institutions and shocks. Cluster
+        # by country rather than using observation-level heteroskedasticity-only
+        # uncertainty.
+        model = smf.ols(formula, data=model_data).fit(
+            cov_type="cluster", cov_kwds={"groups": model_data["country_code"]}
+        )
         coefficient_rows = []
         for predictor in predictor_columns:
             term = f"z_{predictor}"
@@ -706,4 +647,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    if "--nitrogen-only" in sys.argv:
+        refresh_nitrogen_only()
+    else:
+        main()
