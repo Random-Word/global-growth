@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Download datasets for global development analysis."""
+
 import os, json, time, io, sys
 import requests
 import pandas as pd
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
-BASE = "/Users/rstory/Repositories/global-growth"
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(BASE, "data", "raw")
 PROC = os.path.join(BASE, "data", "processed")
 os.makedirs(RAW, exist_ok=True)
@@ -12,6 +15,17 @@ os.makedirs(PROC, exist_ok=True)
 
 session = requests.Session()
 session.headers.update({"User-Agent": "GlobalGrowthAnalysis/1.0"})
+session.mount(
+    "https://",
+    HTTPAdapter(
+        max_retries=Retry(
+            total=4,
+            backoff_factor=1.5,
+            status_forcelist=(429, 500, 502, 503, 504),
+            allowed_methods=("GET",),
+        )
+    ),
+)
 
 
 def cached_get(url, filename, timeout=120, binary=True):
@@ -67,6 +81,18 @@ WDI = {
     "BX.KLT.DINV.WD.GD.ZS": "fdi_pct_gdp",
     "GC.TAX.TOTL.GD.ZS": "tax_revenue_pct_gdp",
     "NE.TRD.GNFS.ZS": "trade_pct_gdp",
+    # Causal-extension inputs: predetermined commodity-export exposure and
+    # fiscal/macroeconomic transmission channels.
+    "TX.VAL.FUEL.ZS.UN": "fuel_exports_pct_merchandise",
+    "TX.VAL.MMTL.ZS.UN": "ores_metals_exports_pct_merchandise",
+    "TX.VAL.AGRI.ZS.UN": "ag_raw_exports_pct_merchandise",
+    "TX.VAL.FOOD.ZS.UN": "food_exports_pct_merchandise",
+    "TX.VAL.MRCH.CD.WT": "merchandise_exports_current_usd",
+    "NE.EXP.GNFS.ZS": "exports_pct_gdp",
+    "GC.XPN.TOTL.GD.ZS": "government_expense_pct_gdp",
+    "GC.REV.XGRT.GD.ZS": "government_revenue_ex_grants_pct_gdp",
+    "GC.BAL.CASH.GD.ZS": "cash_surplus_deficit_pct_gdp",
+    "FP.CPI.TOTL.ZG": "inflation_cpi_pct",
 }
 
 all_wdi = []
@@ -83,7 +109,7 @@ for code, name in WDI.items():
         # Fetch up to 2 pages (20k records each) to cover all countries×years
         url = f"https://api.worldbank.org/v2/country/all/indicator/{code}?format=json&per_page=20000&date=1960:2025"
         try:
-            resp = session.get(url, timeout=60)
+            resp = session.get(url, timeout=120)
             resp.raise_for_status()
             data = resp.json()
             with open(cache_path, "w") as f:

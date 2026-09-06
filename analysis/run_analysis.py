@@ -2,8 +2,13 @@
 """
 Comprehensive analysis of global growth, poverty, and development.
 Addresses 7 key questions for the growth-vs-redistribution debate.
+
+Use --corrections-only to refresh the withdrawn charts 00/06 offline without
+loading datasets or running the analysis pipeline.
 """
+
 import os, sys, warnings
+import tempfile
 
 warnings.filterwarnings("ignore")
 
@@ -17,7 +22,7 @@ import matplotlib.ticker as mticker
 import seaborn as sns
 from scipy import stats
 
-BASE = "/Users/rstory/Repositories/global-growth"
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHARTS = os.path.join(BASE, "charts")
 PROC = os.path.join(BASE, "data", "processed")
 RAW = os.path.join(BASE, "data", "raw")
@@ -34,6 +39,72 @@ plt.rcParams.update(
     }
 )
 sns.set_style("whitegrid")
+
+WITHDRAWN_CHARTS = {
+    "00_summary_dashboard.png": "Chart 00: Legacy summary dashboard withdrawn",
+    "06_redistribution_cost.png": "Chart 06: Legacy redistribution cost comparison withdrawn",
+}
+GDP_SHARE_WITHDRAWAL = (
+    "The legacy calculation divides a 2017-PPP poverty gap by\n"
+    "constant-2015 market-US$ GDP. These price bases are incompatible.\n\n"
+    "GDP-share levels, trends and growth-attribution claims are withdrawn;\n"
+    "this calculation does not confirm that growth made redistribution cheaper.\n\n"
+    "Use Analysis 28 / Chart 118 for same-basis 2021-PPP accounting\n"
+    "and Chart 119 for its accounting decomposition, not causal attribution.\n"
+    "No replacement estimates are computed in this notice."
+)
+
+
+def refresh_withdrawn_chart(filename, charts_dir=CHARTS):
+    """Replace one legacy artifact atomically, without reading any data caches."""
+    title = WITHDRAWN_CHARTS[filename]
+    detail = (
+        "The former dashboard is not republished from legacy results.\n"
+        "Other analyses are not rerun or validated by this correction."
+        if filename == "00_summary_dashboard.png"
+        else "The former GDP-share table and years-of-growth estimate are withdrawn.\n"
+        "The PPP-gap / nominal-military-spending comparison is also withdrawn.\n"
+        "A 3x targeting multiplier is an assumption, not an estimated program cost."
+    )
+    os.makedirs(charts_dir, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(14, 8))
+    temporary_path = None
+    try:
+        ax.axis("off")
+        ax.set_title(title, fontsize=17, fontweight="bold", pad=24)
+        ax.text(
+            0.04, 0.92, "WITHDRAWN — incompatible price bases",
+            transform=ax.transAxes, fontsize=17, fontweight="bold", color="#a12828",
+            va="top", parse_math=False,
+        )
+        ax.text(
+            0.04, 0.78, GDP_SHARE_WITHDRAWAL,
+            transform=ax.transAxes, fontsize=14, va="top", linespacing=1.5,
+            parse_math=False,
+        )
+        ax.text(
+            0.04, 0.16, detail, transform=ax.transAxes, fontsize=11,
+            va="top", color="#555555", linespacing=1.5, parse_math=False,
+        )
+        fig.tight_layout()
+        # Render alongside the destination and publish only a complete PNG.
+        with tempfile.NamedTemporaryFile(
+            dir=charts_dir, prefix=f".{filename}.", suffix=".png", delete=False
+        ) as temporary:
+            temporary_path = temporary.name
+        fig.savefig(temporary_path)
+        os.replace(temporary_path, os.path.join(charts_dir, filename))
+    finally:
+        plt.close(fig)
+        if temporary_path is not None and os.path.exists(temporary_path):
+            os.unlink(temporary_path)
+    print(f"  -> Saved {filename} (WITHDRAWN; no replacement estimates)")
+
+
+if __name__ == "__main__" and "--corrections-only" in sys.argv[1:]:
+    for filename in WITHDRAWN_CHARTS:
+        refresh_withdrawn_chart(filename)
+    raise SystemExit(0)
 
 # ============================================================
 # LOAD DATA
@@ -65,28 +136,33 @@ for pl in [2.15, 3.65, 6.85, 10.0]:
 
 
 ###############################################################################
-# ANALYSIS 1: POVERTY GAP AS % OF GLOBAL GDP OVER TIME
-# Your core hypothesis: has growth made redistribution cheaper?
+# ANALYSIS 1: LEGACY MIXED-BASIS DIAGNOSTIC (NOT A GDP SHARE)
+# Cannot establish whether growth has made redistribution cheaper.
 ###############################################################################
 print("\n" + "=" * 70)
-print("ANALYSIS 1: POVERTY GAP AS % OF GLOBAL GDP OVER TIME")
+print("ANALYSIS 1: LEGACY MIXED-BASIS DIAGNOSTIC — NOT A GDP SHARE")
 print("=" * 70)
 
 fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 fig.suptitle(
-    "Has Growth Made Redistribution Cheaper?\nPoverty Gap as % of Global GDP Over Time",
+    "LEGACY MIXED-BASIS DIAGNOSTIC — SUPERSEDED BY CHART 118\n"
+    "2017-PPP gap divided by constant-2015 market-US$ GDP",
     fontsize=16,
     fontweight="bold",
 )
 
-# Get global GDP in current PPP (World aggregate = WLD)
+# Get legacy constant-2015 market-US$ GDP (World aggregate = WLD).
 wdi_world = wdi[wdi["country_code"] == "WLD"].copy()
-# Use constant-dollar GDP to match the fixed-PPP poverty gap numerator.
-# PIP poverty lines are in 2017 PPP; GDP is in constant 2015 USD.
-# Both are real (inflation-adjusted): the trend-over-time is reliable.
-# The level is approximate because PPP GDP > market-rate GDP for the
-# developing world, but the chart's argument rests on the trend.
+# LEGACY ONLY: PIP gaps are in 2017 PPP while this GDP series is in constant
+# 2015 market USD. Being inflation-adjusted does not make the price bases
+# comparable, so neither the level nor its decomposition is valid as a GDP
+# share. Analysis 28 / Chart 118 supersedes this output with both series in
+# constant 2021 PPP. Keep the calculation only to preserve the old pipeline.
 gdp_by_year = wdi_world.set_index("year")["gdp_constant_2015usd"].dropna().to_dict()
+print(
+    "  WARNING: Chart 01 is a legacy mixed-price-basis diagnostic; "
+    "use Chart 118 for poverty-gap/GDP levels and trends."
+)
 
 results_a1 = {}
 for idx, pl in enumerate([2.15, 3.65, 6.85, 10.0]):
@@ -137,7 +213,7 @@ for idx, pl in enumerate([2.15, 3.65, 6.85, 10.0]):
         df_gap["gap_pct_gdp"],
         "b-o",
         markersize=3,
-        label="Gap as % of GDP",
+        label="Legacy mixed-basis ratio (x100; not a GDP share)",
     )
     l2 = ax2.plot(
         df_gap["year"],
@@ -145,13 +221,13 @@ for idx, pl in enumerate([2.15, 3.65, 6.85, 10.0]):
         "r--s",
         markersize=3,
         alpha=0.7,
-        label="Gap (billion $)",
+        label="Gap (billion 2017-PPP international $)",
     )
 
     ax.set_title(f"${pl}/day poverty line")
     ax.set_xlabel("Year")
-    ax.set_ylabel("Poverty Gap (% of Global GDP, constant $)", color="b")
-    ax2.set_ylabel("Poverty Gap ($ billions)", color="r")
+    ax.set_ylabel("Mixed-basis ratio (x100; not a valid GDP share)", color="b")
+    ax2.set_ylabel("Poverty gap (billion 2017-PPP international $)", color="r")
 
     lines = l1 + l2
     labels = [l.get_label() for l in lines]
@@ -162,13 +238,13 @@ for idx, pl in enumerate([2.15, 3.65, 6.85, 10.0]):
         last = df_gap.iloc[-1]
         print(f"\n  ${pl}/day line:")
         print(
-            f"    {int(first['year'])}: gap = ${first['total_gap_bn']:.0f}B = {first['gap_pct_gdp']:.2f}% of GDP, {first['total_poor_bn']:.2f}B people"
+            f"    {int(first['year'])}: gap = {first['total_gap_bn']:.0f}B 2017-PPP international $, {first['total_poor_bn']:.2f}B people"
         )
         print(
-            f"    {int(last['year'])}: gap = ${last['total_gap_bn']:.0f}B = {last['gap_pct_gdp']:.2f}% of GDP, {last['total_poor_bn']:.2f}B people"
+            f"    {int(last['year'])}: gap = {last['total_gap_bn']:.0f}B 2017-PPP international $, {last['total_poor_bn']:.2f}B people"
         )
         print(
-            f"    Change: {last['gap_pct_gdp'] - first['gap_pct_gdp']:+.2f} ppt ({(last['gap_pct_gdp']/first['gap_pct_gdp'] - 1)*100:+.1f}%)"
+            "    GDP-share levels and changes WITHDRAWN: incompatible price bases."
         )
 
 plt.tight_layout()
@@ -189,16 +265,16 @@ for (key, df_gap), color in zip(results_a1.items(), colors):
         label=f"${key}/day",
     )
 ax.set_title(
-    "Poverty Gap as % of Global GDP: It Has Never Been Cheaper to End Poverty",
+    "LEGACY MIXED-BASIS SERIES — SUPERSEDED BY CHART 118",
     fontsize=14,
     fontweight="bold",
 )
 ax.set_xlabel("Year")
-ax.set_ylabel("Poverty Gap (% of Global GDP, constant $)")
+ax.set_ylabel("Mixed-basis ratio (x100; not a valid GDP share)")
 ax.text(
     0.02,
     0.02,
-    "Gap in 2017 PPP $; GDP in constant 2015 US$. Level approximate; trend reliable.",
+    "Incompatible units: 2017-PPP gap / constant-2015 market-US$ GDP. Do not interpret as a GDP share.",
     transform=ax.transAxes,
     fontsize=7,
     color="gray",
@@ -794,160 +870,9 @@ print("\n" + "=" * 70)
 print("ANALYSIS 6: REDISTRIBUTION VS. GROWTH COST COMPARISON")
 print("=" * 70)
 
-# Track the poverty gap in absolute dollars AND as % of global GDP,
-# and compare with: global military spending, top-1% income, etc.
-fig, axes = plt.subplots(2, 2, figsize=(16, 12))
-fig.suptitle(
-    "The Cost of Ending Poverty: Redistribution vs. Growth",
-    fontsize=16,
-    fontweight="bold",
-)
-
-# Panel A: Poverty gap at $6.85/day with context lines
-ax = axes[0][0]
-gap685 = results_a1.get("6.85")
-if gap685 is not None and len(gap685) > 0:
-    ax.fill_between(
-        gap685["year"],
-        0,
-        gap685["total_gap_bn"],
-        alpha=0.3,
-        color="red",
-        label="Poverty gap ($6.85/day)",
-    )
-    ax.plot(gap685["year"], gap685["total_gap_bn"], "r-", linewidth=2)
-
-    # Add context: global military spending (~$2,000B in 2024)
-    ax.axhline(
-        y=2000,
-        color="gray",
-        linestyle="--",
-        alpha=0.7,
-        label="Global military spending (~$2T)",
-    )
-
-    ax.set_title("Absolute Poverty Gap vs. Reference Points")
-    ax.set_xlabel("Year")
-    ax.set_ylabel("$ Billions")
-    ax.legend(fontsize=9)
-
-# Panel B: Multiple a "realistic targeting" cost (3x perfect targeting)
-ax = axes[0][1]
-for pl, color, label in [
-    (2.15, "blue", "$2.15/day"),
-    (3.65, "orange", "$3.65/day"),
-    (6.85, "red", "$6.85/day"),
-    (10.0, "purple", "$10/day"),
-]:
-    key = str(pl)
-    gap = results_a1.get(key)
-    if gap is not None:
-        # Perfect targeting cost
-        ax.plot(
-            gap["year"], gap["total_gap_bn"], "-", color=color, linewidth=1, alpha=0.5
-        )
-        # Realistic targeting (3x)
-        ax.plot(
-            gap["year"],
-            gap["total_gap_bn"] * 3,
-            "--",
-            color=color,
-            linewidth=2,
-            label=f"{label} (3x targeting)",
-        )
-
-ax.set_title("Realistic Cost of Closing Poverty Gap\n(3x perfect targeting)")
-ax.set_xlabel("Year")
-ax.set_ylabel("$ Billions PPP")
-ax.legend(fontsize=9)
-
-# Panel C: Growth required to close the gap (with current distribution)
-ax = axes[1][0]
-# For each threshold, how many times would GDP need to multiply to bring the
-# median of the poorest group above the line?
-# Using the Woodward logic: if poorest X% get Y% of growth,
-# then GDP needs to grow by gap/(share * current_GDP)
-
-for pl, color in [(2.15, "blue"), (3.65, "orange"), (6.85, "red")]:
-    key = str(pl)
-    gap = results_a1.get(key)
-    if gap is not None:
-        # How many years at 3% global growth to close gap via trickle-down?
-        # Assume poorest 60% get 5% of new growth (Woodward's estimate)
-        # New income to poor per year = 0.05 * 0.03 * GDP = 0.0015 * GDP
-        gap_copy = gap.copy()
-        gap_copy["years_needed"] = gap_copy["total_gap_bn"] / (
-            0.0015 * gap_copy["global_gdp_tn"] * 1000
-        )
-        ax.plot(
-            gap_copy["year"],
-            gap_copy["years_needed"],
-            "-o",
-            color=color,
-            markersize=3,
-            label=f"${pl}/day",
-        )
-
-ax.set_title(
-    "Years of 3% Growth Needed to Close Gap\n(if poorest 60% get 5% of new income)"
-)
-ax.set_xlabel("Year")
-ax.set_ylabel("Years of growth needed")
-ax.legend()
-
-# Panel D: Key comparison table as text
-ax = axes[1][1]
-ax.axis("off")
-# Get latest values
-table_data = []
-for pl in [2.15, 3.65, 6.85, 10.0]:
-    key = str(pl)
-    gap = results_a1.get(key)
-    if gap is not None and len(gap) > 0:
-        latest = gap.iloc[-1]
-        table_data.append(
-            [
-                f"${pl}/day",
-                f"{latest['total_poor_bn']:.2f}B",
-                f"${latest['total_gap_bn']:.0f}B",
-                f"${latest['total_gap_bn']*3:.0f}B",
-                f"{latest['gap_pct_gdp']:.2f}%",
-                f"{latest['gap_pct_gdp']*3:.2f}%",
-            ]
-        )
-
-table = ax.table(
-    cellText=table_data,
-    colLabels=[
-        "Poverty Line",
-        "People\nBelow",
-        "Perfect\nGap",
-        "Realistic\nCost (3x)",
-        "% of\nWorld GDP",
-        "Realistic\n% GDP",
-    ],
-    loc="center",
-    cellLoc="center",
-)
-table.auto_set_font_size(False)
-table.set_fontsize(11)
-table.scale(1.2, 1.8)
-ax.set_title("Latest Year: Cost of Closing Each Poverty Gap", fontweight="bold", pad=20)
-
-plt.tight_layout()
-plt.savefig(os.path.join(CHARTS, "06_redistribution_cost.png"))
-plt.close()
-print("  -> Saved 06_redistribution_cost.png")
-
-# Print the table
-print("\n  Latest year cost comparison:")
-print(
-    f"  {'Line':<12} {'People':<12} {'Perfect Gap':<15} {'Realistic(3x)':<15} {'% GDP':<10} {'Realistic % GDP':<15}"
-)
-for row in table_data:
-    print(
-        f"  {row[0]:<12} {row[1]:<12} {row[2]:<15} {row[3]:<15} {row[4]:<10} {row[5]:<15}"
-    )
+# Do not reuse results_a1 for GDP shares, targeting costs or years of growth.
+refresh_withdrawn_chart("06_redistribution_cost.png")
+print(GDP_SHARE_WITHDRAWAL)
 
 
 ###############################################################################
@@ -1204,148 +1129,9 @@ print("\n" + "=" * 70)
 print("GENERATING SUMMARY DASHBOARD")
 print("=" * 70)
 
-fig, axes = plt.subplots(2, 3, figsize=(22, 14))
-fig.suptitle(
-    "Global Development: Growth, Poverty, and Redistribution\nSummary Dashboard",
-    fontsize=18,
-    fontweight="bold",
-)
-
-# 1. Poverty headcount over time at multiple thresholds
-ax = axes[0][0]
-for pl, color, label in [
-    (2.15, "#2196F3", "$2.15/day"),
-    (3.65, "#FF9800", "$3.65/day"),
-    (6.85, "#E91E63", "$6.85/day"),
-]:
-    key = str(pl)
-    reg = pip_regional[key]
-    yearly = (
-        reg.groupby("reporting_year")
-        .agg({"pop_in_poverty": "sum", "reporting_pop": "sum"})
-        .reset_index()
-    )
-    yearly["rate"] = yearly["pop_in_poverty"] / yearly["reporting_pop"] * 100
-    ax.plot(
-        yearly["reporting_year"],
-        yearly["rate"],
-        "-",
-        color=color,
-        linewidth=2,
-        label=label,
-    )
-ax.set_title("Global Poverty Rate")
-ax.set_ylabel("% of world population")
-ax.legend(fontsize=9)
-
-# 2. Poverty gap as % GDP (your core finding)
-ax = axes[0][1]
-for key, color in [("2.15", "#2196F3"), ("3.65", "#FF9800"), ("6.85", "#E91E63")]:
-    gap = results_a1.get(key)
-    if gap is not None:
-        ax.plot(
-            gap["year"],
-            gap["gap_pct_gdp"],
-            "-",
-            color=color,
-            linewidth=2,
-            label=f"${key}/day",
-        )
-ax.set_title("Poverty Gap as % of World GDP\n(Your Core Hypothesis)")
-ax.set_ylabel("% of Global GDP PPP")
-ax.legend(fontsize=9)
-
-# 3. Sigma convergence
-ax = axes[0][2]
-ax.plot(
-    df_sigma["year"],
-    df_sigma["sigma_unweighted"],
-    "b-",
-    linewidth=2,
-    label="Unweighted",
-)
-ax.plot(
-    df_sigma["year"],
-    df_sigma["sigma_weighted"],
-    "r-",
-    linewidth=2,
-    label="Pop-weighted",
-)
-ax.set_title("Income Convergence\n(SD of log GDP/capita)")
-ax.set_ylabel("Standard deviation")
-ax.legend()
-
-# 4. Growth trajectories (simplified)
-ax = axes[1][0]
-for cc, (name, color) in list(growth_cases.items())[:8]:
-    cdata = mad[
-        (mad["countrycode"] == cc) & (mad["gdppc"].notna()) & (mad["year"] >= 1900)
-    ].sort_values("year")
-    if len(cdata) > 0:
-        ax.plot(cdata["year"], cdata["gdppc"], color=color, linewidth=2, label=name)
-ax.set_yscale("log")
-ax.set_title("GDP per Capita Since 1900")
-ax.set_ylabel("GDP/capita (2011 int'l $, log)")
-ax.legend(fontsize=7, ncol=2)
-
-# 5. Regional poverty decomposition
-ax = axes[1][1]
-reg215 = pip_regional["2.15"]
-# Non-overlapping regions only (exclude AFE/AFW sub-regions of SSF)
-non_overlapping_summary = {"EAS", "SAS", "SSF", "ECS", "LCN", "MEA", "NAC"}
-for _, grp in reg215.groupby("region_code"):
-    rcode = grp["region_code"].iloc[0]
-    rname = grp["region_name"].iloc[0]
-    if rcode not in non_overlapping_summary:
-        continue
-    data = grp.sort_values("reporting_year")
-    ax.plot(
-        data["reporting_year"],
-        data["pop_in_poverty"] / 1e9,
-        "-",
-        linewidth=2,
-        label=rname[:25],
-    )
-ax.set_title("Extreme Poverty ($2.15) by Region")
-ax.set_ylabel("People in poverty (billions)")
-ax.legend(fontsize=6, loc="upper right")
-
-# 6. Cost comparison snapshot
-ax = axes[1][2]
-ax.axis("off")
-summary_text = "KEY FINDINGS\n" + "=" * 40 + "\n\n"
-for pl in [2.15, 3.65, 6.85]:
-    key = str(pl)
-    gap = results_a1.get(key)
-    if gap is not None and len(gap) > 0:
-        first_valid = gap[gap["gap_pct_gdp"].notna()].iloc[0]
-        last = gap[gap["gap_pct_gdp"].notna()].iloc[-1]
-        summary_text += f"${pl}/day poverty gap:\n"
-        summary_text += (
-            f"  {int(first_valid['year'])}: {first_valid['gap_pct_gdp']:.2f}% of GDP\n"
-        )
-        summary_text += f"  {int(last['year'])}: {last['gap_pct_gdp']:.2f}% of GDP\n"
-        change_pct = (last["gap_pct_gdp"] / first_valid["gap_pct_gdp"] - 1) * 100
-        summary_text += f"  Change: {change_pct:+.0f}%\n\n"
-
-summary_text += (
-    "\nConclusion: Growth has made\nredistribution dramatically\ncheaper over time."
-)
-ax.text(
-    0.1,
-    0.95,
-    summary_text,
-    transform=ax.transAxes,
-    fontsize=11,
-    verticalalignment="top",
-    fontfamily="monospace",
-    bbox=dict(boxstyle="round", facecolor="lightyellow", alpha=0.8),
-)
-
-plt.tight_layout()
-plt.savefig(os.path.join(CHARTS, "00_summary_dashboard.png"))
-plt.close()
-print("  -> Saved 00_summary_dashboard.png")
+# Withdraw the whole dashboard rather than republish its inherited conclusions.
+# Independent analyses above still publish their own charts unchanged.
+refresh_withdrawn_chart("00_summary_dashboard.png")
 
 
 ###############################################################################
@@ -1355,15 +1141,14 @@ print("\n" + "=" * 70)
 print("COMPLETE ANALYSIS SUMMARY")
 print("=" * 70)
 
-print(
-    """
+print("""
 KEY FINDINGS:
 
-1. POVERTY GAP AS % OF GDP (Your core hypothesis — CONFIRMED)
-   Growth has dramatically reduced the cost of ending poverty as a share
-   of the global economy. The poverty gap has fallen as a percentage of
-   world GDP at every threshold. Your friend is right that redistribution
-   is cheap; you are right that it's cheap BECAUSE of growth.
+1. LEGACY POVERTY-GAP GDP SHARES — WITHDRAWN
+    Analysis 1 divides a 2017-PPP gap by constant-2015 market-US$ GDP.
+    Its levels and trends are not valid GDP shares and cannot confirm
+    that growth caused redistribution to become cheaper. Use Analysis 28,
+    Charts 118/119, for same-basis accounting, not causal attribution.
 
 2. REGIONAL DECOMPOSITION
    China dominates extreme poverty reduction. Sub-Saharan Africa's share 
@@ -1386,10 +1171,11 @@ KEY FINDINGS:
    than in East Asia. High inequality dampens the poverty-reducing 
    effect of growth. Your friend's paper correctly identifies this.
 
-6. REDISTRIBUTION COST
-   Even with realistic (3x) targeting costs, ending extreme poverty at
-   $2.15/day costs <1% of world GDP. At $6.85/day, it's substantial
-   but not impossible (~3-5% of GDP). These costs have been falling.
+6. LEGACY REDISTRIBUTION COST COMPARISON — WITHDRAWN
+    The old GDP-share costs and years-of-growth estimate are withdrawn.
+    A 3x targeting multiplier is an assumption, not an estimated program
+    cost. PPP gaps cannot be compared directly with nominal military
+    spending. Charts 00/06 now show withdrawal notices, not estimates.
 
 7. GROWTH ROTATION
    There IS evidence of a "flying geese" pattern: growth leadership
@@ -1397,15 +1183,12 @@ KEY FINDINGS:
    But it hasn't reached most of Sub-Saharan Africa.
 
 SYNTHESIS:
-   Both you and your friend are partially right. Growth HAS raised billions
-   out of poverty and made redistribution cheaper. But growth has been
-   deeply uneven, and the remaining poverty is concentrated where growth
-   is hardest to achieve. The strongest position is: growth created the
-   resources; redistribution can deploy them efficiently; and investment
-   in growth-enabling institutions in the poorest places remains essential
-   for the long run.
-"""
-)
+    The legacy mixed-basis calculation cannot establish redistribution's
+    GDP cost or attribute changes in affordability to growth. Consult the
+    same-basis Analysis 28 accounting separately; an accounting decomposition
+    does not establish causation. The unrelated descriptive analyses above
+    have not been revalidated as part of this focused correction.
+""")
 
 print(f"\nAll charts saved to: {CHARTS}")
 print("Files:")

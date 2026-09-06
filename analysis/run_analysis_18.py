@@ -17,6 +17,9 @@ Outputs:
 - charts/95_material_footprint_uncertainty.png
 - charts/96_development_correlates.png
 - data/processed/robustness_*.csv
+
+Use --development-only to refresh section 6 from local WDI/country metadata
+without executing the legacy monetary sensitivities or other sections.
 """
 
 from __future__ import annotations
@@ -316,6 +319,15 @@ def main() -> None:
         country_gap_nominal = float(
             (with_gap["gap_ppp"] * with_gap["price_level_ratio"]).sum()
         )
+        if country_gap_ppp == 0:
+            raise ValueError(
+                "No matched PIP price-basis observations with a positive poverty "
+                f"gap for ${poverty_line}/day (country_gap_ppp=0). "
+                "Check cached PIP country codes, reporting years and compatible "
+                "WDI price-basis coverage before running this legacy sensitivity. "
+                "Use --development-only to refresh chart 96 independently; "
+                "no denominator or monetary estimate has been substituted."
+            )
         weighted_price_ratio = country_gap_nominal / country_gap_ppp
         gap_ppp = world_gap_ppp
         gap_nominal = world_gap_ppp * weighted_price_ratio
@@ -489,6 +501,23 @@ def main() -> None:
     plt.savefig(CHARTS / "95_material_footprint_uncertainty.png")
     plt.close()
 
+    refresh_development_only(wdi)
+
+    print("\nKey outputs to reference in README:")
+    print("  - data/processed/robustness_claim_confidence.csv")
+    print("  - data/processed/robustness_good_life_thresholds.csv")
+    print("  - data/processed/robustness_nitrogen_uncertainty.csv")
+    print("  - data/processed/robustness_material_uncertainty.csv")
+    print("  - data/processed/robustness_development_correlates.csv")
+
+
+def refresh_development_only(
+    wdi: pd.DataFrame | None = None,
+    country_regions: pd.DataFrame | None = None,
+) -> None:
+    """Run only section 6, using supplied frames or the existing offline caches."""
+    if wdi is None:
+        wdi = pd.read_csv(PROC / "wdi_combined.csv")
     # ---------------------------------------------------------------------
     # 6. Development correlates: simple growth-spell panel
     # ---------------------------------------------------------------------
@@ -497,7 +526,8 @@ def main() -> None:
     # WDI also uses codes such as AFE/AFW for aggregates. Use the World Bank's
     # country-region lookup as the authoritative country universe instead of a
     # hand-maintained aggregate exclusion list.
-    country_regions = pd.read_csv(RAW / "wb_country_regions.csv")
+    if country_regions is None:
+        country_regions = pd.read_csv(RAW / "wb_country_regions.csv")
     actual_country_codes = set(country_regions["country_code"].dropna())
     countries = wdi[wdi["country_code"].isin(actual_country_codes)].copy()
     spell_rows: list[dict[str, float | int | str]] = []
@@ -638,16 +668,15 @@ def main() -> None:
     plt.savefig(CHARTS / "96_development_correlates.png")
     plt.close()
 
-    print("\nKey outputs to reference in README:")
-    print("  - data/processed/robustness_claim_confidence.csv")
-    print("  - data/processed/robustness_good_life_thresholds.csv")
-    print("  - data/processed/robustness_nitrogen_uncertainty.csv")
-    print("  - data/processed/robustness_material_uncertainty.csv")
-    print("  - data/processed/robustness_development_correlates.csv")
+
+def run_cli() -> None:
+    if "--nitrogen-only" in sys.argv:
+        refresh_nitrogen_only()
+    elif "--development-only" in sys.argv:
+        refresh_development_only()
+    else:
+        main()
 
 
 if __name__ == "__main__":
-    if "--nitrogen-only" in sys.argv:
-        refresh_nitrogen_only()
-    else:
-        main()
+    run_cli()
